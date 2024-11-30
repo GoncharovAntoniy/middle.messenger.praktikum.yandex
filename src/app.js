@@ -1,15 +1,22 @@
 import Handlebars from 'handlebars';
 import * as Pages from './pages/index';
 import * as Components from './components/index'
+import * as ChatComponents from './pages/chat/components'
+import * as Modules from './pages/chat/modules'
 
 Handlebars.registerPartial('Input', Components.Input)
 Handlebars.registerPartial('Button', Components.Button)
+Handlebars.registerPartial('EmptyChatLog', ChatComponents.EmptyChatLog)
+Handlebars.registerPartial('Avatar', ChatComponents.Avatar)
+Handlebars.registerPartial('HeaderSearch', ChatComponents.HeaderSearch)
+Handlebars.registerPartial('SearchChatInput', ChatComponents.SearchChatInput)
+Handlebars.registerPartial('SearchAndListUsersModule', Modules.SearchAndListUsersModule)
 
 
 export default class App {
     constructor() {
         this.state = {
-            currentPage: '/chat'
+            currentPage: '/register'
         }
         this.appElement = document.getElementById("app")
     }
@@ -34,15 +41,15 @@ export default class App {
                 ],
                 buttons: [
                     {
-                        idButton: 'loginBtn',
-                        typeButton:'button',
-                        classButton:'buttonAuth',
+                        idButton: 'authBtn',
+                        typeButton: 'button',
+                        classButton: 'buttonAuth',
                         textButton: 'Авторизоваться',
                     },
                     {
                         idButton: 'linkBtn',
-                        typeButton:'button',
-                        classButton:'buttonLink',
+                        typeButton: 'button',
+                        classButton: 'buttonLink',
                         textButton: 'Нет аккаунта?',
                     },
                 ]
@@ -103,16 +110,16 @@ export default class App {
                     },
                 ],
                 buttons: [
-                    {   
+                    {
                         idButton: 'registerBtn',
-                        typeButton:'button',
-                        classButton:'buttonAuth',
+                        typeButton: 'button',
+                        classButton: 'buttonAuth',
                         textButton: 'Зарегистрироваться',
                     },
                     {
                         idButton: 'loginBtn',
-                        typeButton:'button',
-                        classButton:'buttonLink',
+                        typeButton: 'button',
+                        classButton: 'buttonLink',
                         textButton: 'Войти',
                     },
                 ]
@@ -121,19 +128,82 @@ export default class App {
         }
         if (this.state.currentPage === "/chat") {
             const template = Handlebars.compile(Pages.ChatPage)
-            this.appElement.innerHTML = template()
+            const context = {
+                infoAvatar: [
+                    {
+                        username: 'Антоний',
+                        lastMessage: 'Привет',
+                        time: '12:12',
+                        notReadMessageCount: '2',
+                    },
+                    {
+                        username: 'Ксюша',
+                        lastMessage: 'Я люблю потусить',
+                        time: '19:20',
+                        notReadMessageCount: '4',
+                    },
+                    {
+                        username: 'Тихон',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                    {
+                        username: 'Саша',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                    {
+                        username: 'Владимир',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                    {
+                        username: 'Владимир',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                    {
+                        username: 'Владимир',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                    {
+                        username: 'Владимир',
+                        lastMessage: 'тестим аватар',
+                        time: '19:20',
+                        notReadMessageCount: '3',
+                    },
+                ]
+            }
+            this.appElement.innerHTML = template(context)
         }
         this.attachEventListener();
     }
 
     attachEventListener() {
+        if (this.state.currentPage === "/register") {
+            const redirectButton = document.querySelector('#loginBtn');
+            redirectButton.addEventListener('click', (e) => {
+                e.preventDefault()
+                this.changePage('/login')
+            })
+        }
         if (this.state.currentPage === "/login") {
-            const redirectButton = document.querySelector('.redirectRegister');
-            // redirectButton.addEventListener('click', (e) => {
-            //     e.preventDefault()
-            //     this.changePage('/register')
-            // })
-            this.changePage()
+            const redirectButton = document.querySelector('#linkBtn');
+            const authorizeBtn = document.querySelector('#authBtn')
+            authorizeBtn.addEventListener('click', (e) => {
+                e.preventDefault()
+                this.changePage('/chat')
+            })
+            redirectButton.addEventListener('click', (e) => {
+                e.preventDefault()
+                this.changePage('/register')
+            })
         }
     }
     changePage(page) {
