@@ -1,0 +1,24 @@
+<form action="" class="form">
+    <div class="fields">
+        <h2 class="login__title">Вход</h2>
+
+        <div class="inputs">
+            {{#each inputs}}
+                <div class="inputContainer">
+                    {{> Input 
+                        inputId=inputId
+                        classInput=classInput 
+                        typeInput=typeInput 
+                    }}
+                    <label class="labelInput" for="{{inputId}}">{{placeholderInput}}</label>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="form__buttons">
+        {{#each buttons}}
+            {{>Button typeButton=typeButton classButton=classButton textButton=textButton}}
+        {{/each}}
+    </div>
+</form>
