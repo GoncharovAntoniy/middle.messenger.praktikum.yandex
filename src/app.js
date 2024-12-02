@@ -9,16 +9,109 @@ Handlebars.registerPartial('Button', Components.Button)
 Handlebars.registerPartial('EmptyChatLog', ChatComponents.EmptyChatLog)
 Handlebars.registerPartial('Avatar', ChatComponents.Avatar)
 Handlebars.registerPartial('HeaderSearch', ChatComponents.HeaderSearch)
+Handlebars.registerPartial('HeaderChat', ChatComponents.HeaderChat)
 Handlebars.registerPartial('SearchChatInput', ChatComponents.SearchChatInput)
+Handlebars.registerPartial('SubmitInput', ChatComponents.SubmitInput)
+Handlebars.registerPartial('ChatLog', ChatComponents.ChatLog)
 Handlebars.registerPartial('SearchAndListUsersModule', Modules.SearchAndListUsersModule)
+Handlebars.registerPartial('MessageModule', Modules.MessageModule)
 
 
 export default class App {
     constructor() {
         this.state = {
-            currentPage: '/register'
+            currentPage: '/register',
+            chatLogMessages: [
+                {
+                    id: 1,
+                    message: 'bla bla bla',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 2,
+                    message: 'bla bla bla',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 3,
+                    message: 'bla bla bla',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 4,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 5,
+                    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 6,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 7,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 8,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 3,
+                    message: 'bla bla bla',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 4,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 5,
+                    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 6,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+                {
+                    id: 7,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 0,
+                    time: '12:00',
+                },
+                {
+                    id: 8,
+                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
+                    role: 1,
+                    time: '12:00',
+                },
+            ]
         }
         this.appElement = document.getElementById("app")
+        this.emptyLog = false
+        this.openMenuActionHeader = false
+        this.openMenuActionSubmitForm = false
     }
 
     render() {
@@ -134,7 +227,7 @@ export default class App {
                         username: 'Антоний',
                         lastMessage: 'Привет',
                         time: '12:12',
-                        notReadMessageCount: '2',
+                        notReadMessageCount: '',
                     },
                     {
                         username: 'Ксюша',
@@ -157,8 +250,8 @@ export default class App {
                     {
                         username: 'Владимир',
                         lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
+                        time: '',
+                        notReadMessageCount: '',
                     },
                     {
                         username: 'Владимир',
@@ -178,9 +271,19 @@ export default class App {
                         time: '19:20',
                         notReadMessageCount: '3',
                     },
-                ]
+                ],
+                infoHeaderChat: {
+                    username: "username"
+                }
             }
-            this.appElement.innerHTML = template(context)
+            this.appElement.innerHTML = template({
+                ...context,
+                emptyLog: this.emptyLog,
+                openMenuActionHeader: this.openMenuActionHeader,
+                openMenuActionSubmitForm: this.openMenuActionSubmitForm,
+                chatLogMessages: this.state.chatLogMessages
+
+            })
         }
         this.attachEventListener();
     }
@@ -205,6 +308,20 @@ export default class App {
                 this.changePage('/register')
             })
         }
+        if (this.state.currentPage === '/chat') {
+            const actionHeaderMenu = document.querySelector('#headerActions')
+            const actionInputMenu = document.querySelector('#inputSubmitAction')
+            console.log('actionInputMenu', actionInputMenu)
+            actionHeaderMenu.addEventListener("click", () => {
+                this.openMenuActionHeader = !this.openMenuActionHeader
+                this.render()
+            })
+            actionInputMenu.addEventListener("click", () => {
+                this.openMenuActionSubmitForm = !this.openMenuActionSubmitForm
+                this.render()
+            })
+        }
+
     }
     changePage(page) {
         this.state.currentPage = page;

@@ -1,0 +1,26 @@
+<div class="headerChat">
+    <div class="headerChat__avatarChat">
+        {{> Avatar username=infoHeaderChat.username}}
+    </div>
+    <div id="headerActions" class="headerChat__actions">
+        <span class="headerChat__actions_dotAction"></span>
+        <span class="headerChat__actions_dotAction"></span>
+        <span class="headerChat__actions_dotAction"></span>
+    </div>
+    {{#if openMenuActionHeader}}
+        <div class="actionMenu">
+            <div class="actionMenu__item">
+                <span class="actionMenu__item_addUser">
+                    +
+                </span>
+                <p class="actionMenu__item_text">Добавить пользователя</p>
+            </div>
+            <div class="actionMenu__item">
+                <span class="actionMenu__item_deleteUser">
+                    +
+                </span>
+                <p class="actionMenu__item_text">Удалить пользователя</p>
+            </div>
+        </div>
+    {{/if}}
+</div>

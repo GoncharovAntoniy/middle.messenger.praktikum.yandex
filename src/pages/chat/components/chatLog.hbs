@@ -1,0 +1,20 @@
+<div class="chatLog">
+  {{#each chatLogMessages}}
+    {{#if role}}
+      <div class="chatLog__myMessage">
+        <p class="chatLog__myMessage_message">
+          {{message}}
+          <span class="chatLog__myMessage_message-time"> <img src="/images/dubleCheckIcon.svg" alt="icon"> {{time}}</span>
+        </p>
+      </div>
+    {{/if}}
+    {{#unless role}}
+      <div class="chatLog__yourMessage">
+        <p class="chatLog__yourMessage_message">
+          {{message}}
+          <span class="chatLog__yourMessage_message-time">{{time}}</span>
+        </p>
+      </div>
+    {{/unless}}
+  {{/each}}
+</div>
