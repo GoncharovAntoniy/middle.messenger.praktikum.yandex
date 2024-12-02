@@ -3,6 +3,11 @@
         {{> SearchAndListUsersModule infoAvatar=infoAvatar}}
     </section>
     <section class="chatContainer__rightSection">
-        {{> EmptyChatLog }}
+        {{> MessageModule 
+                emptyLog=emptyLog 
+                openMenuActionHeader=openMenuActionHeader
+                openMenuActionSubmitForm=openMenuActionSubmitForm
+                chatLogMessages=chatLogMessages
+        }}
     </section>
 </main>

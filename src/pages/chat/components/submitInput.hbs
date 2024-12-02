@@ -1,0 +1,29 @@
+<form class="submitFormMessage" action="">
+  <img
+    id="inputSubmitAction"
+    class="submitFormMessage__action"
+    src="/images/paperclipIcon.svg"
+    alt=""
+  />
+  <input class="submitFormMessage__input" type="text" placeholder="Сообщение" />
+  <button class="submitFormMessage__button" type="submit"><img
+      src="/images/arrowRightIcon.svg"
+      alt=""
+    /></button>
+  {{#if openMenuActionSubmitForm}}
+    <div class="submitFormMessage__actions">
+      <div class="submitFormMessage__actions_item">
+        <img src="/images/fotoAction.svg" alt="icon" />
+        <p class="submitFormMessage__actions_item-text">Фото или Видео</p>
+      </div>
+      <div class="submitFormMessage__actions_item">
+        <img src="/images/fileAction.svg" alt="icon" />
+        <p class="submitFormMessage__actions_item-text">Файл</p>
+      </div>
+      <div class="submitFormMessage__actions_item">
+        <img src="/images/locationAction.svg" alt="icon" />
+        <p class="submitFormMessage__actions_item-text">Локация</p>
+      </div>
+    </div>
+  {{/if}}
+</form>
