@@ -7,20 +7,18 @@
         <span class="headerChat__actions_dotAction"></span>
         <span class="headerChat__actions_dotAction"></span>
     </div>
-    {{#if openMenuActionHeader}}
-        <div class="actionMenu">
-            <div class="actionMenu__item">
-                <span class="actionMenu__item_addUser">
-                    +
-                </span>
-                <p class="actionMenu__item_text">Добавить пользователя</p>
-            </div>
-            <div class="actionMenu__item">
-                <span class="actionMenu__item_deleteUser">
-                    +
-                </span>
-                <p class="actionMenu__item_text">Удалить пользователя</p>
-            </div>
+    <div class="actionMenu">
+        <div id="addedUser" class="actionMenu__item">
+            <span class="actionMenu__item_addUser">
+                +
+            </span>
+            <p class="actionMenu__item_text">Добавить пользователя</p>
         </div>
-    {{/if}}
+        <div id="deleteUser" class="actionMenu__item">
+            <span class="actionMenu__item_deleteUser">
+                +
+            </span>
+            <p class="actionMenu__item_text">Удалить пользователя</p>
+        </div>
+    </div>
 </div>

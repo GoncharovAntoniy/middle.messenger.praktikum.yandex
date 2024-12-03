@@ -6,16 +6,13 @@
         <div class="messageModule__header">
             {{> HeaderChat 
                     infoHeaderChat=infoHeaderChat  
-                    openMenuActionHeader=openMenuActionHeader
             }}
         </div>
         <div class="messageModule__chat">
             {{> ChatLog chatLogMessages=chatLogMessages }}
         </div>
         <div class="messageModule__formSubmit">
-            {{> SubmitInput 
-                    openMenuActionSubmitForm=openMenuActionSubmitForm
-            }}
+            {{> SubmitInput }}
         </div>
     {{/unless}}
 </div>

@@ -4,14 +4,12 @@
 
         <div class="inputs">
             {{#each inputs}}
-                <div class="inputContainer">
-                    {{> Input 
-                        inputId=inputId
-                        classInput=classInput 
-                        typeInput=typeInput 
-                    }}
-                    <label class="labelInput" for="{{inputId}}">{{placeholderInput}}</label>
-                </div>
+                {{> Input 
+                    inputId=inputId
+                    classInput=classInput 
+                    typeInput=typeInput 
+                    placeholderInput=placeholderInput
+                }}
             {{/each}}
         </div>
     </div>

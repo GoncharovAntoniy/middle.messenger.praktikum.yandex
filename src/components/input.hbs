@@ -1,7 +1,9 @@
-<input
-  id="{{inputId}}"
-  class="{{classInput}}"
-  type="{{typeInput}}"
-  {{!-- placeholder="{{placeholderInput}}" --}}
-  required
-/>
+<div class="inputContainer">
+  <input
+    id="{{inputId}}"
+    class="{{classInput}}"
+    type="{{typeInput}}"
+    required
+  />
+  <label class="labelInput" for="{{inputId}}">{{placeholderInput}}</label>
+</div>
