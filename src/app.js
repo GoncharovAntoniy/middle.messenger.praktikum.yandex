@@ -13,6 +13,7 @@ Handlebars.registerPartial('HeaderChat', ChatComponents.HeaderChat)
 Handlebars.registerPartial('SearchChatInput', ChatComponents.SearchChatInput)
 Handlebars.registerPartial('SubmitInput', ChatComponents.SubmitInput)
 Handlebars.registerPartial('ChatLog', ChatComponents.ChatLog)
+Handlebars.registerPartial('ModalChat', ChatComponents.ModalChat)
 Handlebars.registerPartial('SearchAndListUsersModule', Modules.SearchAndListUsersModule)
 Handlebars.registerPartial('MessageModule', Modules.MessageModule)
 
@@ -20,98 +21,128 @@ Handlebars.registerPartial('MessageModule', Modules.MessageModule)
 export default class App {
     constructor() {
         this.state = {
-            currentPage: '/register',
+            currentPage: '/profile',
             chatLogMessages: [
                 {
                     id: 1,
                     message: 'bla bla bla',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 2,
                     message: 'bla bla bla',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 3,
                     message: 'bla bla bla',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 4,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 5,
                     message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 6,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 7,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 8,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 3,
                     message: 'bla bla bla',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 4,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 5,
                     message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 6,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 7,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 0,
                     time: '12:00',
+                    isImage: false,
                 },
                 {
                     id: 8,
                     message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
                     role: 1,
                     time: '12:00',
+                    isImage: false,
                 },
-            ]
+            ],
+            emptyLog: false,
+            modalInfo: {
+                title: 'Добавьте пользователя',
+                infoInput: {
+                    inputId: "inputLoginAddUser",
+                    classInput: "input",
+                    typeInput: "text",
+                    placeholderInput: "Логин",
+                },
+                infoButton: {
+                    idButton: "buttonAddUser",
+                    typeButton: "button",
+                    classButton: "buttonAuth",
+                    textButton: "Добавить",
+                }
+            }
         }
         this.appElement = document.getElementById("app")
-        this.emptyLog = false
-        this.openMenuActionHeader = false
-        this.openMenuActionSubmitForm = false
+        this.chatModal = null
+        this.modalChatContainer
+
     }
 
     render() {
@@ -274,15 +305,20 @@ export default class App {
                 ],
                 infoHeaderChat: {
                     username: "username"
-                }
+                },
             }
             this.appElement.innerHTML = template({
                 ...context,
-                emptyLog: this.emptyLog,
-                openMenuActionHeader: this.openMenuActionHeader,
-                openMenuActionSubmitForm: this.openMenuActionSubmitForm,
-                chatLogMessages: this.state.chatLogMessages
-
+                emptyLog: this.state.emptyLog,
+                chatLogMessages: this.state.chatLogMessages,
+                modalInfo: this.state.modalInfo,
+            })
+        }
+        if (this.state.currentPage === "/profile") {
+            const template = Handlebars.compile(Pages.ProfilePage)
+            const context = {}
+            this.appElement.innerHTML = template({
+                ...context,
             })
         }
         this.attachEventListener();
@@ -311,20 +347,90 @@ export default class App {
         if (this.state.currentPage === '/chat') {
             const actionHeaderMenu = document.querySelector('#headerActions')
             const actionInputMenu = document.querySelector('#inputSubmitAction')
-            console.log('actionInputMenu', actionInputMenu)
+            const openHeaderMenu = document.querySelector('.actionMenu')
+            const openInputMenu = document.querySelector('.submitFormMessage__actions')
+            const openModalAaddUser = document.querySelector('#addedUser')
+            const openModalDeleteUser = document.querySelector('#deleteUser')
+
+
             actionHeaderMenu.addEventListener("click", () => {
-                this.openMenuActionHeader = !this.openMenuActionHeader
-                this.render()
+                openHeaderMenu.classList.toggle('activeMenu')
             })
             actionInputMenu.addEventListener("click", () => {
-                this.openMenuActionSubmitForm = !this.openMenuActionSubmitForm
-                this.render()
+                openInputMenu.classList.toggle('activeMenu')
             })
+            if (actionInputMenu) {
+                const inputMediaValue = document.querySelector('#input_media')
+                inputMediaValue.addEventListener('change', (e) => {
+                    console.log(e.target.files[0])
+                    const mediaUrl = URL.createObjectURL(e.target.files[0])
+                    this.state.chatLogMessages.push({
+                        id: this.state.chatLogMessages.length,
+                        message: mediaUrl,
+                        role: 1,
+                        time: '12:00',
+                        isImage: true,
+                    })
+                    this.render()
+                })
+            }
+            openModalAaddUser.addEventListener('click', () => {
+                const newValue = {
+                    title: 'Добавить пользователя',
+                    infoButton: {
+                        ...this.state.modalInfo.infoButton,
+                        textButton: 'Добавить',
+                        idButton: 'addUser',
+                    }
+                }
+                this.updateStateModal(newValue)
+
+            })
+            openModalDeleteUser.addEventListener('click', () => {
+                const newValue = {
+                    title: 'Удалить пользователя',
+                    infoButton: {
+                        ...this.state.modalInfo.infoButton,
+                        textButton: 'Удалить',
+                        idButton: 'deleteUser',
+                    }
+                }
+                this.updateStateModal(newValue)
+
+            })
+            if (this.chatModal) {
+                this.chatModal.addEventListener('click', () => {
+                    this.chatModal.remove()
+                    this.render()
+                })
+                this.modalChatContainer.addEventListener('click', (e) => {
+                    e.stopPropagation()
+                })
+            }
         }
 
     }
     changePage(page) {
         this.state.currentPage = page;
         this.render();
+    }
+
+    updateStateModal(newModalInfo) {
+        this.state = { ...this.state, modalInfo: { ...this.state.modalInfo, ...newModalInfo } }
+        const chatContainer = document.querySelector('.chatContainer')
+        const template = Handlebars.compile(ChatComponents.ModalChat)
+        const html = template(this.state.modalInfo);
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+
+        const modalElement = tempDiv.firstElementChild;
+
+        if (chatContainer && modalElement) {
+            chatContainer.appendChild(modalElement);
+            this.chatModal = document.querySelector('.modalChat')
+            this.modalChatContainer = document.querySelector('.modalChat__container')
+        }
+        this.attachEventListener()
     }
 }

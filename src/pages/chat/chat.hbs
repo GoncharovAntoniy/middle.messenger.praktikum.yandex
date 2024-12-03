@@ -5,9 +5,12 @@
     <section class="chatContainer__rightSection">
         {{> MessageModule 
                 emptyLog=emptyLog 
-                openMenuActionHeader=openMenuActionHeader
-                openMenuActionSubmitForm=openMenuActionSubmitForm
                 chatLogMessages=chatLogMessages
         }}
     </section>
+    {{!-- {{> ModalChat 
+            title=modalInfo.title 
+            infoInput=modalInfo.infoInput 
+            infoButton=modalInfo.infoButton
+    }} --}}
 </main>
