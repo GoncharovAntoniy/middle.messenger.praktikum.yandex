@@ -1,5 +1,6 @@
 @use 'consts' as *;
 @import url("../pages/chat/styles/chatStyles.scss");
+@import url("../pages/profile/styles/psofile.scss");
 * {
   margin: 0;
   padding: 0;
@@ -137,6 +138,7 @@ body {
   background-color: inherit;
   color: #3369f3;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .buttonLink:hover {
