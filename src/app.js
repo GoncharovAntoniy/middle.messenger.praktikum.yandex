@@ -3,6 +3,7 @@ import * as Pages from './pages/index';
 import * as Components from './components/index'
 import * as ChatComponents from './pages/chat/components'
 import * as Modules from './pages/chat/modules'
+import * as ProfileComponents from './pages/profile/components/index'
 
 Handlebars.registerPartial('Input', Components.Input)
 Handlebars.registerPartial('Button', Components.Button)
@@ -16,12 +17,21 @@ Handlebars.registerPartial('ChatLog', ChatComponents.ChatLog)
 Handlebars.registerPartial('ModalChat', ChatComponents.ModalChat)
 Handlebars.registerPartial('SearchAndListUsersModule', Modules.SearchAndListUsersModule)
 Handlebars.registerPartial('MessageModule', Modules.MessageModule)
+Handlebars.registerPartial('BackToChat', ProfileComponents.BackToChat)
+Handlebars.registerPartial('AvatarProfile', ProfileComponents.AvatarProfile)
+Handlebars.registerPartial('FieldInfoProfile', ProfileComponents.FieldInfoProfile)
 
 
 export default class App {
     constructor() {
+        this.appElement = document.getElementById("app")
+        this.chatModal = null
+        this.modalChatContainer
+        this.updateData = false
+        this.updatePass = false
+        this.saveButton = false
         this.state = {
-            currentPage: '/profile',
+            currentPage: '/login',
             chatLogMessages: [
                 {
                     id: 1,
@@ -137,11 +147,74 @@ export default class App {
                     classButton: "buttonAuth",
                     textButton: "Добавить",
                 }
-            }
+            },
+
+            fields: [
+                {
+                    id: 'emailProfile',
+                    nameField: 'Почта',
+                    value: 'pochta@yandex.ru',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+                {
+                    id: 'loginProfile',
+                    nameField: 'Логин',
+                    value: 'ivanivanov',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+                {
+                    id: 'usernameProfile',
+                    nameField: 'Имя',
+                    value: 'Иван',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+                {
+                    id: 'lastnameProfile',
+                    nameField: 'Фамилия',
+                    value: 'Иванов',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+                {
+                    id: 'chatName',
+                    nameField: 'Имя в чате',
+                    value: 'Иван',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+                {
+                    id: 'numberProfile',
+                    nameField: 'Телефон',
+                    value: '+7 (909) 967 30 30',
+                    typeInput: 'text',
+                    disabled: true,
+                },
+            ],
+            fieldsPass: [
+                {
+                    id: 'oldPass',
+                    nameField: 'Старый пароль',
+                    value: 'old password',
+                    typeInput: 'password',
+                },
+                {
+                    id: 'newPass',
+                    nameField: 'Новый пароль',
+                    value: 'new password',
+                    typeInput: 'password',
+                },
+                {
+                    id: 'newRePass',
+                    nameField: 'Повторите новый пароль',
+                    value: 'new password',
+                    typeInput: 'password',
+                },
+            ]
         }
-        this.appElement = document.getElementById("app")
-        this.chatModal = null
-        this.modalChatContainer
+
 
     }
 
@@ -316,9 +389,47 @@ export default class App {
         }
         if (this.state.currentPage === "/profile") {
             const template = Handlebars.compile(Pages.ProfilePage)
-            const context = {}
+            const context = {
+                avatarInfo: {
+                    icon: "/images/userIcon.svg",
+                    username: "Антоний",
+                },
+
+                buttons: [
+                    {
+                        idButton: 'updateData',
+                        typeButton: 'button',
+                        classButton: 'buttonLink',
+                        textButton: 'Изменить данные',
+                    },
+                    {
+                        idButton: 'updatePassword',
+                        typeButton: 'button',
+                        classButton: 'buttonLink',
+                        textButton: 'Изменить пароль',
+                    },
+                    {
+                        idButton: 'logout',
+                        typeButton: 'button',
+                        classButton: 'buttonLink colorRed',
+                        textButton: 'Выйти',
+                    },
+                ],
+                updateBtn: {
+                    idButton: 'saveDataBtn',
+                    typeButton: 'button',
+                    classButton: 'buttonAuth buttonProfileSave',
+                    textButton: 'Сохранить',
+                },
+
+            }
             this.appElement.innerHTML = template({
                 ...context,
+                fields: this.state.fields,
+                updateData: this.updateData,
+                updatePass: this.updatePass,
+                fieldsPass: this.state.fieldsPass,
+                saveButton: this.saveButton,
             })
         }
         this.attachEventListener();
@@ -351,8 +462,12 @@ export default class App {
             const openInputMenu = document.querySelector('.submitFormMessage__actions')
             const openModalAaddUser = document.querySelector('#addedUser')
             const openModalDeleteUser = document.querySelector('#deleteUser')
+            const goToProfileBtn = document.querySelector('#goToProfile')
 
-
+            goToProfileBtn.addEventListener('click', () => {
+                this.state.currentPage = '/profile'
+                this.render()
+            })
             actionHeaderMenu.addEventListener("click", () => {
                 openHeaderMenu.classList.toggle('activeMenu')
             })
@@ -409,6 +524,99 @@ export default class App {
             }
         }
 
+        if (this.state.currentPage === '/profile') {
+            const updateDataBtn = document.querySelector('#updateData')
+            const updatePassBtn = document.querySelector('#updatePassword')
+            const backToChatBtn = document.querySelector('#backToChat')
+            const logoutBtn = document.querySelector('#logout')
+
+            backToChatBtn.addEventListener('click', () => {
+                this.state.currentPage = '/chat'
+                this.render()
+            })
+            if (updateDataBtn && updatePassBtn) {
+
+                updateDataBtn.addEventListener('click', () => {
+                    this.state.fields = this.state.fields.map((item) => ({ ...item, disabled: false }))
+                    this.updateData = true
+                    this.updatePass = false
+                    this.saveButton = true
+                    this.render()
+                })
+                updatePassBtn.addEventListener('click', () => {
+                    this.updatePass = true
+                    this.updateData = false
+                    this.saveButton = true
+                    this.render()
+                })
+
+                logoutBtn.addEventListener('click', () => {
+                    this.state.currentPage = '/login'
+                    this.render()
+                })
+            }
+
+            if (this.updateData) {
+                const saveDataBtn = document.querySelector('#saveDataBtn')
+                const updateLogin = document.querySelector('#loginProfile')
+                const updateUsername = document.querySelector('#usernameProfile')
+                const updateLastname = document.querySelector('#lastnameProfile')
+                const updateChatName = document.querySelector('#chatName')
+                const updateNumber = document.querySelector('#numberProfile')
+                const updateEmail = document.querySelector('#emailProfile')
+
+                saveDataBtn.addEventListener('click', () => {
+                    this.state.fields = this.state.fields.map((item) => ({ ...item, disabled: true }))
+                    this.updateData = false
+                    this.updatePass = false
+                    this.saveButton = false
+                    this.render()
+                })
+
+                updateLogin.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+                updateUsername.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+                updateLastname.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+                updateChatName.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+                updateNumber.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+                updateEmail.addEventListener('change', (e) => {
+                    this.changeDataProfile(e.currentTarget.id, e.target.value)
+                })
+            }
+
+            if (this.updatePass) {
+                const saveDataBtn = document.querySelector('#saveDataBtn')
+                const oldPassInput = document.querySelector('#oldPass')
+                const newPassInput = document.querySelector('#newPass')
+                const RePassInput = document.querySelector('#newRePass')
+
+                saveDataBtn.addEventListener('click', () => {
+                    this.updateData = false
+                    this.updatePass = false
+                    this.saveButton = false
+                    this.render()
+                })
+                oldPassInput.addEventListener('change', (e) => {
+                    this.changeDataPass(e.currentTarget.id, e.target.value)
+                })
+                newPassInput.addEventListener('change', (e) => {
+                    this.changeDataPass(e.currentTarget.id, e.target.value)
+                })
+                RePassInput.addEventListener('change', (e) => {
+                    this.changeDataPass(e.currentTarget.id, e.target.value)
+                })
+            }
+        }
+
     }
     changePage(page) {
         this.state.currentPage = page;
@@ -433,4 +641,14 @@ export default class App {
         }
         this.attachEventListener()
     }
+
+    changeDataProfile(id, newValue) {
+        this.state.fields = this.state.fields.map((item) => id === item.id ? { ...item, value: newValue } : { ...item })
+        this.render()
+    }
+    changeDataPass(id, newValue) {
+        this.state.fieldsPass = this.state.fieldsPass.map((item) => id === item.id ? { ...item, value: newValue } : { ...item })
+        this.render()
+    }
+
 }
