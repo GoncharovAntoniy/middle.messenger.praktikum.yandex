@@ -1,387 +1,36 @@
 import Handlebars from 'handlebars';
 import * as Pages from './pages/index';
-import * as Components from './components/index'
 import * as ChatComponents from './pages/chat/components'
-import * as Modules from './pages/chat/modules'
 import * as ProfileComponents from './pages/profile/components/index'
+import { state } from './consts/consts';
+import { documentElements } from './consts/elements';
+import { registerPartial } from './helpers/registerPartial';
 
-Handlebars.registerPartial('Input', Components.Input)
-Handlebars.registerPartial('Button', Components.Button)
-Handlebars.registerPartial('EmptyChatLog', ChatComponents.EmptyChatLog)
-Handlebars.registerPartial('Avatar', ChatComponents.Avatar)
-Handlebars.registerPartial('HeaderSearch', ChatComponents.HeaderSearch)
-Handlebars.registerPartial('HeaderChat', ChatComponents.HeaderChat)
-Handlebars.registerPartial('SearchChatInput', ChatComponents.SearchChatInput)
-Handlebars.registerPartial('SubmitInput', ChatComponents.SubmitInput)
-Handlebars.registerPartial('ChatLog', ChatComponents.ChatLog)
-Handlebars.registerPartial('ModalChat', ChatComponents.ModalChat)
-Handlebars.registerPartial('SearchAndListUsersModule', Modules.SearchAndListUsersModule)
-Handlebars.registerPartial('MessageModule', Modules.MessageModule)
-Handlebars.registerPartial('BackToChat', ProfileComponents.BackToChat)
-Handlebars.registerPartial('AvatarProfile', ProfileComponents.AvatarProfile)
-Handlebars.registerPartial('FieldInfoProfile', ProfileComponents.FieldInfoProfile)
+registerPartial()
 
 
 export default class App {
     constructor() {
         this.appElement = document.getElementById("app")
-        this.chatModal = null
-        this.modalChatContainer
         this.updateData = false
         this.updatePass = false
         this.saveButton = false
-        this.state = {
-            currentPage: '/login',
-            chatLogMessages: [
-                {
-                    id: 1,
-                    message: 'bla bla bla',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 2,
-                    message: 'bla bla bla',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 3,
-                    message: 'bla bla bla',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 4,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 5,
-                    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 6,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 7,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 8,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 3,
-                    message: 'bla bla bla',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 4,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 5,
-                    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 6,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 7,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 0,
-                    time: '12:00',
-                    isImage: false,
-                },
-                {
-                    id: 8,
-                    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-                    role: 1,
-                    time: '12:00',
-                    isImage: false,
-                },
-            ],
-            emptyLog: false,
-            modalInfo: {
-                title: 'Добавьте пользователя',
-                infoInput: {
-                    inputId: "inputLoginAddUser",
-                    classInput: "input",
-                    typeInput: "text",
-                    placeholderInput: "Логин",
-                },
-                infoButton: {
-                    idButton: "buttonAddUser",
-                    typeButton: "button",
-                    classButton: "buttonAuth",
-                    textButton: "Добавить",
-                }
-            },
-
-            fields: [
-                {
-                    id: 'emailProfile',
-                    nameField: 'Почта',
-                    value: 'pochta@yandex.ru',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-                {
-                    id: 'loginProfile',
-                    nameField: 'Логин',
-                    value: 'ivanivanov',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-                {
-                    id: 'usernameProfile',
-                    nameField: 'Имя',
-                    value: 'Иван',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-                {
-                    id: 'lastnameProfile',
-                    nameField: 'Фамилия',
-                    value: 'Иванов',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-                {
-                    id: 'chatName',
-                    nameField: 'Имя в чате',
-                    value: 'Иван',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-                {
-                    id: 'numberProfile',
-                    nameField: 'Телефон',
-                    value: '+7 (909) 967 30 30',
-                    typeInput: 'text',
-                    disabled: true,
-                },
-            ],
-            fieldsPass: [
-                {
-                    id: 'oldPass',
-                    nameField: 'Старый пароль',
-                    value: 'old password',
-                    typeInput: 'password',
-                },
-                {
-                    id: 'newPass',
-                    nameField: 'Новый пароль',
-                    value: 'new password',
-                    typeInput: 'password',
-                },
-                {
-                    id: 'newRePass',
-                    nameField: 'Повторите новый пароль',
-                    value: 'new password',
-                    typeInput: 'password',
-                },
-            ]
-        }
-
-
+        this.state = state
     }
 
     render() {
         if (this.state.currentPage === "/login") {
             const template = Handlebars.compile(Pages.LoginPage)
-            const context = {
-                inputs: [
-                    {
-                        inputId: "inputText",
-                        classInput: 'input',
-                        typeInput: 'text',
-                        placeholderInput: 'Логин',
-                    },
-                    {
-                        inputId: "inputPassword",
-                        classInput: 'input',
-                        typeInput: 'password',
-                        placeholderInput: 'Пароль',
-                    },
-                ],
-                buttons: [
-                    {
-                        idButton: 'authBtn',
-                        typeButton: 'button',
-                        classButton: 'buttonAuth',
-                        textButton: 'Авторизоваться',
-                    },
-                    {
-                        idButton: 'linkBtn',
-                        typeButton: 'button',
-                        classButton: 'buttonLink',
-                        textButton: 'Нет аккаунта?',
-                    },
-                ]
-            }
-            this.appElement.innerHTML = template(context)
+            this.appElement.innerHTML = template(this.state.contextLogin)
         }
         if (this.state.currentPage === "/register") {
             const template = Handlebars.compile(Pages.RegisterPage)
-            const context = {
-                inputs: [
-                    {
-                        inputId: "email",
-                        classInput: 'input',
-                        typeInput: 'text',
-                        placeholderInput: 'Почта',
-                    },
-                    {
-                        inputId: "login",
-                        classInput: 'input',
-                        typeInput: 'text',
-                        placeholderInput: 'Логин',
-                    },
-                    {
-                        inputId: "firstname",
-                        classInput: 'input',
-                        typeInput: 'text',
-                        placeholderInput: 'имя',
-                    },
-                    {
-                        inputId: "lastname",
-                        classInput: 'input',
-                        typeInput: 'text',
-                        placeholderInput: 'Фамилия',
-                    },
-                    {
-                        inputId: "telephone",
-                        classInput: 'input',
-                        typeInput: 'number',
-                        placeholderInput: 'Телефон',
-                    },
-                    {
-                        inputId: "inputPassword",
-                        classInput: 'input',
-                        typeInput: 'password',
-                        placeholderInput: 'Пароль',
-                    },
-                    {
-                        inputId: "password",
-                        classInput: 'input',
-                        typeInput: 'password',
-                        placeholderInput: 'Пароль',
-                    },
-                    {
-                        inputId: "repassword",
-                        classInput: 'input',
-                        typeInput: 'password',
-                        placeholderInput: 'Пароль (ещё раз)',
-                    },
-                ],
-                buttons: [
-                    {
-                        idButton: 'registerBtn',
-                        typeButton: 'button',
-                        classButton: 'buttonAuth',
-                        textButton: 'Зарегистрироваться',
-                    },
-                    {
-                        idButton: 'loginBtn',
-                        typeButton: 'button',
-                        classButton: 'buttonLink',
-                        textButton: 'Войти',
-                    },
-                ]
-            }
-            this.appElement.innerHTML = template(context)
+            this.appElement.innerHTML = template(this.state.contextRegister)
         }
         if (this.state.currentPage === "/chat") {
             const template = Handlebars.compile(Pages.ChatPage)
-            const context = {
-                infoAvatar: [
-                    {
-                        username: 'Антоний',
-                        lastMessage: 'Привет',
-                        time: '12:12',
-                        notReadMessageCount: '',
-                    },
-                    {
-                        username: 'Ксюша',
-                        lastMessage: 'Я люблю потусить',
-                        time: '19:20',
-                        notReadMessageCount: '4',
-                    },
-                    {
-                        username: 'Тихон',
-                        lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
-                    },
-                    {
-                        username: 'Саша',
-                        lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
-                    },
-                    {
-                        username: 'Владимир',
-                        lastMessage: 'тестим аватар',
-                        time: '',
-                        notReadMessageCount: '',
-                    },
-                    {
-                        username: 'Владимир',
-                        lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
-                    },
-                    {
-                        username: 'Владимир',
-                        lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
-                    },
-                    {
-                        username: 'Владимир',
-                        lastMessage: 'тестим аватар',
-                        time: '19:20',
-                        notReadMessageCount: '3',
-                    },
-                ],
-                infoHeaderChat: {
-                    username: "username"
-                },
-            }
             this.appElement.innerHTML = template({
-                ...context,
+                ...this.state.contextChat,
                 emptyLog: this.state.emptyLog,
                 chatLogMessages: this.state.chatLogMessages,
                 modalInfo: this.state.modalInfo,
@@ -389,42 +38,8 @@ export default class App {
         }
         if (this.state.currentPage === "/profile") {
             const template = Handlebars.compile(Pages.ProfilePage)
-            const context = {
-                avatarInfo: {
-                    icon: "/images/userIcon.svg",
-                    username: "Антоний",
-                },
-
-                buttons: [
-                    {
-                        idButton: 'updateData',
-                        typeButton: 'button',
-                        classButton: 'buttonLink',
-                        textButton: 'Изменить данные',
-                    },
-                    {
-                        idButton: 'updatePassword',
-                        typeButton: 'button',
-                        classButton: 'buttonLink',
-                        textButton: 'Изменить пароль',
-                    },
-                    {
-                        idButton: 'logout',
-                        typeButton: 'button',
-                        classButton: 'buttonLink colorRed',
-                        textButton: 'Выйти',
-                    },
-                ],
-                updateBtn: {
-                    idButton: 'saveDataBtn',
-                    typeButton: 'button',
-                    classButton: 'buttonAuth buttonProfileSave',
-                    textButton: 'Сохранить',
-                },
-
-            }
             this.appElement.innerHTML = template({
-                ...context,
+                ...this.state.contextProfile,
                 fields: this.state.fields,
                 updateData: this.updateData,
                 updatePass: this.updatePass,
@@ -437,7 +52,7 @@ export default class App {
 
     attachEventListener() {
         if (this.state.currentPage === "/register") {
-            const redirectButton = document.querySelector('#loginBtn');
+            const { redirectButton } = documentElements()
             redirectButton.addEventListener('click', (e) => {
                 e.preventDefault()
                 this.changePage('/login')
@@ -456,28 +71,30 @@ export default class App {
             })
         }
         if (this.state.currentPage === '/chat') {
-            const actionHeaderMenu = document.querySelector('#headerActions')
-            const actionInputMenu = document.querySelector('#inputSubmitAction')
-            const openHeaderMenu = document.querySelector('.actionMenu')
-            const openInputMenu = document.querySelector('.submitFormMessage__actions')
-            const openModalAaddUser = document.querySelector('#addedUser')
-            const openModalDeleteUser = document.querySelector('#deleteUser')
-            const goToProfileBtn = document.querySelector('#goToProfile')
+            const { actionHeaderMenu,
+                actionInputMenu,
+                openHeaderMenu,
+                openInputMenu,
+                openModalAaddUser,
+                openModalDeleteUser,
+                goToProfileBtn,
+                chatModal,
+                modalChatContainer,
+            } = documentElements()
 
             goToProfileBtn.addEventListener('click', () => {
                 this.state.currentPage = '/profile'
                 this.render()
             })
             actionHeaderMenu.addEventListener("click", () => {
-                openHeaderMenu.classList.toggle('activeMenu')
+                openHeaderMenu.classList.toggle('active')
             })
             actionInputMenu.addEventListener("click", () => {
-                openInputMenu.classList.toggle('activeMenu')
+                openInputMenu.classList.toggle('active')
             })
             if (actionInputMenu) {
-                const inputMediaValue = document.querySelector('#input_media')
+                const { inputMediaValue } = documentElements()
                 inputMediaValue.addEventListener('change', (e) => {
-                    console.log(e.target.files[0])
                     const mediaUrl = URL.createObjectURL(e.target.files[0])
                     this.state.chatLogMessages.push({
                         id: this.state.chatLogMessages.length,
@@ -513,27 +130,63 @@ export default class App {
                 this.updateStateModal(newValue)
 
             })
-            if (this.chatModal) {
-                this.chatModal.addEventListener('click', () => {
-                    this.chatModal.remove()
+            if (chatModal) {
+                chatModal.addEventListener('click', () => {
+                    chatModal.remove()
                     this.render()
                 })
-                this.modalChatContainer.addEventListener('click', (e) => {
+                modalChatContainer.addEventListener('click', (e) => {
                     e.stopPropagation()
                 })
             }
         }
 
         if (this.state.currentPage === '/profile') {
-            const updateDataBtn = document.querySelector('#updateData')
-            const updatePassBtn = document.querySelector('#updatePassword')
-            const backToChatBtn = document.querySelector('#backToChat')
-            const logoutBtn = document.querySelector('#logout')
+            const {
+                updateDataBtn,
+                updatePassBtn,
+                backToChatBtn,
+                logoutBtn,
+                modalProfile,
+                modalProfileContainer,
+                iconProfile,
+                inputAddFoto,
+                buttonUpdateFoto,
+            } = documentElements()
+
 
             backToChatBtn.addEventListener('click', () => {
                 this.state.currentPage = '/chat'
                 this.render()
             })
+
+            iconProfile.addEventListener('click', () => {
+
+                this.updateStateModalProfile(this.state.modalProfileInfo, false)
+            })
+            if (modalProfile) {
+
+                modalProfile.addEventListener('click', () => {
+                    modalProfile.remove()
+                    this.render()
+                })
+                modalProfileContainer.addEventListener('click', (e) => {
+                    e.stopPropagation()
+                })
+                inputAddFoto.addEventListener('change', (e) => {
+                    const mediaUrl = URL.createObjectURL(e.target.files[0])
+                    this.updateStateModalProfile({ ...this.state.modalProfileInfo, infoInput: { ...this.state.modalProfileInfo.infoInput, value: mediaUrl } }, true)
+
+                })
+                buttonUpdateFoto.addEventListener('click', () => {
+                    const baseClass = 'profile__infoUser_avatar-container_icon'
+                    this.state.contextProfile.avatarInfo.classAvatar = `${baseClass} iconAvatar`
+                    this.state.contextProfile.avatarInfo.avatar = this.state.modalProfileInfo.infoInput.value
+                    this.state.modalProfileInfo.infoInput.value = ''
+                    this.render()
+                })
+            }
+
             if (updateDataBtn && updatePassBtn) {
 
                 updateDataBtn.addEventListener('click', () => {
@@ -557,13 +210,13 @@ export default class App {
             }
 
             if (this.updateData) {
-                const saveDataBtn = document.querySelector('#saveDataBtn')
-                const updateLogin = document.querySelector('#loginProfile')
-                const updateUsername = document.querySelector('#usernameProfile')
-                const updateLastname = document.querySelector('#lastnameProfile')
-                const updateChatName = document.querySelector('#chatName')
-                const updateNumber = document.querySelector('#numberProfile')
-                const updateEmail = document.querySelector('#emailProfile')
+                const { saveDataBtn,
+                    updateLogin,
+                    updateUsername,
+                    updateLastname,
+                    updateChatName,
+                    updateNumber,
+                    updateEmail } = documentElements()
 
                 saveDataBtn.addEventListener('click', () => {
                     this.state.fields = this.state.fields.map((item) => ({ ...item, disabled: true }))
@@ -594,10 +247,7 @@ export default class App {
             }
 
             if (this.updatePass) {
-                const saveDataBtn = document.querySelector('#saveDataBtn')
-                const oldPassInput = document.querySelector('#oldPass')
-                const newPassInput = document.querySelector('#newPass')
-                const RePassInput = document.querySelector('#newRePass')
+                const { saveDataBtn, oldPassInput, newPassInput, RePassInput } = documentElements()
 
                 saveDataBtn.addEventListener('click', () => {
                     this.updateData = false
@@ -625,7 +275,7 @@ export default class App {
 
     updateStateModal(newModalInfo) {
         this.state = { ...this.state, modalInfo: { ...this.state.modalInfo, ...newModalInfo } }
-        const chatContainer = document.querySelector('.chatContainer')
+        const { chatContainer } = documentElements()
         const template = Handlebars.compile(ChatComponents.ModalChat)
         const html = template(this.state.modalInfo);
 
@@ -636,8 +286,27 @@ export default class App {
 
         if (chatContainer && modalElement) {
             chatContainer.appendChild(modalElement);
-            this.chatModal = document.querySelector('.modalChat')
-            this.modalChatContainer = document.querySelector('.modalChat__container')
+        }
+        this.attachEventListener()
+    }
+    updateStateModalProfile(newModalInfo, update) {
+        this.state = { ...this.state, modalProfileInfo: { ...this.state.modalProfileInfo, ...newModalInfo } }
+        const { profile, modalProfile } = documentElements()
+        const template = Handlebars.compile(ProfileComponents.ModalUpdateIconProfile)
+        const html = template(this.state.modalProfileInfo);
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+
+        const modalElement = tempDiv.firstElementChild;
+
+        if (profile && modalElement) {
+            if (update) {
+                modalProfile.innerHTML = template(this.state.modalProfileInfo)
+            } else {
+
+                profile.appendChild(modalElement);
+            }
         }
         this.attachEventListener()
     }
