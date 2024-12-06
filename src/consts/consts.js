@@ -384,7 +384,7 @@ const modalProfileInfo = {
 }
 
 export const state = {
-    currentPage: '/profile',
+    currentPage: '/login',
     chatLogMessages: chatLogMessages,
     emptyLog: false,
     modalInfo: modalInfo,
