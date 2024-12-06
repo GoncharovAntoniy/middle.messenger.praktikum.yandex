@@ -47,6 +47,10 @@ export default class App {
                 saveButton: this.saveButton,
             })
         }
+        if (this.state.currentPage === '/errorPage') {
+            const template = Handlebars.compile(Pages.ErrorPage)
+            this.appElement.innerHTML = template(this.state.errorPageContext)
+        }
         this.attachEventListener();
     }
 
@@ -80,8 +84,14 @@ export default class App {
                 goToProfileBtn,
                 chatModal,
                 modalChatContainer,
+                userElementListChat,
             } = documentElements()
 
+            userElementListChat.forEach((item) => {
+                item.addEventListener('click', () => {
+                    this.changePage('/errorPage')
+                })
+            })
             goToProfileBtn.addEventListener('click', () => {
                 this.state.currentPage = '/profile'
                 this.render()
@@ -265,6 +275,13 @@ export default class App {
                     this.changeDataPass(e.currentTarget.id, e.target.value)
                 })
             }
+        }
+
+        if (this.state.currentPage === "/errorPage") {
+            const { backToChat } = documentElements()
+            backToChat.addEventListener('click', () => {
+                this.changePage('/chat')
+            })
         }
 
     }
