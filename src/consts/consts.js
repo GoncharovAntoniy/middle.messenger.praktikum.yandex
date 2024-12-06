@@ -98,6 +98,7 @@ const chatLogMessages = [
         isImage: false,
     },
 ]
+
 const modalInfo = {
     title: 'Добавьте пользователя',
     infoInput: {
@@ -158,6 +159,7 @@ const fields = [
         disabled: true,
     },
 ]
+
 const fieldsPass = [
     {
         id: 'oldPass',
@@ -178,6 +180,7 @@ const fieldsPass = [
         typeInput: 'password',
     },
 ]
+
 const contextLogin = {
     inputs: [
         {
@@ -208,6 +211,7 @@ const contextLogin = {
         },
     ]
 }
+
 const contextRegister = {
     inputs: [
         {
@@ -366,6 +370,7 @@ const contextProfile = {
     },
 
 }
+
 const modalProfileInfo = {
     title: 'Загрузите файл',
     infoInput: {
@@ -383,6 +388,17 @@ const modalProfileInfo = {
     }
 }
 
+const errorPageContext = {
+    errorCode: '404',
+    errorDescription: 'Не туда попали',
+    backToChatBtn: {
+        idButton: 'backToChat',
+        typeButton: 'button',
+        classButton: 'buttonLink backToChat',
+        textButton: 'Назад к чатам',
+    }
+}
+
 export const state = {
     currentPage: '/login',
     chatLogMessages: chatLogMessages,
@@ -395,4 +411,5 @@ export const state = {
     contextRegister: contextRegister,
     contextChat: contextChat,
     contextProfile: contextProfile,
+    errorPageContext: errorPageContext,
 }

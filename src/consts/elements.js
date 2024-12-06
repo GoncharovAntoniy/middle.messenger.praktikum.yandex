@@ -1,6 +1,7 @@
 export const documentElements = () => {
     return {
         redirectButton: document.querySelector('#loginBtn'),
+        registerBtn: document.querySelector('#registerBtn'),
         actionHeaderMenu: document.querySelector('#headerActions'),
         actionInputMenu: document.querySelector('#inputSubmitAction'),
         openHeaderMenu: document.querySelector('.actionMenu'),
@@ -18,6 +19,7 @@ export const documentElements = () => {
         updateUsername: document.querySelector('#usernameProfile'),
         updateLastname: document.querySelector('#lastnameProfile'),
         updateChatName: document.querySelector('#chatName'),
+        userElementListChat: document.querySelectorAll('.avatar'),
         updateNumber: document.querySelector('#numberProfile'),
         updateEmail: document.querySelector('#emailProfile'),
         saveDataBtn: document.querySelector('#saveDataBtn'),
@@ -33,5 +35,6 @@ export const documentElements = () => {
         modalChatContainer: document.querySelector('.modalChat__container'),
         inputAddFoto: document.querySelector('#addFoto'),
         buttonUpdateFoto: document.querySelector('#buttonUpdateFoto'),
+        backToChat: document.querySelector('#backToChat'),
     }
 };
