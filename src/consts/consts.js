@@ -102,6 +102,7 @@ const chatLogMessages = [
 const modalInfo = {
     title: 'Добавьте пользователя',
     infoInput: {
+        name: 'login',
         inputId: "inputLoginAddUser",
         classInput: "input",
         typeInput: "text",
@@ -117,6 +118,7 @@ const modalInfo = {
 
 const fields = [
     {
+        name: 'email',
         id: 'emailProfile',
         nameField: 'Почта',
         value: 'pochta@yandex.ru',
@@ -124,6 +126,7 @@ const fields = [
         disabled: true,
     },
     {
+        name: 'login',
         id: 'loginProfile',
         nameField: 'Логин',
         value: 'ivanivanov',
@@ -131,6 +134,7 @@ const fields = [
         disabled: true,
     },
     {
+        name: 'first_name',
         id: 'usernameProfile',
         nameField: 'Имя',
         value: 'Иван',
@@ -138,6 +142,7 @@ const fields = [
         disabled: true,
     },
     {
+        name: 'second_name',
         id: 'lastnameProfile',
         nameField: 'Фамилия',
         value: 'Иванов',
@@ -145,6 +150,7 @@ const fields = [
         disabled: true,
     },
     {
+        name:'display_name',
         id: 'chatName',
         nameField: 'Имя в чате',
         value: 'Иван',
@@ -152,6 +158,7 @@ const fields = [
         disabled: true,
     },
     {
+        name: 'phone',
         id: 'numberProfile',
         nameField: 'Телефон',
         value: '+7 (909) 967 30 30',
@@ -162,18 +169,21 @@ const fields = [
 
 const fieldsPass = [
     {
+        name: 'oldPassword',
         id: 'oldPass',
         nameField: 'Старый пароль',
         value: 'old password',
         typeInput: 'password',
     },
     {
+        name:'newPassword',
         id: 'newPass',
         nameField: 'Новый пароль',
         value: 'new password',
         typeInput: 'password',
     },
     {
+        name:'newPassword',
         id: 'newRePass',
         nameField: 'Повторите новый пароль',
         value: 'new password',
@@ -184,12 +194,14 @@ const fieldsPass = [
 const contextLogin = {
     inputs: [
         {
+            name:'login',
             inputId: "inputText",
             classInput: 'input',
             typeInput: 'text',
             placeholderInput: 'Логин',
         },
         {
+            name: 'password',
             inputId: "inputPassword",
             classInput: 'input',
             typeInput: 'password',
@@ -215,48 +227,49 @@ const contextLogin = {
 const contextRegister = {
     inputs: [
         {
+            name: 'email',
             inputId: "email",
             classInput: 'input',
             typeInput: 'text',
             placeholderInput: 'Почта',
         },
         {
+            name: 'login',
             inputId: "login",
             classInput: 'input',
             typeInput: 'text',
             placeholderInput: 'Логин',
         },
         {
+            name:'first_name',
             inputId: "firstname",
             classInput: 'input',
             typeInput: 'text',
             placeholderInput: 'имя',
         },
         {
+            name: 'second_name',
             inputId: "lastname",
             classInput: 'input',
             typeInput: 'text',
             placeholderInput: 'Фамилия',
         },
         {
+            name: 'phone',
             inputId: "telephone",
             classInput: 'input',
             typeInput: 'number',
             placeholderInput: 'Телефон',
         },
         {
+            name: 'password',
             inputId: "inputPassword",
             classInput: 'input',
             typeInput: 'password',
             placeholderInput: 'Пароль',
         },
         {
-            inputId: "password",
-            classInput: 'input',
-            typeInput: 'password',
-            placeholderInput: 'Пароль',
-        },
-        {
+            name: 'password',
             inputId: "repassword",
             classInput: 'input',
             typeInput: 'password',
@@ -333,6 +346,11 @@ const contextChat = {
     infoHeaderChat: {
         username: "username"
     },
+    infoSubmitInput: {
+        name: 'message',
+        id: 'submitInput',
+        type: 'text',
+    }
 }
 
 const contextProfile = {
@@ -400,7 +418,7 @@ const errorPageContext = {
 }
 
 export const state = {
-    currentPage: '/login',
+    currentPage: '/chat',
     chatLogMessages: chatLogMessages,
     emptyLog: false,
     modalInfo: modalInfo,
