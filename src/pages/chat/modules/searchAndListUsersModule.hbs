@@ -1,0 +1,14 @@
+<div>
+    {{> HeaderSearch }}
+    <div class="listUsers">
+
+    {{#each infoAvatar}}
+        {{> Avatar 
+                username=username 
+                lastMessage=lastMessage 
+                time=time 
+                notReadMessageCount=notReadMessageCount
+        }}
+    {{/each}}
+    </div>
+</div>

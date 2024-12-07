@@ -1,0 +1,17 @@
+<div class="inputContainer">
+    <label class="labelInputModalProfile" for="{{inputId}}">
+        <input
+            name=""{{name}}
+            id="{{inputId}}"
+            class="{{classInput}}"
+            type="{{typeInput}}"
+            value="{{value}}"
+            required
+        />
+        {{#if value}}
+            <img class="fotoUser" src="{{value}}" alt="icon">
+        {{else}}
+            {{placeholderInput}}
+        {{/if}}
+  </label>
+</div>
