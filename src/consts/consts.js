@@ -418,7 +418,7 @@ const errorPageContext = {
 }
 
 export const state = {
-    currentPage: '/chat',
+    currentPage: '/login',
     chatLogMessages: chatLogMessages,
     emptyLog: false,
     modalInfo: modalInfo,
