@@ -1,0 +1,56 @@
+<main class="profile">
+  <div class="profile__backToChat">
+    {{> BackToChat }}
+  </div>
+  <section class="profile__infoUser">
+    <div class="profile__infoUser_container">
+        {{> AvatarProfile avatarInfo=avatarInfo icon=icon}}
+        <div class="profile__infoUser_container_fields">
+            {{#if updatePass}}
+                {{#each fieldsPass}}
+                    {{> FieldInfoProfile 
+                            id=id
+                            nameField=nameField 
+                            value=value
+                            typeInput=typeInput
+                    }}
+                {{/each}}
+            {{else}}
+                {{#each fields}}
+                    {{> FieldInfoProfile 
+                            nameField=nameField 
+                            value=value
+                            typeInput=typeInput
+                            disabled=disabled
+                    }}
+                {{/each}}
+            {{/if}}
+        </div>
+        <div class="profile__infoUser_container_update">
+            {{#if saveButton}}
+            <div class="profile__infoUser_container_update-saveBtnContainer">
+
+                {{> Button  
+                        idButton=updateBtn.idButton
+                        typeButton=updateBtn.typeButton
+                        classButton=updateBtn.classButton
+                        textButton=updateBtn.textButton
+                }}
+                    
+            </div>
+            {{else}}
+                {{#each buttons}}
+                    <div class="profile__infoUser_container_update-btnContainer">
+                        {{>Button 
+                            idButton=idButton
+                            typeButton=typeButton
+                            classButton=classButton
+                            textButton=textButton
+                        }}
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+  </section>
+</main>
