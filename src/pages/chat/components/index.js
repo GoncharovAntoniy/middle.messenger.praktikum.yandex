@@ -1,8 +1,0 @@
-export { default as EmptyChatLog } from './emptyChatLog.hbs?raw'
-export { default as HeaderSearch } from './headerSearch.hbs?raw'
-export { default as HeaderChat } from './headerChat.hbs?raw'
-export { default as Avatar } from './avatar.hbs?raw'
-export { default as SearchChatInput } from './searchChatInput.hbs?raw'
-export { default as SubmitInput } from './submitInput.hbs?raw'
-export { default as ChatLog } from './chatLog.hbs?raw'
-export { default as ModalChat } from './modalChat.hbs?raw'
