@@ -95,9 +95,11 @@ export default class Block {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected componentDidUpdate(
-    oldProps: BlockProps,
-    newProps: BlockProps,
+    oldProps?: BlockProps,
+    newProps?: BlockProps,
   ): boolean {
+    console.log(oldProps)
+    console.log(newProps)
     return true;
   }
 
