@@ -1,46 +1,41 @@
 function isLength(value) {
-  return (
-    typeof value === "number" &&
-    value > -1 &&
-    value % 1 === 0 &&
-    value <= Number.MAX_SAFE_INTEGER
-  );
+  return typeof value === "number" && value > -1 && value % 1 === 0 && value <= Number.MAX_SAFE_INTEGER
 }
 
 function isNil(value) {
-  return value === null || value === undefined;
+  return value === null || value === undefined
 }
 
 function isArrayLike(value) {
-  return !isNil(value) && typeof value !== "function" && isLength(value.length);
+  return !isNil(value) && typeof value !== "function" && isLength(value.length)
 }
 
 function isObjectLike(value) {
-  return typeof value === "object" && value !== null;
+  return typeof value === "object" && value !== null
 }
 
 function getTag(value) {
   if (value === null) {
-    return value === undefined ? "[object Undefined]" : "[object Null]";
+    return value === undefined ? "[object Undefined]" : "[object Null]"
   }
-  return toString.call(value);
+  return toString.call(value)
 }
 
-const objectProto = Object.prototype;
+const objectProto = Object.prototype
 function isPrototype(value) {
-  const ctor = value && value.constructor;
-  const proto = (typeof ctor === "function" && ctor.prototype) || objectProto;
+  const ctor = value && value.constructor
+  const proto = (typeof ctor === "function" && ctor.prototype) || objectProto
 
-  return value === proto;
+  return value === proto
 }
 
 function isArguments(value) {
-  return isObjectLike(value) && getTag(value) === "[object Arguments]";
+  return isObjectLike(value) && getTag(value) === "[object Arguments]"
 }
 
 export function isEmpty(value) {
   if (value === null) {
-    return true;
+    return true
   }
 
   if (
@@ -52,23 +47,23 @@ export function isEmpty(value) {
       // isTypedArray(value) ||
       isArguments(value))
   ) {
-    return !value.length;
+    return !value.length
   }
 
-  const tag = getTag(value);
+  const tag = getTag(value)
   if (tag === "[object Map]" || tag === "[object Set]") {
-    return !value.size;
+    return !value.size
   }
 
   if (isPrototype(value)) {
-    return !Object.keys(value).length;
+    return !Object.keys(value).length
   }
 
   for (const key in value) {
     if (hasOwnProperty.call(value, key)) {
-      return false;
+      return false
     }
   }
 
-  return true;
+  return true
 }
