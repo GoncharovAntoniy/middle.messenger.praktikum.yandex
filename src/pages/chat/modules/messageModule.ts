@@ -59,5 +59,3 @@ export class MessageModule extends Block {
         </div>`
     }
 }
-
-

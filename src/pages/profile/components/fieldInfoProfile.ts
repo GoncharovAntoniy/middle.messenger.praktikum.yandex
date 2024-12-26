@@ -35,5 +35,3 @@ export class FieldInfoProfile extends Block {
             </div>`
   }
 }
-
-

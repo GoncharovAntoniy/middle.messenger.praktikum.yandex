@@ -18,5 +18,3 @@ export class AvatarProfile extends Block {
             </div>`
   }
 }
-
-

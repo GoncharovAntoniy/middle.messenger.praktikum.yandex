@@ -37,4 +37,3 @@ export class HeaderChat extends Block {
                 `
     }
 }
-

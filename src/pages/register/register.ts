@@ -79,4 +79,3 @@ export class Register extends Block {
         `
     }
 }
-

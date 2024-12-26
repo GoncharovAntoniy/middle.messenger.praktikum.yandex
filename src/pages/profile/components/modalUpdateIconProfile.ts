@@ -33,4 +33,3 @@ export class ModalProfile extends Block {
                 `
     }
 }
-

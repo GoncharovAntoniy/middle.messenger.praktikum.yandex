@@ -53,5 +53,3 @@ export class ModalChat extends Block {
                 `
     }
 }
-
-

@@ -15,4 +15,3 @@ export class EmptyChatlog extends Block {
           `
   }
 }
-

@@ -33,5 +33,3 @@ export class InputModal extends Block {
                 `
     }
 }
-
-

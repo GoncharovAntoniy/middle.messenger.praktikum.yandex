@@ -38,5 +38,3 @@ export class SearchAndListUsersModule extends Block {
                 </div>`
     }
 }
-
-
