@@ -1,39 +1,35 @@
 import App from "../../../App.ts";
 import { state } from "../../../consts/consts";
 import Block from "../../../framework/Block";
+import { TContextChat, TInfoAvatar } from "../../../types/index.ts";
 import { Avatar } from "../components/avatar";
 import { HeaderSearch } from "../components/headerSearch";
 
-type TAvatar = {
-    username: string,
-    time: string,
-    notReadMessageCount: string,
-    lastMessage: string,
+interface TProps {
+    props: {
+        contextChat: TContextChat;
+    };
 }
 
 export class SearchAndListUsersModule extends Block {
-    constructor(props: any) {
+    constructor(props: TProps) {
         super({
             ...props,
             HeaderSearch: new HeaderSearch({
-                onClick: (e) => this.redirectProfile(e)
+                onClick: (e: Event) => this.redirectProfile(e)
             }),
-            Avatars: props.props.contextChat.infoAvatar.map((item:TAvatar) => new Avatar({
-                username: item.username, 
-                time: item.time, 
-                notReadMessageCount: item.notReadMessageCount, 
-                lastMessage: item.lastMessage,
-                
-            }))
+            Avatars: props.props.contextChat.infoAvatar.map((item: TInfoAvatar) => new Avatar(item))
         })
     }
-    redirectProfile(e) {
+    redirectProfile(e: Event) {
         e.preventDefault()
-        state.currentPage = '/profile'
-        const app = new App()
-        app.render()
+        if ((e.target as HTMLInputElement).id === "goToProfile") {
+            state.currentPage = '/profile'
+            const app = new App()
+            app.render()
+        }
     }
-    override render() {
+    render() {
         return `<div>
                     {{{ HeaderSearch }}}
                     <div class="listUsers">

@@ -1,13 +1,10 @@
 import Block from "../../../framework/Block";
+import { TChatLogMessages } from "../../../types";
 
 export class Message extends Block {
-    constructor(props: any) {
+    constructor(props: TChatLogMessages) {
         super({
             ...props,
-            isImage: props.isImage,
-            role: props.role,
-            message: props.message,
-            time: props.time
         })
     }
 

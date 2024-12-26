@@ -1,4 +1,4 @@
-@use "../../../styles/consts" as *;
+@use '../../../styles/consts' as *;
 
 .chatContainer {
   position: relative;
@@ -14,10 +14,14 @@
     padding: 10px;
   }
 
+  &__rightSection::-webkit-scrollbar {
+    display: none;
+  }
   &__rightSection {
     flex: 0 1 80%;
     height: 100%;
-    padding: 10px 20px;
+    padding: 0 20px;
+    overflow: scroll;
   }
 }
 
@@ -92,7 +96,7 @@
 }
 
 .searchInput:focus + #searchInputLabel,
-.searchInput[data-has-value="true"] + #searchInputLabel {
+.searchInput[data-has-value='true'] + #searchInputLabel {
   top: 0;
   left: 0;
   font-size: 9px;
@@ -108,7 +112,9 @@
 
 .avatar:hover {
   background-color: #f8f8f8;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .listUsers {
@@ -185,12 +191,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow: scroll;
   box-sizing: border-box;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &__header {
     position: fixed;
@@ -257,13 +258,14 @@
   }
 }
 
-
 .actionMenu {
   display: none;
   position: absolute;
   right: 0;
   top: 80px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.1);
 
   border-radius: 20px;
   background-color: white;
@@ -304,9 +306,6 @@
   }
 }
 
-.chatLog::-webkit-scrollbar {
-  display: none;
-}
 .chatLog {
   position: sticky;
   display: flex;
@@ -315,7 +314,6 @@
   height: 100%;
   justify-content: flex-end;
   padding: 10px 8px;
-  overflow: scroll;
   box-sizing: border-box;
 
   &__myMessage {
@@ -323,7 +321,6 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 8px;
-    
 
     &_message {
       width: fit-content;
@@ -343,7 +340,9 @@
     &_media {
       max-width: 400px;
       padding: 11px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.1);
       border: $border-gray-color;
       border-radius: 12px;
       & > img {
@@ -423,7 +422,9 @@
     background-color: white;
     left: 0;
     bottom: 70px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 0 6px rgba(0, 0, 0, 0.05),
+      0 1px 3px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     width: 162px;
     display: none;
@@ -440,13 +441,14 @@
       padding: 8px 16px;
       font-size: 12px;
 
-
       &:hover {
         background-color: #f8f8f8;
         border-radius: 12px;
       }
 
-      &-media, &-file, &-location {
+      &-media,
+      &-file,
+      &-location {
         display: none;
       }
     }
@@ -459,7 +461,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 66666;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 
@@ -484,5 +486,5 @@
 }
 
 .active {
-  display: flex ;
+  display: flex;
 }

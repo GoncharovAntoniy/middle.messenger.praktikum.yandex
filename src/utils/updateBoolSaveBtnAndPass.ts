@@ -1,6 +1,9 @@
 import { FieldInfoProfile } from "../pages/profile/components/fieldInfoProfile"
+import { TField } from "../types"
+import { changeInputsProfile } from "./changeInputsProfile"
+import { validationFormInput } from "./validationFormInput"
 
-export const updateBoolSaveBtnAndPass = (currentThis, value) => {
+export const updateBoolSaveBtnAndPass = (currentThis: any, value: boolean) => {
     currentThis.setProps({
         ...currentThis.props, props: {
             ...currentThis.props.props, contextProfile: {
@@ -9,22 +12,26 @@ export const updateBoolSaveBtnAndPass = (currentThis, value) => {
         }
     })
 
-    const FieldsInfoProfile = value ? currentThis.props.props.fieldsPass.map((item) => (
+    const FieldsInfoProfile = value ? currentThis.props.props.fieldsPass.map((item: TField) => (
         new FieldInfoProfile({
-            id: item.id,
-            name: item.name,
-            nameField: item.nameField,
-            typeInput: item.typeInput,
-            value: item.value
-        })
-    )) : currentThis.props.props.fields.map((item) => (
-        new FieldInfoProfile({
-            id: item.id,
+            idInput: item.idInput,
             name: item.name,
             nameField: item.nameField,
             typeInput: item.typeInput,
             value: item.value,
-            disabled: item.disabled
+            onChange: (e, thisCur) => changeInputsProfile(e, thisCur),
+            onBlur: (e, thisCur) => validationFormInput(e, thisCur)
+        })
+    )) : currentThis.props.props.fields.map((item: TField) => (
+        new FieldInfoProfile({
+            idInput: item.idInput,
+            name: item.name,
+            nameField: item.nameField,
+            typeInput: item.typeInput,
+            value: item.value,
+            disabled: item.disabled,
+            onChange: (e, thisCur) => changeInputsProfile(e, thisCur),
+            onBlur: (e, thisCur) => validationFormInput(e, thisCur)
         })
     ))
     currentThis.setLists({ FieldsInfoProfile })

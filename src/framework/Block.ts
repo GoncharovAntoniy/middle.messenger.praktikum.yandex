@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable prettier/prettier */
 import EventBus, { EventCallback } from "./EventBus";
 import * as Handlebars from "handlebars";
 
@@ -89,17 +87,15 @@ export default class Block {
     if (!response) {
       return;
     }
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected componentDidUpdate(
     oldProps?: BlockProps,
     newProps?: BlockProps,
   ): boolean {
-    console.log(oldProps)
-    console.log(newProps)
+    console.log('oldProps', oldProps);
+    console.log('newProps', newProps);
     return true;
   }
 
@@ -118,7 +114,6 @@ export default class Block {
       } else if (Array.isArray(value)) {
         lists[key] = value;
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         props[key] = value;
       }
     });
@@ -152,6 +147,10 @@ export default class Block {
     Object.assign(this.props, nextProps);
   };
 
+  public getProps() {
+    return this.props;
+  }
+
   public setLists = (nextList: Record<string, any[]>): void => {
     if (!nextList) {
       return;
@@ -160,12 +159,25 @@ export default class Block {
     Object.assign(this.lists, nextList);
   };
 
-  public removeLists = (nameList) => {
-    this.lists = Object.fromEntries(Object.entries(this.lists).filter((item) => item[0] !== nameList))
-  }
-  public removeChildren = (nameChild) => {
-    this.children = Object.fromEntries(Object.entries(this.children).filter((item) => item[0] !== nameChild))
-  }
+  public setChild = (nextChild: Record<string, any>): void => {
+    if (!nextChild) {
+      return;
+    }
+
+    Object.assign(this.children, nextChild);
+  };
+
+  public removeLists = (nameList: any) => {
+    this.lists = Object.fromEntries(
+      Object.entries(this.lists).filter(item => item[0] !== nameList),
+    );
+  };
+
+  public removeChildren = (nameChild: any) => {
+    this.children = Object.fromEntries(
+      Object.entries(this.children).filter(item => item[0] !== nameChild),
+    );
+  };
 
   get element(): HTMLElement | null {
     return this._element;
@@ -228,7 +240,6 @@ export default class Block {
   }
 
   private _makePropsProxy(props: any): any {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     return new Proxy(props, {
@@ -255,7 +266,8 @@ export default class Block {
   public show(): void {
     const content = this.getContent();
     if (content) {
-      content.style.display = "block";
+      content.style.display = "flex";
+      this._render();
     }
   }
 

@@ -1,10 +1,15 @@
 import Block from "../../../framework/Block";
+import { TButton } from "../../../types";
+
+interface TProps extends TButton {
+  onClick: (e: Event) => void
+}
 
 export class BackToChat extends Block {
-  constructor(props) {
+  constructor(props: TProps) {
     super({...props,
       events: {
-        click: (e) => props.onClick(e)
+        click: (e: Event) => props.onClick(e)
       }
     })
   }

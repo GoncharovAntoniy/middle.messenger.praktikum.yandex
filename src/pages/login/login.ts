@@ -1,48 +1,63 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import App from "../../App.ts";
-import { Button } from "../../components/button";
-import { Input } from "../../components/input";
-import { state } from "../../consts/consts";
-import Block from "../../framework/Block";
+import App from '../../App.ts';
+import { Button } from '../../components/button';
+import { Input } from '../../components/input';
+import { state } from '../../consts/consts';
+import Block from '../../framework/Block';
+import { TButton, TInput } from '../../types/index.ts';
+import { validationFormInput } from '../../utils/validationFormInput.ts';
 
 
+interface TProps {
+  props: {
+    buttons: TButton[];
+    inputs: TInput[];
+  }
+}
 
 export class Login extends Block {
-  constructor(props: any) {
+  dictInputsValue: Record<string, string | number> = {};
+  constructor(props: TProps) {
     super({
       ...props,
-      Inputs: props.props.inputs.map((item: any) => new Input({
-        name: item.name,
-        inputId: item.inputId,
-        classInput: item.classInput,
-        typeInput: item.typeInput,
-        placeholderInput: item.placeholderInput,
-      })),
-      Buttons: props.props.buttons.map((item: any) => new Button({
-        classButton: item.classButton,
-        idButton: item.idButton,
-        textButton: item.textButton,
-        typeButton: item.typeButton,
-        onClick: (e) => this.changeClickButtons(e)
-      }))
+      Inputs: props.props.inputs.map(
+        (item: TInput) =>
+          new Input({
+            ...item,
+            onChange: (e, currentThis) => this.changeInputValue(e, currentThis),
+            onBlur: (e, currentThis) => validationFormInput(e, currentThis),
+          }),
+      ),
+      Buttons: props.props.buttons.map(
+        (item: TButton) =>
+          new Button({
+            ...item,
+            onClick: e => this.changeClickButtons(e),
+          }),
+      ),
     });
   }
 
-  changeClickButtons(e) {
-    e.preventDefault()
-    console.log(e.currentTarget)
-    const app = new App()
-    if (e.currentTarget.id === "authBtn") {
-        state.currentPage = "/chat"
+  changeClickButtons(e: Event) {
+    e.preventDefault();
+    // console.log(e.currentTarget)
+    const app = new App();
+    if ((e.currentTarget as HTMLElement).id === 'authBtn') {
+      state.currentPage = '/chat';
     }
-    if (e.currentTarget.id === "linkBtn") {
-      state.currentPage = "/register"
+    if ((e.currentTarget as HTMLElement).id === 'linkBtn') {
+      state.currentPage = '/register';
     }
-    app.render()
+    app.render();
   }
 
-  override render() {
+  changeInputValue(e: Event, currentThis: any) {
+    const { name, value } = (e.target as HTMLInputElement);
+    this.dictInputsValue[name] = value;
+    currentThis.setProps({ value })
+    console.log(this.dictInputsValue);
+  }
+
+  render() {
     return `
         <div id="app">
             <main>

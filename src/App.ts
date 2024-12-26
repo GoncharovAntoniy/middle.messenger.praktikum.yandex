@@ -1,18 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// @ts-ignore
 import { state } from "./consts/consts";
 import { Chat } from "./pages/chat/chat";
+import { ErrorPage } from "./pages/errorPage/errorPage";
 import { Login } from "./pages/login/login";
 import { Profile } from "./pages/profile/profile";
 import { Register } from "./pages/register/register";
+import { TState } from "./types";
 
 export default class App {
-  public state;
+  public state: TState;
   private appElement: HTMLElement | null;
 
   constructor() {
-    // @ts-ignore
     this.state = state;
     this.appElement = document.getElementById("app");
   }
@@ -40,12 +38,21 @@ export default class App {
         emptyLog: this.state.emptyLog,
         chatLogMessages: this.state.chatLogMessages
       }
-      const chatPage = new Chat({
-        props: props
-      });
+      const chatPage = new Chat({ props, contextChat: this.state.contextChat, emptyLog: this.state.emptyLog, });
       if (this.appElement) {
         this.appElement.replaceWith(chatPage.getContent());
+        const rigthBlock = document.querySelector(".chatContainer__rightSection")
+        if (rigthBlock) {
+
+          rigthBlock.scrollTo({
+            top: rigthBlock.scrollHeight,
+            left: 0,
+            behavior: "auto",
+          })
+        }
       }
+
+
     }
     if (this.state.currentPage === "/profile") {
       const props = {
@@ -60,6 +67,15 @@ export default class App {
       });
       if (this.appElement) {
         this.appElement.replaceWith(profilePage.getContent());
+      }
+    }
+    if (this.state.currentPage === "/errorPage") {
+
+      const errorPage = new ErrorPage({
+        ...this.state.errorPageContext
+      });
+      if (this.appElement) {
+        this.appElement.replaceWith(errorPage.getContent());
       }
     }
     return "";

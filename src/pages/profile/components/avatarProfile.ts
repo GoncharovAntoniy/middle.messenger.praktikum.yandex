@@ -1,7 +1,8 @@
 import Block from "../../../framework/Block";
+import { TAvatarInfoProfile } from "../../../types";
 
 export class AvatarProfile extends Block {
-  constructor(props) {
+  constructor(props: TAvatarInfoProfile) {
     super(props)
   }
   render() {

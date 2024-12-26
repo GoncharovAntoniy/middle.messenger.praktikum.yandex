@@ -1,18 +1,29 @@
 import Block from "../framework/Block"
+import { TInput } from "../types"
+
+
+interface TProps extends TInput {
+  onChange: (e: Event, currentThis: any) => void;
+  onBlur: (e: Event, currentThis: any) => void;
+  // events: {
+  //   [key: string]: (e: Event, currentThis: any) => void
+  // },
+}
+
+
 
 export class Input extends Block {
-  constructor(props: any = "") {
+  constructor(props: TProps) {
     super({
       ...props,
-      name: props.name,
-      inputId: props.inputId,
-      classInput: props.classInput,
-      typeInput: props.typeInput,
-      placeholderInput: props.placeholderInput,
+      events: {
+        change: (e: Event) => props.onChange(e, this),
+        focusout: (e: Event) => props.onBlur(e, this),
+      }
     })
   }
 
-  override render() {
+  render() {
     return `
     <div class="inputContainer" >
       <input
@@ -20,6 +31,7 @@ export class Input extends Block {
           id = "{{inputId}}"
           class="{{classInput}}"
           type = "{{typeInput}}"
+          value="{{value}}"
           required
       />
       <label class="labelInput" for= "{{inputId}}" > {{ placeholderInput }}</label>

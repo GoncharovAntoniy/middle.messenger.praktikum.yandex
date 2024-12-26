@@ -1,7 +1,8 @@
 import Block from "../../../framework/Block";
+import { TInput } from "../../../types";
 
 export class InputModal extends Block {
-    constructor(props) {
+    constructor(props: TInput) {
         super({
             ...props,
             classInput: props.classInput,

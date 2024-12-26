@@ -74,6 +74,9 @@ body {
   line-height: 13px;
   padding: 10px 0;
 }
+.errorInput {
+  border-color: red;
+}
 
 .input:focus {
   border: none;
