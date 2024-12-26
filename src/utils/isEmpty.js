@@ -38,7 +38,7 @@ function isArguments(value) {
   return isObjectLike(value) && getTag(value) === "[object Arguments]";
 }
 
-function isEmpty(value) {
+export function isEmpty(value) {
   if (value === null) {
     return true;
   }
@@ -48,8 +48,8 @@ function isEmpty(value) {
     (Array.isArray(value) ||
       typeof value === "string" ||
       typeof value.splice === "function" ||
-      isBuffer(value) ||
-      isTypedArray(value) ||
+      // isBuffer(value) ||
+      // isTypedArray(value) ||
       isArguments(value))
   ) {
     return !value.length;
