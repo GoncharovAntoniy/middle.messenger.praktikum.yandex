@@ -1,9 +1,12 @@
-export const updateBoolSaveBtn = (currentThis, value) => {
-    currentThis.setProps({
-        ...currentThis.props, props: {
-            ...currentThis.props.props, contextProfile: {
-                ...currentThis.props.props.contextProfile, saveButton: value
-            }
-        }
-    })
-}
+export const updateBoolSaveBtn = (currentThis: any, value: boolean) => {
+  currentThis.setProps({
+    ...currentThis.props,
+    props: {
+      ...currentThis.props.props,
+      contextProfile: {
+        ...currentThis.props.props.contextProfile,
+        saveButton: value,
+      },
+    },
+  });
+};

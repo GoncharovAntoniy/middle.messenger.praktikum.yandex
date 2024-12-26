@@ -1,28 +1,55 @@
+import { Button } from "../../../components/button";
+import { Input } from "../../../components/input";
 import Block from "../../../framework/Block";
+import { TButton, TInput, TModalInfo } from "../../../types";
+
+export interface TPropsModalChat extends TModalInfo {
+    infoInput: TInput;
+    infoButton: TButton;
+}
 
 export class ModalChat extends Block {
-    constructor(props) {
-        super({ ...props })
+    constructor(props: TPropsModalChat) {
+        super({
+            ...props,
+            Input: new Input({
+                ...props.infoInput,
+                onChange: (e: Event, currentThis: any) => {
+                    const { value } = e.target as HTMLInputElement
+                    console.log(value, currentThis)
+                },
+                onBlur: (e: Event, currentThis: any) => console.log(e, currentThis)
+            }),
+            Button: new Button({
+                ...props.infoButton,
+                onClick: (e: Event) => {
+                    console.log(e)
+                }
+            }),
+            events: {
+                submit: (e: Event) => e.preventDefault(),
+                click: (e: Event) => {
+                    const attrClass = (e.target as HTMLInputElement).getAttribute('class')
+                    if (attrClass === "modalChat__container") {
+                        e.stopPropagation()
+                    }
+                    if (attrClass === "modalChat active") {
+                        this.setProps({ className: "modalChat" })
+                    }
+                }
+            }
+        })
     }
 
     render() {
-        return `<div class="modalChat">
+        return `<form class="{{className}}">
                     <div class="modalChat__container">
                         <h4 class="modalChat__container">{{title}}</h4>
-                        {{> Input 
-                                inputId=infoInput.inputId
-                                classInput=infoInput.classInput
-                                typeInput=infoInput.typeInput
-                                placeholderInput=infoInput.placeholderInput
-                        }}
-                        {{> Button 
-                                idButton=infoButton.idButton
-                                typeButton=infoButton.typeButton
-                                classButton=infoButton.classButton
-                                textButton=infoButton.textButton
-                        }}
+                        {{{ Input }}}
+                        {{{ Button }}}
+                        
                     </div>
-                </div>
+                </form>
                 `
     }
 }

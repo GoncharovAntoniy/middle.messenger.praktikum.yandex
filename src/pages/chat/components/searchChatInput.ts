@@ -1,13 +1,20 @@
 import Block from "../../../framework/Block";
 
+interface TProps {
+  onChange: (e: Event) => void
+}
+
 export class SearchChatInput extends Block {
-  constructor(props) {
-    super({ ...props })
+  constructor(props: TProps) {
+    super({ events: {
+      ...props,
+      change: (e: Event) => props.onChange(e)
+    }})
   }
 
   render() {
     return `<div class="inputContainer">
-              <input id="searchInput" class="searchInput" type="text" required />
+              <input id="searchInput" value="{{value}}" class="searchInput" type="text" required />
               <label id="searchInputLabel" class="labelInput" for="searchInput"><span
                 ><svg
                     width="20"

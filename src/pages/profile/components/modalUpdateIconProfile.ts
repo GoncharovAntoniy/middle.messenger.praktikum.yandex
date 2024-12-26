@@ -1,15 +1,23 @@
 import { Button } from "../../../components/button";
 import Block from "../../../framework/Block";
+import { TButton, TInput } from "../../../types";
 import { InputModal } from "./inputModal";
 
+interface TProps {
+    props: {
+        infoInput: TInput;
+        infoButton: TButton;
+    }
+}
+
 export class ModalProfile extends Block {
-    constructor(props) {
+    constructor(props: TProps) {
         super({
             ...props,
             InputModalProfile: new InputModal({
                 ...props.props.infoInput
             }),
-            Button: new Button({ ...props.props.infoButton })
+            Button: new Button({ ...props.props.infoButton, onClick: (e: Event, currentThis: any) => console.log(e, currentThis) })
         })
     }
 

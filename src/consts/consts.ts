@@ -1,4 +1,19 @@
-const chatLogMessages = [
+import {
+    TChatLogMessages,
+    TContextChat,
+    TContextLogin,
+    TContextProfile,
+    TContextRegister,
+    TDict,
+    TErrorPageContext,
+    TField,
+    TModalInfo,
+    TModalProfileInfo,
+    TState,
+    TSubmitActionItem
+} from "../types"
+
+const chatLogMessages: TChatLogMessages[] = [
     {
         id: 1,
         message: 'bla bla bla',
@@ -99,8 +114,10 @@ const chatLogMessages = [
     },
 ]
 
-const modalInfo = {
+const modalInfo: TModalInfo = {
     title: 'Добавьте пользователя',
+    className: "modalChat",
+    closeIcon: "/images/XIcon.svg",
     infoInput: {
         name: 'login',
         inputId: "inputLoginAddUser",
@@ -116,10 +133,10 @@ const modalInfo = {
     }
 }
 
-const fields = [
+const fields: TField[] = [
     {
         name: 'email',
-        id: 'emailProfile',
+        idInput: 'emailProfile',
         nameField: 'Почта',
         value: 'pochta@yandex.ru',
         typeInput: 'text',
@@ -127,7 +144,7 @@ const fields = [
     },
     {
         name: 'login',
-        id: 'loginProfile',
+        idInput: 'loginProfile',
         nameField: 'Логин',
         value: 'ivanivanov',
         typeInput: 'text',
@@ -135,7 +152,7 @@ const fields = [
     },
     {
         name: 'first_name',
-        id: 'usernameProfile',
+        idInput: 'usernameProfile',
         nameField: 'Имя',
         value: 'Иван',
         typeInput: 'text',
@@ -143,7 +160,7 @@ const fields = [
     },
     {
         name: 'second_name',
-        id: 'lastnameProfile',
+        idInput: 'lastnameProfile',
         nameField: 'Фамилия',
         value: 'Иванов',
         typeInput: 'text',
@@ -151,7 +168,7 @@ const fields = [
     },
     {
         name: 'display_name',
-        id: 'chatName',
+        idInput: 'chatName',
         nameField: 'Имя в чате',
         value: 'Иван',
         typeInput: 'text',
@@ -159,7 +176,7 @@ const fields = [
     },
     {
         name: 'phone',
-        id: 'numberProfile',
+        idInput: 'numberProfile',
         nameField: 'Телефон',
         value: '+7 (909) 967 30 30',
         typeInput: 'text',
@@ -167,31 +184,31 @@ const fields = [
     },
 ]
 
-const fieldsPass = [
+const fieldsPass: TField[] = [
     {
         name: 'oldPassword',
-        id: 'oldPass',
+        idInput: 'oldPass',
         nameField: 'Старый пароль',
         value: 'old password',
         typeInput: 'password',
     },
     {
         name: 'newPassword',
-        id: 'newPass',
+        idInput: 'newPass',
         nameField: 'Новый пароль',
         value: 'new password',
         typeInput: 'password',
     },
     {
         name: 'newPassword',
-        id: 'newRePass',
+        idInput: 'newRePass',
         nameField: 'Повторите новый пароль',
         value: 'new password',
         typeInput: 'password',
     },
 ]
 
-const contextLogin = {
+const contextLogin: TContextLogin = {
     inputs: [
         {
             name: 'login',
@@ -224,7 +241,7 @@ const contextLogin = {
     ]
 }
 
-const contextRegister = {
+const contextRegister: TContextRegister = {
     inputs: [
         {
             name: 'email',
@@ -292,7 +309,35 @@ const contextRegister = {
     ]
 }
 
-const contextChat = {
+
+const submitActionsItem: TSubmitActionItem[] = [
+    {
+        icon: "/images/fotoAction.svg",
+        actionId: "input_media",
+        actionType: "file",
+        textItem: "Фото или Видео",
+        class: "media",
+        accept: "image/*,video/*"
+    },
+    {
+        icon: "/images/fileAction.svg",
+        actionId: "input_file",
+        actionType: "file",
+        textItem: "Файл",
+        class: "file",
+        accept: ""
+    },
+    {
+        icon: "/images/locationAction.svg",
+        actionId: "input_location",
+        actionType: "file",
+        textItem: "Локация",
+        class: "location",
+        accept: ""
+    },
+]
+
+const contextChat: TContextChat = {
     infoAvatar: [
         {
             username: 'Антоний',
@@ -350,10 +395,13 @@ const contextChat = {
         name: 'message',
         id: 'submitInput',
         type: 'text',
-    }
+        classInput: 'submitFormMessage__input'
+    },
+    modalInfo,
+    submitActionsItem
 }
 
-const contextProfile = {
+const contextProfile: TContextProfile = {
     updateData: false,
     updatePass: false,
     saveButton: false,
@@ -393,7 +441,7 @@ const contextProfile = {
 
 }
 
-const modalProfileInfo = {
+const modalProfileInfo: TModalProfileInfo = {
     title: 'Загрузите файл',
     infoInput: {
         inputId: "addFoto",
@@ -410,7 +458,7 @@ const modalProfileInfo = {
     }
 }
 
-const errorPageContext = {
+const errorPageContext: TErrorPageContext = {
     errorCode: '404',
     errorDescription: 'Не туда попали',
     backToChatBtn: {
@@ -421,17 +469,22 @@ const errorPageContext = {
     }
 }
 
-export const state = {
-    currentPage: '/login',
-    chatLogMessages: chatLogMessages,
+
+
+export const dictInput: TDict = {}
+export const dictInputProfile: TDict = {}
+
+export const state: TState = {
+    currentPage: '/profile',
+    chatLogMessages,
     emptyLog: false,
-    modalInfo: modalInfo,
-    modalProfileInfo: modalProfileInfo,
-    fields: fields,
-    fieldsPass: fieldsPass,
-    contextLogin: contextLogin,
-    contextRegister: contextRegister,
-    contextChat: contextChat,
-    contextProfile: contextProfile,
-    errorPageContext: errorPageContext,
+    modalInfo,
+    modalProfileInfo,
+    fields,
+    fieldsPass,
+    contextLogin,
+    contextRegister,
+    contextChat,
+    contextProfile,
+    errorPageContext,
 }

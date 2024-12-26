@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Block from "../framework/Block";
+import { TButton } from "../types";
+
+interface TProps extends TButton {
+  onClick: (e: Event, currentThis: any) => void
+}
 
 export class Button extends Block {
-  constructor(props: any = "") {
+  constructor(props: TProps) {
     super({
       ...props,
-      textButton: props.textButton,
-      classButton: props.classButton,
-      idButton: props.idButton,
-      typeButton: props.typeButton,
       events: {
-        click: (e: Event) =>  props.onClick(e)
+        click: (e: Event) =>  props.onClick(e, this)
       },
     });
   }
 
-  override render() {
+  render() {
     return `<button
               id="{{idButton}}"
               type="{{typeButton}}"

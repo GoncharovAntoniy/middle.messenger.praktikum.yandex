@@ -1,6 +1,6 @@
-function first(list) {
+export function first(list) {
   if (Array.isArray(list)) {
-    const array = new Array(...list);
+    const array = [...list];
     return array[0];
   }
   return undefined;

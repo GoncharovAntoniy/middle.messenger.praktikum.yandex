@@ -1,4 +1,4 @@
-const rangeRight = (start, end, step, isRight = false) => {
+export const rangeRight = (start, end, step, isRight = false) => {
   const array = [];
   if (end === undefined) {
     end = start;

@@ -1,4 +1,4 @@
-function range(start = 0, end, step = 1) {
+export function range(start = 0, end, step = 1) {
   const array = [];
   if (arguments.length === 1) {
     end = start;

@@ -1,8 +1,12 @@
 import Block from "../../../framework/Block";
 
+type TProps = {
+  emptyLog: boolean
+}
+
 export class EmptyChatlog extends Block {
-  constructor(props) {
-    super({ ...props })
+  constructor(props: TProps) {
+    super(props)
   }
   render() {
     return `<div class="emptyChatLog">
