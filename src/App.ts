@@ -38,6 +38,7 @@ export default class App {
         emptyLog: this.state.emptyLog,
         chatLogMessages: this.state.chatLogMessages
       }
+      
       const chatPage = new Chat({ props, contextChat: this.state.contextChat, emptyLog: this.state.emptyLog, });
       if (this.appElement) {
         this.appElement.replaceWith(chatPage.getContent());
