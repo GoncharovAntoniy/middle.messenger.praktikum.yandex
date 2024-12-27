@@ -9,6 +9,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,6 +24,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-console': 'warn',
     'no-debugger': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
   ignorePatterns: ['node_modules/', 'build/'],
 };
