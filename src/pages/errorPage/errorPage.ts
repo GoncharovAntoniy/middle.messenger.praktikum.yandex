@@ -1,8 +1,8 @@
-import App from '../../App.ts';
+import App from '../../App';
 import { Button } from '../../components/button';
 import { state } from '../../consts/consts';
 import Block from '../../framework/Block';
-import { TButton } from '../../types/index.ts';
+import { TButton } from '../../types/index';
 
 interface TProps {
   backToChatBtn: TButton;

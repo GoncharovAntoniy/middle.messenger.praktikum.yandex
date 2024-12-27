@@ -1,10 +1,10 @@
-import App from '../../App.ts';
+import App from '../../App';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
 import { state } from '../../consts/consts';
 import Block from '../../framework/Block';
-import { TButton, TInput } from '../../types/index.ts';
-import { validationFormInput } from '../../utils/validationFormInput.ts';
+import { TButton, TInput } from '../../types/index';
+import { validationFormInput } from '../../utils/validationFormInput';
 
 interface TProps {
   props: {

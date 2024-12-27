@@ -1,7 +1,7 @@
-import App from '../../../App.ts';
+import App from '../../../App';
 import { state } from '../../../consts/consts';
 import Block from '../../../framework/Block';
-import { TContextChat, TInfoAvatar } from '../../../types/index.ts';
+import { TContextChat, TInfoAvatar } from '../../../types/index';
 import { Avatar } from '../components/avatar';
 import { HeaderSearch } from '../components/headerSearch';
 

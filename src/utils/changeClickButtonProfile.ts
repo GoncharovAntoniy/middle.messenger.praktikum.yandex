@@ -1,7 +1,7 @@
-import App from '../App.ts';
+import App from '../App';
 import { Button } from '../components/button';
 import { state } from '../consts/consts';
-import { TButton } from '../types/index.ts';
+import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
 import { updateBoolSaveBtnAndPass } from './updateBoolSaveBtnAndPass';
 

@@ -1,8 +1,8 @@
-import App from '../../../App.ts';
+import App from '../../../App';
 import { state } from '../../../consts/consts';
 import Block from '../../../framework/Block';
-import { TContextChat } from '../../../types/index.ts';
-import { validationFormInput } from '../../../utils/validationFormInput.ts';
+import { TContextChat } from '../../../types/index';
+import { validationFormInput } from '../../../utils/validationFormInput';
 import { ButtonSubmitChat } from './buttonSubmitChat';
 import { InputSubmitAction } from './inputSubmitAction';
 import { InputSubmitChat } from './inputSubmitChat';

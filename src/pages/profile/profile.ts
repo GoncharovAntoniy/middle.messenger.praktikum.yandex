@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import App from '../../App.ts';
+import App from '../../App';
 import { Button } from '../../components/button';
 import { state } from '../../consts/consts';
 import Block from '../../framework/Block';
-import { TButton, TContextProfile, TField, TModalProfileInfo } from '../../types/index.ts';
+import { TButton, TContextProfile, TField, TModalProfileInfo } from '../../types/index';
 import { changeClickButtonProfile } from '../../utils/changeClickButtonProfile';
-import { changeInputsProfile } from '../../utils/changeInputsProfile.ts';
-import { validationFormInput } from '../../utils/validationFormInput.ts';
+import { changeInputsProfile } from '../../utils/changeInputsProfile';
+import { validationFormInput } from '../../utils/validationFormInput';
 import { AvatarProfile } from './components/avatarProfile';
 import { BackToChat } from './components/backToChat';
 import { FieldInfoProfile } from './components/fieldInfoProfile';

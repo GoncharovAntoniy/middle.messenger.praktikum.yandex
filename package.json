@@ -20,6 +20,7 @@
     "lint:fix": "eslint \"src/**/*.{js, ts}\" --fix",
     "lint:styles": "stylelint 'src/**/*.{css,scss,pcss}'",
     "lint:styles:fix": "stylelint 'src/**/*.{css,scss,pcss}' --fix",
+    "prettier:clean": "prettier --no-cache --write .",
     "preview": "vite preview"
   },
   "devDependencies": {
