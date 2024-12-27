@@ -1,4 +1,4 @@
-@use "../../../styles/consts" as *;
+@use '../../../styles/consts' as *;
 
 .chatContainer {
   position: relative;
@@ -117,9 +117,7 @@
 
 .avatar:hover {
   background-color: #f8f8f8;
-  box-shadow:
-    0 4px 6px rgb(0 0 0 / 5%),
-    0 1px 3px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 .listUsers {
@@ -270,9 +268,7 @@
   position: absolute;
   right: 0;
   top: 80px;
-  box-shadow:
-    0 4px 6px rgb(0 0 0 / 20%),
-    0 1px 3px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 20%), 0 1px 3px rgb(0 0 0 / 10%);
   border-radius: 20px;
   background-color: white;
   flex-direction: column;
@@ -347,9 +343,7 @@
     &_media {
       max-width: 400px;
       padding: 11px;
-      box-shadow:
-        0 4px 6px rgb(0 0 0 / 20%),
-        0 1px 3px rgb(0 0 0 / 10%);
+      box-shadow: 0 4px 6px rgb(0 0 0 / 20%), 0 1px 3px rgb(0 0 0 / 10%);
       border: $border-gray-color;
       border-radius: 12px;
 
@@ -435,9 +429,7 @@
     background-color: white;
     left: 0;
     bottom: 70px;
-    box-shadow:
-      0 0 6px rgb(0 0 0 / 5%),
-      0 1px 3px rgb(0 0 0 / 10%);
+    box-shadow: 0 0 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
     border-radius: 12px;
     width: 162px;
     display: none;

@@ -1,4 +1,4 @@
-@use "../../../styles/consts" as *;
+@use '../../../styles/consts' as *;
 
 .profile {
   position: relative;
@@ -116,7 +116,7 @@
 
       &:hover {
         &::before {
-          content: "Поменять аватар";
+          content: 'Поменять аватар';
           position: absolute;
           color: white;
           background-color: $bg-color-gray-opacity;

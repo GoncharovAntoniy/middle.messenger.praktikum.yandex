@@ -1,8 +1,8 @@
-@use "consts" as *;
+@use 'consts' as *;
 
-@import url("../pages/chat/styles/chatStyles.scss");
-@import url("../pages/profile/styles/psofile.scss");
-@import url("../pages/errorPage/styles/errorPage.scss");
+@import url('../pages/chat/styles/chatStyles.scss');
+@import url('../pages/profile/styles/psofile.scss');
+@import url('../pages/errorPage/styles/errorPage.scss');
 
 * {
   margin: 0;
@@ -100,7 +100,7 @@ body {
 }
 
 .input:focus + .labelInput,
-.input[data-has-value="true"] + .labelInput {
+.input[data-has-value='true'] + .labelInput {
   top: 0;
   left: 0;
   font-size: 9px;
