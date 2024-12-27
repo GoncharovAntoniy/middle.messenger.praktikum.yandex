@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': ['error', { endOfLine: 'crlf' }],
+    'prettier/prettier': ['error', { endOfLine: 'lf' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-unused-vars': 'off',
