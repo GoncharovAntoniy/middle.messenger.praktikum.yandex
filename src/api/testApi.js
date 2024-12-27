@@ -1,14 +1,14 @@
 export function fetchWithRetry(url, options = {}) {
-  const { tries = 1 } = options
+  const { tries = 1 } = options;
 
   function onError(err) {
-    const triesLeft = tries - 1
+    const triesLeft = tries - 1;
     if (!triesLeft) {
-      throw err
+      throw err;
     }
 
-    return fetchWithRetry(url, { ...options, tries: triesLeft })
+    return fetchWithRetry(url, { ...options, tries: triesLeft });
   }
 
-  return fetch(url, options).catch(onError)
+  return fetch(url, options).catch(onError);
 }
