@@ -1,16 +1,10 @@
-import Block from "../framework/Block"
-import { TInput } from "../types"
-
+import Block from '../framework/Block';
+import { TInput } from '../types';
 
 interface TProps extends TInput {
   onChange: (e: Event, currentThis: any) => void;
   onBlur: (e: Event, currentThis: any) => void;
-  // events: {
-  //   [key: string]: (e: Event, currentThis: any) => void
-  // },
 }
-
-
 
 export class Input extends Block {
   constructor(props: TProps) {
@@ -19,8 +13,8 @@ export class Input extends Block {
       events: {
         change: (e: Event) => props.onChange(e, this),
         focusout: (e: Event) => props.onBlur(e, this),
-      }
-    })
+      },
+    });
   }
 
   render() {
@@ -35,6 +29,6 @@ export class Input extends Block {
           required
       />
       <label class="labelInput" for= "{{inputId}}" > {{ placeholderInput }}</label>
-    </div>`
+    </div>`;
   }
 }

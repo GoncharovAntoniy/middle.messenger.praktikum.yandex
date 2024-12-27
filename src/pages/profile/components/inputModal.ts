@@ -1,19 +1,19 @@
-import Block from "../../../framework/Block";
-import { TInput } from "../../../types";
+import Block from '../../../framework/Block';
+import { TInput } from '../../../types';
 
 export class InputModal extends Block {
-    constructor(props: TInput) {
-        super({
-            ...props,
-            classInput: props.classInput,
-            inputId: props.inputId,
-            placeholderInput: props.placeholderInput,
-            typeInput: props.typeInput,
-            value: props.value
-        })
-    }
-    render() {
-        return `<div class="inputContainer">
+  constructor(props: TInput) {
+    super({
+      ...props,
+      classInput: props.classInput,
+      inputId: props.inputId,
+      placeholderInput: props.placeholderInput,
+      typeInput: props.typeInput,
+      value: props.value,
+    });
+  }
+  render() {
+    return `<div class="inputContainer">
                     <label class="labelInputModalProfile" for="{{inputId}}">
                         <input
                             name="{{{name}}}"
@@ -30,6 +30,6 @@ export class InputModal extends Block {
                         {{/if}}
                 </label>
                 </div>
-                `
-    }
+                `;
+  }
 }

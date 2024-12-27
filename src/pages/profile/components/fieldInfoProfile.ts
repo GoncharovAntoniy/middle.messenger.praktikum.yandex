@@ -1,7 +1,7 @@
-import Block from "../../../framework/Block";
-import { TField } from "../../../types";
+import Block from '../../../framework/Block';
+import { TField } from '../../../types';
 
-interface TProps extends TField{
+interface TProps extends TField {
   onChange: (e: Event, currentThis: any) => void;
   onBlur: (e: Event, currentThis: any) => void;
 }
@@ -12,9 +12,9 @@ export class FieldInfoProfile extends Block {
       ...props,
       events: {
         change: (e: Event) => props.onChange(e, this),
-        focusout: (e: Event) => props.onBlur(e, this)
-      }
-    })
+        focusout: (e: Event) => props.onBlur(e, this),
+      },
+    });
   }
 
   render() {
@@ -32,6 +32,6 @@ export class FieldInfoProfile extends Block {
                 type="{{typeInput}}"
                 id="{{id}}"
               />
-            </div>`
+            </div>`;
   }
 }

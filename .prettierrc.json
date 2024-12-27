@@ -4,6 +4,5 @@
   "singleQuote": true,
   "printWidth": 180,
   "tabWidth": 2,
-  "arrowParens": "avoid",
-  "endOfLine": "lf"
+  "endOfLine": "crlf"
 }

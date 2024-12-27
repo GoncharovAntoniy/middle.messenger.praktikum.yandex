@@ -1,21 +1,21 @@
-import Block from "../../../framework/Block";
-import { TSubmitActionItem } from "../../../types";
+import Block from '../../../framework/Block';
+import { TSubmitActionItem } from '../../../types';
 
 interface TProps extends TSubmitActionItem {
-    onClick: (e: Event) => void
+  onClick: (e: Event) => void;
 }
 
 export class SubmitFormActionItem extends Block {
-    constructor(props: TProps) {
-        super({
-            ...props,
-            events: {
-                click: (e: Event) => props.onClick(e)
-            }
-        })
-    }
-    render() {
-        return `
+  constructor(props: TProps) {
+    super({
+      ...props,
+      events: {
+        click: (e: Event) => props.onClick(e),
+      },
+    });
+  }
+  render() {
+    return `
              <label class="submitFormMessage__actions_item" for="{{actionId}}">
                   <img src="{{icon}}" alt="icon" />
                   <input
@@ -29,6 +29,6 @@ export class SubmitFormActionItem extends Block {
                     {{textItem}}
                   </span>
             </label>
-        `
-    }
+        `;
+  }
 }

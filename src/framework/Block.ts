@@ -1,5 +1,7 @@
-import EventBus, { EventCallback } from "./EventBus";
-import * as Handlebars from "handlebars";
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-this-alias */
+import EventBus, { EventCallback } from './EventBus';
+import * as Handlebars from 'handlebars';
 
 interface BlockProps {
   [key: string]: any;
@@ -7,10 +9,10 @@ interface BlockProps {
 
 export default class Block {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render",
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
+    FLOW_RENDER: 'flow:render',
   };
 
   protected _element: HTMLElement | null = null;
@@ -27,8 +29,7 @@ export default class Block {
 
   constructor(propsWithChildren: BlockProps = {}) {
     const eventBus = new EventBus();
-    const { props, children, lists } =
-      this._getChildrenPropsAndProps(propsWithChildren);
+    const { props, children, lists } = this._getChildrenPropsAndProps(propsWithChildren);
     this.props = this._makePropsProxy({ ...props });
     this.children = children;
     this.lists = this._makePropsProxy({ ...lists });
@@ -39,7 +40,7 @@ export default class Block {
 
   private _addEvents(): void {
     const { events = {} } = this.props;
-    Object.keys(events).forEach(eventName => {
+    Object.keys(events).forEach((eventName) => {
       if (this._element) {
         this._element.addEventListener(eventName, events[eventName]);
       }
@@ -48,18 +49,9 @@ export default class Block {
 
   private _registerEvents(eventBus: EventBus): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this) as EventCallback);
-    eventBus.on(
-      Block.EVENTS.FLOW_CDM,
-      this._componentDidMount.bind(this) as EventCallback,
-    );
-    eventBus.on(
-      Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this) as EventCallback,
-    );
-    eventBus.on(
-      Block.EVENTS.FLOW_RENDER,
-      this._render.bind(this) as EventCallback,
-    );
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this) as EventCallback);
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this) as EventCallback);
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this) as EventCallback);
   }
 
   protected init(): void {
@@ -68,7 +60,7 @@ export default class Block {
 
   private _componentDidMount(): void {
     this.componentDidMount();
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       child.dispatchComponentDidMount();
     });
   }
@@ -79,10 +71,7 @@ export default class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(
-    oldProps: BlockProps,
-    newProps: BlockProps,
-  ): void {
+  private _componentDidUpdate(oldProps: BlockProps, newProps: BlockProps): void {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -90,10 +79,7 @@ export default class Block {
     this._render();
   }
 
-  protected componentDidUpdate(
-    oldProps?: BlockProps,
-    newProps?: BlockProps,
-  ): boolean {
+  protected componentDidUpdate(oldProps?: BlockProps, newProps?: BlockProps): boolean {
     console.log('oldProps', oldProps);
     console.log('newProps', newProps);
     return true;
@@ -168,15 +154,11 @@ export default class Block {
   };
 
   public removeLists = (nameList: any) => {
-    this.lists = Object.fromEntries(
-      Object.entries(this.lists).filter(item => item[0] !== nameList),
-    );
+    this.lists = Object.fromEntries(Object.entries(this.lists).filter((item) => item[0] !== nameList));
   };
 
   public removeChildren = (nameChild: any) => {
-    this.children = Object.fromEntries(
-      Object.entries(this.children).filter(item => item[0] !== nameChild),
-    );
+    this.children = Object.fromEntries(Object.entries(this.children).filter((item) => item[0] !== nameChild));
   };
 
   get element(): HTMLElement | null {
@@ -194,10 +176,10 @@ export default class Block {
       propsAndStubs[key] = `<div data-id="__l_${tmpId}"></div>`;
     });
 
-    const fragment = this._createDocumentElement("template");
+    const fragment = this._createDocumentElement('template');
     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (stub) {
         stub.replaceWith(child.getContent());
@@ -205,8 +187,8 @@ export default class Block {
     });
 
     Object.entries(this.lists).forEach(([, child]) => {
-      const listCont = this._createDocumentElement("template");
-      child.forEach(item => {
+      const listCont = this._createDocumentElement('template');
+      child.forEach((item) => {
         if (item instanceof Block) {
           listCont.content.append(item.getContent());
         } else {
@@ -229,12 +211,12 @@ export default class Block {
   }
 
   protected render(): string {
-    return "";
+    return '';
   }
 
   public getContent(): HTMLElement {
     if (!this._element) {
-      throw new Error("Element is not created");
+      throw new Error('Element is not created');
     }
     return this._element;
   }
@@ -245,7 +227,7 @@ export default class Block {
     return new Proxy(props, {
       get(target: any, prop: string) {
         const value = target[prop];
-        return typeof value === "function" ? value.bind(target) : value;
+        return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target: any, prop: string, value: any) {
         const oldTarget = { ...target };
@@ -254,7 +236,7 @@ export default class Block {
         return true;
       },
       deleteProperty() {
-        throw new Error("No access");
+        throw new Error('No access');
       },
     });
   }
@@ -266,7 +248,7 @@ export default class Block {
   public show(): void {
     const content = this.getContent();
     if (content) {
-      content.style.display = "flex";
+      content.style.display = 'flex';
       this._render();
     }
   }
@@ -274,7 +256,7 @@ export default class Block {
   public hide(): void {
     const content = this.getContent();
     if (content) {
-      content.style.display = "none";
+      content.style.display = 'none';
     }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 module.exports = {
@@ -5,12 +6,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -22,9 +18,9 @@ module.exports = {
     'prettier/prettier': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
-    'no-console': 'warn',
+    'no-unused-vars': 'off',
+    'no-console': 'off',
     'no-debugger': 'warn',
     '@typescript-eslint/ban-ts-comment': 'off',
   },
-  ignorePatterns: ['node_modules/', 'build/'],
 };

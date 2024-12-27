@@ -6,12 +6,11 @@ import Block from '../../framework/Block';
 import { TButton, TInput } from '../../types/index.ts';
 import { validationFormInput } from '../../utils/validationFormInput.ts';
 
-
 interface TProps {
   props: {
     buttons: TButton[];
     inputs: TInput[];
-  }
+  };
 }
 
 export class Login extends Block {
@@ -31,7 +30,7 @@ export class Login extends Block {
         (item: TButton) =>
           new Button({
             ...item,
-            onClick: e => this.changeClickButtons(e),
+            onClick: (e) => this.changeClickButtons(e),
           }),
       ),
     });
@@ -51,9 +50,9 @@ export class Login extends Block {
   }
 
   changeInputValue(e: Event, currentThis: any) {
-    const { name, value } = (e.target as HTMLInputElement);
+    const { name, value } = e.target as HTMLInputElement;
     this.dictInputsValue[name] = value;
-    currentThis.setProps({ value })
+    currentThis.setProps({ value });
     console.log(this.dictInputsValue);
   }
 

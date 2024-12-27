@@ -1,15 +1,17 @@
-import Block from "../../../framework/Block";
+import Block from '../../../framework/Block';
 
 interface TProps {
-  onChange: (e: Event) => void
+  onChange: (e: Event) => void;
 }
 
 export class SearchChatInput extends Block {
   constructor(props: TProps) {
-    super({ events: {
-      ...props,
-      change: (e: Event) => props.onChange(e)
-    }})
+    super({
+      events: {
+        ...props,
+        change: (e: Event) => props.onChange(e),
+      },
+    });
   }
 
   render() {
@@ -31,6 +33,6 @@ export class SearchChatInput extends Block {
                     />
                   </svg></span>Поиск</label>
             </div>
-            `
+            `;
   }
 }
