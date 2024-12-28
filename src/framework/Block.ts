@@ -5,10 +5,12 @@ import * as Handlebars from 'handlebars';
 
 export interface BlockProps {
   props?: {
+    // Пришлось добавить any потому, что в некоторых местах использую конструкция для получения и изменения пропсов типа this.props.prop?...
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
-  [key: string]: unknown | string | number | boolean | HTMLElement | HTMLInputElement | Record<string, unknown> | undefined | void | EventListener | Block | Block[];
+  setProps?: (value: object) => void;
+  [key: string]: unknown | (() => void) | string | number | boolean | HTMLElement | HTMLInputElement | Record<string, unknown> | undefined | void | EventListener | Block | Block[];
 }
 
 interface AttributeProps {
@@ -27,8 +29,7 @@ export default class Block {
   protected _id: number = Math.floor(100000 + Math.random() * 900000);
   public props: BlockProps;
   public children: Record<string, Block>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected lists: Record<string, any[]>;
+  public lists: Record<string, unknown[]>;
   protected eventBus: () => EventBus;
 
   constructor(propsWithChildren: BlockProps = {} as BlockProps) {
@@ -233,8 +234,7 @@ export default class Block {
         const value = target[prop as keyof T];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      set(target: T, prop: string | symbol, value: any) {
+      set(target: T, prop: string | symbol, value) {
         const oldTarget = { ...target };
         target[prop as keyof T] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);

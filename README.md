@@ -4,7 +4,16 @@
 
 Билд + запуск проекта: npm run start
 
+Линтеры: 
+    npm run lint - проверка eslint
+    npm run lint:fix - проверка eslint с исправлениями
+    npm run styles - проверка stylelint
+    npm run styles:fix - проверка stylelint с исправлениями
+    npm run lint:all - проверка stylelint, eslint + типы
+    npm run lint:all:fix - проверка stylelint, eslint + типы с исправлениями
+
 Netlify: https://messenger-learn-yandex.netlify.app/
+
 
 Проект - простой мессенджер, пока только верстка с минимальным функционалом на клиенте. (Можно в профиле поменять данные, пароль и аватарку, но после обновления страницы они потеряются. Сообщения в чате отправлять нельзя, есть модалки, но они пока не до конца доработаны)
 

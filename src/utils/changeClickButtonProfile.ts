@@ -1,28 +1,28 @@
 import App from '../App';
 import { Button } from '../components/button';
 import { state } from '../consts/consts';
+import Block from '../framework/Block';
 import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
 import { updateBoolSaveBtnAndPass } from './updateBoolSaveBtnAndPass';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const changeClickButtonProfile = (event: Event, currentThis: any) => {
+export const changeClickButtonProfile = (event: Event, currentThis: Block) => {
   const currentFieldsEl = currentThis.lists.FieldsInfoProfile;
   const currentElementId = (event.currentTarget as HTMLInputElement).id;
 
   const updateButtons = () => {
     currentThis.children.Buttons = new Button({
-      classButton: currentThis.props.props.contextProfile.updateBtn.classButton,
-      idButton: currentThis.props.props.contextProfile.updateBtn.idButton,
-      textButton: currentThis.props.props.contextProfile.updateBtn.textButton,
-      typeButton: currentThis.props.props.contextProfile.updateBtn.typeButton,
+      classButton: currentThis.props.props?.contextProfile.updateBtn.classButton,
+      idButton: currentThis.props.props?.contextProfile.updateBtn.idButton,
+      textButton: currentThis.props.props?.contextProfile.updateBtn.textButton,
+      typeButton: currentThis.props.props?.contextProfile.updateBtn.typeButton,
       onClick: (e) => changeClickButtonProfile(e, currentThis),
     });
     currentThis.removeLists('Buttons');
     updateBoolSaveBtn(currentThis, true);
   };
 
-  const Buttons = currentThis.props.props.contextProfile.buttons.map(
+  const Buttons = currentThis.props.props?.contextProfile.buttons.map(
     (item: TButton) =>
       new Button({
         classButton: item.classButton,
@@ -36,6 +36,7 @@ export const changeClickButtonProfile = (event: Event, currentThis: any) => {
   switch (currentElementId) {
     case 'updateData': {
       updateButtons();
+      // Не смог избавить сяот any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: false });
@@ -59,6 +60,7 @@ export const changeClickButtonProfile = (event: Event, currentThis: any) => {
       currentThis.setLists({ Buttons });
       updateBoolSaveBtnAndPass(currentThis, false);
       updateBoolSaveBtn(currentThis, false);
+      // Не смог избавить сяот any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: true });

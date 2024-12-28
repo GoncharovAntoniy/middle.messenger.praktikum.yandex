@@ -1,15 +1,13 @@
 import { dictInput } from '../consts/consts';
-
-interface BlockProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
-const checkRegex = (regex: RegExp, currentThis: BlockProps, value: string) => {
+// Не смог избавить сяот any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const checkRegex = (regex: RegExp, currentThis: any, value: string) => {
   !regex.test(value) && value ? currentThis.setProps({ classInput: 'input errorInput' }) : currentThis.setProps({ classInput: 'input' });
 };
-
-export const validationFormInput = (event: Event, currentThis: BlockProps) => {
+// Не смог избавить сяот any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const validationFormInput = (event: Event, currentThis: any) => {
+  event.preventDefault();
   const { name, value } = event.target as HTMLInputElement;
   console.log(currentThis);
   dictInput[name] = value;

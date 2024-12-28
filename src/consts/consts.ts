@@ -228,7 +228,7 @@ const contextLogin: TContextLogin = {
   buttons: [
     {
       idButton: 'authBtn',
-      typeButton: 'button',
+      typeButton: 'submit',
       classButton: 'buttonAuth',
       textButton: 'Авторизоваться',
     },
@@ -471,7 +471,7 @@ export const dictInput: TDict = {};
 export const dictInputProfile: TDict = {};
 
 export const state: TState = {
-  currentPage: '/chat',
+  currentPage: '/register',
   chatLogMessages,
   emptyLog: false,
   modalInfo,
