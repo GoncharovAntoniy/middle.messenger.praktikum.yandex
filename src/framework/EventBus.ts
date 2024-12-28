@@ -1,4 +1,4 @@
-export type EventCallback = (...args: any[]) => void;
+export type EventCallback = (...args: unknown[]) => void;
 
 export default class EventBus {
   private listeners: Record<string, EventCallback[]>;
@@ -11,7 +11,7 @@ export default class EventBus {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
-    
+
     this.listeners[event].push(callback);
   }
 
@@ -20,17 +20,15 @@ export default class EventBus {
       throw new Error(`No event: ${event}`);
     }
 
-    this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback,
-    );
+    this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  public emit(event: string, ...args: any[]): void {
+  public emit(event: string, ...args: unknown[]): void {
     if (!this.listeners[event]) {
       throw new Error(`No event: ${event}`);
     }
 
-    this.listeners[event].forEach(listener => {
+    this.listeners[event].forEach((listener) => {
       listener(...args);
     });
   }

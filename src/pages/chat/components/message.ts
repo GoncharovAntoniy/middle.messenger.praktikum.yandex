@@ -1,15 +1,15 @@
-import Block from "../../../framework/Block";
-import { TChatLogMessages } from "../../../types";
+import Block from '../../../framework/Block';
+import { TChatLogMessages } from '../../../types';
 
 export class Message extends Block {
-    constructor(props: TChatLogMessages) {
-        super({
-            ...props,
-        })
-    }
+  constructor(props: TChatLogMessages) {
+    super({
+      ...props,
+    });
+  }
 
-    render() {
-        return `<div>
+  render() {
+    return `<div>
                     {{#if role}}
                     <div class="chatLog__myMessage">
                         {{#if isImage}}
@@ -34,6 +34,6 @@ export class Message extends Block {
                         </p>
                     </div>
                     {{/unless}}
-                <div/>`
-    }
+                <div/>`;
+  }
 }

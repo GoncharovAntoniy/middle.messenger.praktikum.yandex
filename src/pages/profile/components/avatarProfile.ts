@@ -1,9 +1,9 @@
-import Block from "../../../framework/Block";
-import { TAvatarInfoProfile } from "../../../types";
+import Block from '../../../framework/Block';
+import { TAvatarInfoProfile } from '../../../types';
 
 export class AvatarProfile extends Block {
   constructor(props: TAvatarInfoProfile) {
-    super(props)
+    super(props);
   }
   render() {
     return `<div class="profile__infoUser_avatar">
@@ -15,8 +15,6 @@ export class AvatarProfile extends Block {
                 />
               </div>
               <p class="profile__infoUser_avatar-userName">{{{username}}}</p>
-            </div>`
+            </div>`;
   }
 }
-
-

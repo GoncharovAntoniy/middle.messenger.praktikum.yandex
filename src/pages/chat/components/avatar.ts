@@ -1,9 +1,9 @@
-import Block from "../../../framework/Block";
-import { TInfoAvatar } from "../../../types";
+import Block from '../../../framework/Block';
+import { TInfoAvatar } from '../../../types';
 
 export class Avatar extends Block {
   constructor(props: TInfoAvatar) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -28,7 +28,6 @@ export class Avatar extends Block {
                 {{/if}}
               </div>
             </div>
-          ` 
+          `;
   }
 }
-

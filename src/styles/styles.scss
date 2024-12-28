@@ -1,17 +1,19 @@
 @use 'consts' as *;
-@import url("../pages/chat/styles/chatStyles.scss");
-@import url("../pages/profile/styles/psofile.scss");
-@import url("../pages/errorPage/styles/errorPage.scss");
+
+@import url('../pages/chat/styles/chatStyles.scss');
+@import url('../pages/profile/styles/psofile.scss');
+@import url('../pages/errorPage/styles/errorPage.scss');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
   font-family: Arial, Helvetica, sans-serif;
-
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,7 +42,7 @@ body {
   justify-content: space-between;
   align-items: center;
   border-radius: 12px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: 0 0 6px 0 rgb(0 0 0 / 14%);
   min-height: 460px;
   padding: 30px;
   gap: 47px;
@@ -74,6 +76,7 @@ body {
   line-height: 13px;
   padding: 10px 0;
 }
+
 .errorInput {
   border-color: red;
 }
@@ -97,19 +100,19 @@ body {
 }
 
 .input:focus + .labelInput,
-.input[data-has-value="true"] + .labelInput {
+.input[data-has-value='true'] + .labelInput {
   top: 0;
   left: 0;
   font-size: 9px;
   line-height: 9;
-  color: #999999;
+  color: #999;
 }
 
 .input:valid + .labelInput {
   top: 0;
   left: 0;
   font-size: 9px;
-  color: #999999;
+  color: #999;
 }
 
 .form__buttons {

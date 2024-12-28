@@ -1,8 +1,9 @@
-import Block from "../framework/Block";
-import { TButton } from "../types";
+import Block from '../framework/Block';
+import { TButton } from '../types';
 
 interface TProps extends TButton {
-  onClick: (e: Event, currentThis: any) => void
+  onClick?: (e: Event, currentThis: Button) => void;
+  onSubmit?: (e: Event) => void;
 }
 
 export class Button extends Block {
@@ -10,7 +11,8 @@ export class Button extends Block {
     super({
       ...props,
       events: {
-        click: (e: Event) =>  props.onClick(e, this)
+        click: (e: Event) => props.onClick && props.onClick(e, this as Button),
+        submit: (e: Event) => props.onSubmit && props.onSubmit(e),
       },
     });
   }

@@ -1,13 +1,12 @@
-import Block from "../../../framework/Block";
+import Block from '../../../framework/Block';
 
 export class ButtonSubmitChat extends Block {
-
-    render() {
-        return `
+  render() {
+    return `
             <button class="submitFormMessage__button" type="submit"><img
                   src="/images/arrowRightIcon.svg"
                   alt=""
             /></button>
-        `
-    }
+        `;
+  }
 }

@@ -1,30 +1,30 @@
-import Block from "../../../framework/Block";
-import { SearchChatInput } from "./searchChatInput";
+import Block from '../../../framework/Block';
+import { SearchChatInput } from './searchChatInput';
 
 type TProps = {
-    onClick: (e: Event) => void
-}
+  onClick: (e: Event) => void;
+};
 
 export class HeaderSearch extends Block {
-    valueSearchInput: string = ""
-    constructor(props: TProps) {
-        super({
-            ...props,
-            SearchChatInput: new SearchChatInput({ onChange: (e: Event) => this.changeInputSearch(e) }),
-            events: {
-                click: (e: Event) => props.onClick(e)
-            }
-        })
-    }
+  valueSearchInput = '';
+  constructor(props: TProps) {
+    super({
+      ...props,
+      SearchChatInput: new SearchChatInput({ onChange: (e: Event) => this.changeInputSearch(e) }),
+      events: {
+        click: (e: Event) => props.onClick(e),
+      },
+    });
+  }
 
-    changeInputSearch(e: Event) {
-        this.valueSearchInput = (e.target as HTMLInputElement).value;
-        this.children.SearchChatInput.setProps({ value: this.valueSearchInput })
-        console.log(e.target)
-    }
+  changeInputSearch(e: Event) {
+    this.valueSearchInput = (e.target as HTMLInputElement).value;
+    this.children.SearchChatInput.setProps({ value: this.valueSearchInput });
+    console.log(e.target);
+  }
 
-    render() {
-        return `<div class="headerSearch">
+  render() {
+    return `<div class="headerSearch">
                     <button id="goToProfile" class="buttonProfile">
                         Профиль 
                         <span>
@@ -35,8 +35,6 @@ export class HeaderSearch extends Block {
                     </button>
                     {{{ SearchChatInput }}}
                 </div>
-                `
-    }
+                `;
+  }
 }
-
-

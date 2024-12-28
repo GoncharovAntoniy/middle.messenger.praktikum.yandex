@@ -1,23 +1,25 @@
+/* eslint-disable no-undef */
 'use strict';
 
 module.exports = {
-  env: { browser: true, es2021: true },
-  extends: ['standard', 'eslint:recommended', 'prettier'],
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'eslint-config-prettier'],
   parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
   plugins: ['@typescript-eslint', 'prettier'],
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      ],
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-        project: ['./tsconfig.json'],
-      },
-    },
-  ],
-  ignorePatterns: ['.eslintrc.cjs'],
+  rules: {
+    'prettier/prettier': ['error', { endOfLine: 'lf' }],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
+    'no-console': 'off',
+    'no-debugger': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'off',
+  },
 };

@@ -1,4 +1,4 @@
-export const last = list => {
+export const last = (list) => {
   if (Array.isArray(list)) {
     const array = [...list];
     // const array = new Array(...list);
