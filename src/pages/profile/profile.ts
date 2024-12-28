@@ -44,8 +44,8 @@ export class Profile extends Block {
                 nameField: item.nameField,
                 typeInput: item.typeInput,
                 value: item.value,
-                onChange: (e: Event, currentThis: any) => changeInputsProfile(e, currentThis),
-                onBlur: (e: Event, currentThis: any) => validationFormInput(e, currentThis),
+                onChange: (e: Event, currentThis) => changeInputsProfile(e, currentThis),
+                onBlur: (e: Event, currentThis) => validationFormInput(e, currentThis),
               }),
           )
         : props.props.fields.map(
