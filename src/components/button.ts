@@ -2,7 +2,7 @@ import Block from '../framework/Block';
 import { TButton } from '../types';
 
 interface TProps extends TButton {
-  onClick: (e: Event, currentThis: any) => void;
+  onClick: (e: Event, currentThis: Button) => void;
 }
 
 export class Button extends Block {
@@ -10,7 +10,7 @@ export class Button extends Block {
     super({
       ...props,
       events: {
-        click: (e: Event) => props.onClick(e, this),
+        click: (e: Event) => props.onClick(e, this as Button),
       },
     });
   }

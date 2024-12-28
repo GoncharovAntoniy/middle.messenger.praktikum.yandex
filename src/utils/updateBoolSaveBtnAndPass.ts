@@ -3,6 +3,7 @@ import { TField } from '../types';
 import { changeInputsProfile } from './changeInputsProfile';
 import { validationFormInput } from './validationFormInput';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateBoolSaveBtnAndPass = (currentThis: any, value: boolean) => {
   currentThis.setProps({
     ...currentThis.props,

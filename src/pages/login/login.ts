@@ -49,7 +49,7 @@ export class Login extends Block {
     app.render();
   }
 
-  changeInputValue(e: Event, currentThis: any) {
+  changeInputValue(e: Event, currentThis: Input) {
     const { name, value } = e.target as HTMLInputElement;
     this.dictInputsValue[name] = value;
     currentThis.setProps({ value });

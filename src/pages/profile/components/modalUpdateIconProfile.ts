@@ -17,12 +17,12 @@ export class ModalProfile extends Block {
       InputModalProfile: new InputModal({
         ...props.props.infoInput,
       }),
-      Button: new Button({ ...props.props.infoButton, onClick: (e: Event, currentThis: any) => console.log(e, currentThis) }),
+      Button: new Button({ ...props.props.infoButton, onClick: (e: Event, currentThis: Button) => console.log(e, currentThis) }),
     });
   }
 
   render() {
-    const title = this.props.props.title;
+    const title = this.props.props?.title;
     return `<div class="modalProfile">
                     <div class="modalProfile__container">
                         <h4 class="modalProfile__container_title">${title}</h4>

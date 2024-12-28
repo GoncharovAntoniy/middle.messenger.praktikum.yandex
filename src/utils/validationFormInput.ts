@@ -1,6 +1,7 @@
 import { dictInput } from '../consts/consts';
 
 interface BlockProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

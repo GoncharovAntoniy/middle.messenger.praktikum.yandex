@@ -26,8 +26,8 @@ export class Register extends Block {
             classInput: item.classInput,
             typeInput: item.typeInput,
             placeholderInput: item.placeholderInput,
-            onChange: (e: Event, currentThis: any) => this.changeInputValue(e, currentThis),
-            onBlur: (e: Event, currentThis: any) => validationFormInput(e, currentThis),
+            onChange: (e: Event, currentThis: Input) => this.changeInputValue(e, currentThis),
+            onBlur: (e: Event, currentThis: Input) => validationFormInput(e, currentThis),
           }),
       ),
       Buttons: props.props.buttons.map(
@@ -56,7 +56,7 @@ export class Register extends Block {
     app.render();
   }
 
-  changeInputValue(e: Event, currentThis: any) {
+  changeInputValue(e: Event, currentThis: Input) {
     const { name, value } = e.target as HTMLInputElement;
     this.dictInputsValue[name] = value;
     currentThis.setProps({ value });

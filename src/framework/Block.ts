@@ -1,10 +1,18 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import EventBus, { EventCallback } from './EventBus';
 import * as Handlebars from 'handlebars';
 
-interface BlockProps {
-  [key: string]: any;
+export interface BlockProps {
+  props?: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  };
+  [key: string]: unknown | string | number | boolean | HTMLElement | HTMLInputElement | Record<string, unknown> | undefined | void | EventListener | Block | Block[];
+}
+
+interface AttributeProps {
+  [key: string]: string;
 }
 
 export default class Block {
@@ -16,18 +24,14 @@ export default class Block {
   };
 
   protected _element: HTMLElement | null = null;
-
   protected _id: number = Math.floor(100000 + Math.random() * 900000);
-
-  protected props: BlockProps;
-
-  protected children: Record<string, Block>;
-
+  public props: BlockProps;
+  public children: Record<string, Block>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected lists: Record<string, any[]>;
-
   protected eventBus: () => EventBus;
 
-  constructor(propsWithChildren: BlockProps = {}) {
+  constructor(propsWithChildren: BlockProps = {} as BlockProps) {
     const eventBus = new EventBus();
     const { props, children, lists } = this._getChildrenPropsAndProps(propsWithChildren);
     this.props = this._makePropsProxy({ ...props });
@@ -39,7 +43,7 @@ export default class Block {
   }
 
   private _addEvents(): void {
-    const { events = {} } = this.props;
+    const { events = {} } = this.props as { events?: Record<string, EventListener> };
     Object.keys(events).forEach((eventName) => {
       if (this._element) {
         this._element.addEventListener(eventName, events[eventName]);
@@ -88,78 +92,78 @@ export default class Block {
   private _getChildrenPropsAndProps(propsAndChildren: BlockProps): {
     children: Record<string, Block>;
     props: BlockProps;
-    lists: Record<string, any[]>;
+    lists: Record<string, Block[]>;
   } {
     const children: Record<string, Block> = {};
     const props: BlockProps = {};
-    const lists: Record<string, any[]> = {};
+    const lists: Record<string, Block[]> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
-      } else if (Array.isArray(value)) {
-        lists[key] = value;
+      } else if (Array.isArray(value) && value.every((item) => item instanceof Block)) {
+        lists[key] = value as Block[];
       } else {
         props[key] = value;
       }
     });
 
-    return { children, props, lists };
+    return { children, props: props as BlockProps, lists };
   }
 
   protected addAttributes(): void {
-    const { attr = {} } = this.props;
+    const { attr = {} } = this.props as { attr?: AttributeProps };
 
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
-        this._element.setAttribute(key, value as string);
+        this._element.setAttribute(key, value);
       }
     });
   }
 
-  protected setAttributes(attr: any): void {
+  protected setAttributes(attr: AttributeProps): void {
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
-        this._element.setAttribute(key, value as string);
+        this._element.setAttribute(key, value);
       }
     });
   }
 
-  public setProps = (nextProps: BlockProps): void => {
+  public setProps(nextProps: BlockProps): void {
     if (!nextProps) {
       return;
     }
 
     Object.assign(this.props, nextProps);
-  };
+  }
 
   public getProps() {
     return this.props;
   }
 
-  public setLists = (nextList: Record<string, any[]>): void => {
+  public setLists(nextList: Record<string, Block[]>): void {
     if (!nextList) {
       return;
     }
 
     Object.assign(this.lists, nextList);
-  };
+  }
 
-  public setChild = (nextChild: Record<string, any>): void => {
+  public setChild(nextChild: Record<string, Block>): void {
     if (!nextChild) {
       return;
     }
 
     Object.assign(this.children, nextChild);
-  };
+  }
 
-  public removeLists = (nameList: any) => {
-    this.lists = Object.fromEntries(Object.entries(this.lists).filter((item) => item[0] !== nameList));
-  };
+  public removeLists(nameList: string): void {
+    this.lists = Object.fromEntries(Object.entries(this.lists).filter(([key]) => key !== nameList));
+  }
 
-  public removeChildren = (nameChild: any) => {
-    this.children = Object.fromEntries(Object.entries(this.children).filter((item) => item[0] !== nameChild));
-  };
+  public removeChildren(nameChild: string): void {
+    this.children = Object.fromEntries(Object.entries(this.children).filter(([key]) => key !== nameChild));
+  }
 
   get element(): HTMLElement | null {
     return this._element;
@@ -221,17 +225,18 @@ export default class Block {
     return this._element;
   }
 
-  private _makePropsProxy(props: any): any {
+  private _makePropsProxy<T extends object>(props: T): T {
     const self = this;
 
     return new Proxy(props, {
-      get(target: any, prop: string) {
-        const value = target[prop];
+      get(target: T, prop: string | symbol) {
+        const value = target[prop as keyof T];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target: any, prop: string, value: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      set(target: T, prop: string | symbol, value: any) {
         const oldTarget = { ...target };
-        target[prop] = value;
+        target[prop as keyof T] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },

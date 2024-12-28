@@ -1,9 +1,10 @@
+import { Input } from '../../../components/input';
 import Block from '../../../framework/Block';
 import { TField } from '../../../types';
 
 interface TProps extends TField {
-  onChange: (e: Event, currentThis: any) => void;
-  onBlur: (e: Event, currentThis: any) => void;
+  onChange: (e: Event, currentThis: Input) => void;
+  onBlur: (e: Event, currentThis: Input) => void;
 }
 
 export class FieldInfoProfile extends Block {

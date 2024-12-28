@@ -1,8 +1,9 @@
+import { Input } from '../../../components/input';
 import Block from '../../../framework/Block';
 
 interface TProps {
   onChange: (e: Event) => void;
-  onBlur: (e: Event, currentThis: any) => void;
+  onBlur: (e: Event, currentThis: Input) => void;
 }
 
 export class InputSubmitChat extends Block {

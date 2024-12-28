@@ -1,5 +1,6 @@
 import { dictInputProfile, state } from '../consts/consts';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const changeInputsProfile = (e: Event, currentThis: any) => {
   const { value, type, name } = e.target as HTMLInputElement;
   if (type === 'password') {

@@ -14,11 +14,11 @@ export class ModalChat extends Block {
       ...props,
       Input: new Input({
         ...props.infoInput,
-        onChange: (e: Event, currentThis: any) => {
+        onChange: (e: Event, currentThis: Input) => {
           const { value } = e.target as HTMLInputElement;
           console.log(value, currentThis);
         },
-        onBlur: (e: Event, currentThis: any) => console.log(e, currentThis),
+        onBlur: (e: Event, currentThis: Input) => console.log(e, currentThis),
       }),
       Button: new Button({
         ...props.infoButton,

@@ -5,6 +5,7 @@ import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
 import { updateBoolSaveBtnAndPass } from './updateBoolSaveBtnAndPass';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const changeClickButtonProfile = (event: Event, currentThis: any) => {
   const currentFieldsEl = currentThis.lists.FieldsInfoProfile;
   const currentElementId = (event.currentTarget as HTMLInputElement).id;
@@ -35,6 +36,7 @@ export const changeClickButtonProfile = (event: Event, currentThis: any) => {
   switch (currentElementId) {
     case 'updateData': {
       updateButtons();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: false });
       });
@@ -57,6 +59,7 @@ export const changeClickButtonProfile = (event: Event, currentThis: any) => {
       currentThis.setLists({ Buttons });
       updateBoolSaveBtnAndPass(currentThis, false);
       updateBoolSaveBtn(currentThis, false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: true });
       });

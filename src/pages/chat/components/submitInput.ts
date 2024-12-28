@@ -51,7 +51,7 @@ export class SubmitInput extends Block {
 
   openMenuActions() {
     const isActive = this.children.SubmitFormActions.getProps().className;
-    if (isActive.includes('active')) {
+    if (isActive == 'submitFormMessage__actions active') {
       this.children.SubmitFormActions.setProps({ className: 'submitFormMessage__actions' });
     } else {
       this.children.SubmitFormActions.setProps({ className: 'submitFormMessage__actions active' });

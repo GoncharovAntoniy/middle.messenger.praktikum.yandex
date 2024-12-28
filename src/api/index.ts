@@ -5,22 +5,25 @@ enum METHODS {
   DELETE = 'DELETE',
 }
 
+type Headers = Record<string, string>;
+
 type Options = {
   method?: METHODS;
-  data?: any;
-  headers?: any;
+  data?: Record<string, unknown> | string | FormData | null;
+  headers?: Headers;
   timeout?: number;
 };
-type OptionsWithoutMethod = Omit<Options, 'methods'>;
+type OptionsWithoutMethod = Omit<Options, 'method'>;
 
-function queryStringify(data: Record<string, any>) {
+function queryStringify(data: Record<string, unknown>): string {
   if (typeof data !== 'object') {
-    throw new Error('Data must be object');
+    throw new Error('Data must be an object');
   }
 
   const keys = Object.keys(data);
   return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+    const value = encodeURIComponent(String(data[key]));
+    return `${result}${key}=${value}${index < keys.length - 1 ? '&' : ''}`;
   }, '?');
 }
 
@@ -41,38 +44,40 @@ export class HTTPTransport {
     return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
   };
 
-  request = (url: string, options: OptionsWithoutMethod = {}, timeout = 5000): Promise<XMLHttpRequest> => {
+  request = (url: string, options: Options = {}, timeout = 5000): Promise<XMLHttpRequest> => {
     const { headers = {}, method, data } = options;
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!method) {
-        reject('No method');
+        reject(new Error('No method specified'));
         return;
       }
 
       const xhr = new XMLHttpRequest();
       const isGet = method === METHODS.GET;
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data as Record<string, unknown>)}` : url);
 
-      Object.keys(headers).forEach((key) => {
-        xhr.setRequestHeader(key, headers[key]);
+      Object.entries(headers).forEach(([key, value]) => {
+        xhr.setRequestHeader(key, value);
       });
 
       xhr.onload = function () {
         resolve(xhr);
       };
 
-      xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.onabort = () => reject(new Error('Request aborted'));
+      xhr.onerror = () => reject(new Error('Network error'));
+      xhr.ontimeout = () => reject(new Error('Request timeout'));
 
       xhr.timeout = timeout;
-      xhr.ontimeout = reject;
 
       if (isGet || !data) {
         xhr.send();
-      } else {
+      } else if (typeof data === 'string' || data instanceof FormData) {
         xhr.send(data);
+      } else {
+        xhr.send(JSON.stringify(data));
       }
     });
   };

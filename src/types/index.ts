@@ -1,4 +1,8 @@
-export interface TChatLogMessages {
+import { BlockProps } from '../framework/Block';
+import { Input } from '../components/input';
+import { Button } from '../components/button';
+
+export interface TChatLogMessages extends BlockProps {
   id: number;
   message: string;
   role: number;
@@ -6,49 +10,49 @@ export interface TChatLogMessages {
   isImage: boolean;
 }
 
-export interface TInput {
+export interface TInput extends BlockProps {
   name?: string;
   inputId: string;
   classInput: string;
   typeInput: string;
   placeholderInput: string;
   value?: string;
-  onChange?: (e: Event, currentThis: any) => void;
-  onBlur?: (e: Event, currentThis: any) => void;
-  events?: { [key: string]: (e: Event, currentThis: any) => void };
+  onChange?: (e: Event, currentThis: Input) => void;
+  onBlur?: (e: Event, currentThis: Input) => void;
+  events?: Record<string, (e: Event, currentThis: Input) => void>;
 }
 
-export interface TButton {
+export interface TButton extends BlockProps {
   idButton: string;
   typeButton?: string;
   classButton?: string;
   textButton?: string;
   events?: Record<string, (e: Event) => void>;
-  onClick?: (e: Event, currentThis: any) => void;
+  onClick?: (e: Event, currentThis: Button) => void;
 }
 
-export interface TField {
+export interface TField extends BlockProps {
   name: string;
   idInput: string;
   nameField: string;
   value: string;
   typeInput: string;
   disabled?: boolean;
-  onChange?: (e: Event, currentThis: any) => void;
-  onBlur?: (e: Event, currentThis: any) => void;
+  onChange?: (e: Event, currentThis: Input) => void;
+  onBlur?: (e: Event, currentThis: Input) => void;
 }
 
-export interface TContextLogin {
+export interface TContextLogin extends BlockProps {
   inputs: TInput[];
   buttons: TButton[];
 }
 
-export interface TContextRegister {
+export interface TContextRegister extends BlockProps {
   inputs: TInput[];
   buttons: TButton[];
 }
 
-export interface TSubmitActionItem {
+export interface TSubmitActionItem extends BlockProps {
   icon: string;
   actionId: string;
   actionType: string;
@@ -57,25 +61,25 @@ export interface TSubmitActionItem {
   accept: string;
 }
 
-export interface TInfoAvatar {
+export interface TInfoAvatar extends BlockProps {
   username: string;
   lastMessage?: string;
   time?: string;
   notReadMessageCount?: string;
 }
 
-export interface TInfoHeaderChat {
+export interface TInfoHeaderChat extends BlockProps {
   username: string;
 }
 
-export interface TInfoSubmitInput {
+export interface TInfoSubmitInput extends BlockProps {
   name: string;
   id: string;
   type: string;
   classInput: string;
 }
 
-export interface TModalInfo {
+export interface TModalInfo extends BlockProps {
   title: string;
   className: string;
   closeIcon: string;
@@ -83,7 +87,7 @@ export interface TModalInfo {
   infoButton: TButton;
 }
 
-export interface TContextChat {
+export interface TContextChat extends BlockProps {
   infoAvatar: TInfoAvatar[];
   infoHeaderChat: TInfoHeaderChat;
   infoSubmitInput: TInfoSubmitInput;
@@ -91,13 +95,13 @@ export interface TContextChat {
   submitActionsItem: TSubmitActionItem[];
 }
 
-export interface TAvatarInfoProfile {
+export interface TAvatarInfoProfile extends BlockProps {
   avatar: string;
   username: string;
   classAvatar: string;
 }
 
-export interface TContextProfile {
+export interface TContextProfile extends BlockProps {
   updateData: boolean;
   updatePass: boolean;
   saveButton: boolean;
@@ -107,13 +111,13 @@ export interface TContextProfile {
   updateBtn: TButton;
 }
 
-export interface TModalProfileInfo {
+export interface TModalProfileInfo extends BlockProps {
   title: string;
   infoInput: TInput;
   infoButton: TButton;
 }
 
-export interface TErrorPageContext {
+export interface TErrorPageContext extends BlockProps {
   errorCode: string;
   errorDescription: string;
   backToChatBtn: TButton;
@@ -123,7 +127,7 @@ export interface TDict {
   [key: string]: string | number;
 }
 
-export interface TState {
+export interface TState extends BlockProps {
   currentPage: string;
   emptyLog: boolean;
   chatLogMessages: TChatLogMessages[];

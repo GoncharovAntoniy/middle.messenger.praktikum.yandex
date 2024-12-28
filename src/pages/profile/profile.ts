@@ -83,7 +83,8 @@ export class Profile extends Block {
   }
 
   render() {
-    const saveButton = this.props.props.contextProfile.saveButton;
+    console.log(this);
+    const saveButton = this.props.props?.contextProfile.saveButton;
     return `
         <div id="app">
             <main class="profile">

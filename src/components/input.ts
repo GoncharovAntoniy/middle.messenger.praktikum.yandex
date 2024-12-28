@@ -2,8 +2,8 @@ import Block from '../framework/Block';
 import { TInput } from '../types';
 
 interface TProps extends TInput {
-  onChange: (e: Event, currentThis: any) => void;
-  onBlur: (e: Event, currentThis: any) => void;
+  onChange: (e: Event, currentThis: Input) => void;
+  onBlur: (e: Event, currentThis: Input) => void;
 }
 
 export class Input extends Block {

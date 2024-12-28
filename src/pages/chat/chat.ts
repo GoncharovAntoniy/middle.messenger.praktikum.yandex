@@ -41,7 +41,7 @@ export class Chat extends Block {
   openModalChat(e: Event, currentProps: TCurrentProps) {
     e.stopPropagation();
 
-    let propsModal = this.props.props.contextChat.modalInfo;
+    let propsModal = this.props.props?.contextChat.modalInfo;
     propsModal = {
       ...propsModal,
       infoButton: {

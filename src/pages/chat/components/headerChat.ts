@@ -20,7 +20,8 @@ export class HeaderChat extends Block {
 
   showActionMenu(e: Event) {
     e.stopPropagation();
-    if (this.children.ActionMenu.getProps().className.includes('active')) {
+    const { className } = this.children.ActionMenu.getProps();
+    if (className == 'actionMenu active') {
       this.children.ActionMenu.setProps({ className: 'actionMenu' });
     } else {
       this.children.ActionMenu.setProps({ className: 'actionMenu active' });
