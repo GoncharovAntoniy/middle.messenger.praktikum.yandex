@@ -17,7 +17,8 @@ interface AttributeProps {
   [key: string]: string;
 }
 
-export default class Block {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default abstract class Block<Props extends Record<string, any> = BlockProps> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -27,7 +28,7 @@ export default class Block {
 
   protected _element: HTMLElement | null = null;
   protected _id: number = Math.floor(100000 + Math.random() * 900000);
-  public props: BlockProps;
+  public props: Props;
   public children: Record<string, Block>;
   public lists: Record<string, unknown[]>;
   protected eventBus: () => EventBus;
@@ -35,7 +36,7 @@ export default class Block {
   constructor(propsWithChildren: BlockProps = {} as BlockProps) {
     const eventBus = new EventBus();
     const { props, children, lists } = this._getChildrenPropsAndProps(propsWithChildren);
-    this.props = this._makePropsProxy({ ...props });
+    this.props = this._makePropsProxy({ ...(props as Props) });
     this.children = children;
     this.lists = this._makePropsProxy({ ...lists });
     this.eventBus = () => eventBus;
@@ -47,7 +48,16 @@ export default class Block {
     const { events = {} } = this.props as { events?: Record<string, EventListener> };
     Object.keys(events).forEach((eventName) => {
       if (this._element) {
-        this._element.addEventListener(eventName, events[eventName]);
+        this._element.addEventListener(eventName, events[eventName].bind(this));
+      }
+    });
+  }
+
+  private _removeEvents(): void {
+    const { events = {} } = this.props as { events?: Record<string, EventListener> };
+    Object.keys(events).forEach((eventName) => {
+      if (this._element) {
+        this._element.removeEventListener(eventName, events[eventName]);
       }
     });
   }
@@ -171,7 +181,13 @@ export default class Block {
   }
 
   private _render(): void {
-    const propsAndStubs = { ...this.props };
+    const shouldRemoveEvents = this._element !== null;
+
+    if (shouldRemoveEvents) {
+      this._removeEvents();
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const propsAndStubs = { ...this.props } as Record<string, any>;
     const tmpId = Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;

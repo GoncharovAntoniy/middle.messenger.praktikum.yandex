@@ -29,6 +29,7 @@ export class Input extends Block {
           required
       />
       <label class="labelInput" for= "{{inputId}}" > {{ placeholderInput }}</label>
+      <label class="errorLabel" for= "{{inputId}}" > {{ errorValue }}</label>
     </div>`;
   }
 }
