@@ -1,4 +1,4 @@
-@use "../../../styles/consts" as *;
+@use '../../../styles/consts' as *;
 
 .chatContainer {
   position: relative;
@@ -14,10 +14,15 @@
     padding: 10px;
   }
 
+  &__rightSection::-webkit-scrollbar {
+    display: none;
+  }
+
   &__rightSection {
     flex: 0 1 80%;
     height: 100%;
-    padding: 10px 20px;
+    padding: 0 20px;
+    overflow: scroll;
   }
 }
 
@@ -53,6 +58,7 @@
   align-items: center;
   color: $color-light-gray;
   cursor: pointer;
+
   & > span {
     transform: translateY(1px);
   }
@@ -70,10 +76,12 @@
   padding: 6px;
   font-size: 12px;
 }
+
 .searchInput:focus {
   border: none;
   outline: none;
 }
+
 #searchInputLabel {
   position: absolute;
   top: 50%;
@@ -86,13 +94,14 @@
   display: flex;
   align-items: center;
   gap: 4px;
+
   & > span {
     transform: translateY(1px);
   }
 }
 
 .searchInput:focus + #searchInputLabel,
-.searchInput[data-has-value="true"] + #searchInputLabel {
+.searchInput[data-has-value='true'] + #searchInputLabel {
   top: 0;
   left: 0;
   font-size: 9px;
@@ -108,12 +117,13 @@
 
 .avatar:hover {
   background-color: #f8f8f8;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 .listUsers {
   overflow: scroll;
   height: calc(100vh - 110px);
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -169,7 +179,7 @@
       width: 20px;
       height: 20px;
       background-color: $color-blue;
-      color: #ffffff;
+      color: #fff;
       font-size: 12px;
       display: flex;
       align-items: center;
@@ -185,12 +195,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow: scroll;
   box-sizing: border-box;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &__header {
     position: fixed;
@@ -200,7 +205,7 @@
   }
 
   &__chat {
-    padding: 72px 0 52px 0;
+    padding: 72px 0 52px;
   }
 
   &__formSubmit {
@@ -221,6 +226,7 @@
 
   & .avatar {
     border-bottom: none;
+
     &:hover {
       box-shadow: none;
       background-color: inherit;
@@ -257,14 +263,12 @@
   }
 }
 
-
 .actionMenu {
   display: none;
   position: absolute;
   right: 0;
   top: 80px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 4px 6px rgb(0 0 0 / 20%), 0 1px 3px rgb(0 0 0 / 10%);
   border-radius: 20px;
   background-color: white;
   flex-direction: column;
@@ -281,6 +285,7 @@
     padding: 15px;
     transition: 0.3s;
     width: 100%;
+
     &:hover {
       background-color: #f3f1f1;
     }
@@ -304,9 +309,6 @@
   }
 }
 
-.chatLog::-webkit-scrollbar {
-  display: none;
-}
 .chatLog {
   position: sticky;
   display: flex;
@@ -315,7 +317,6 @@
   height: 100%;
   justify-content: flex-end;
   padding: 10px 8px;
-  overflow: scroll;
   box-sizing: border-box;
 
   &__myMessage {
@@ -323,7 +324,6 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 8px;
-    
 
     &_message {
       width: fit-content;
@@ -332,7 +332,7 @@
       flex-wrap: wrap;
       padding: 11px;
       background-color: #e4edfd;
-      border-radius: 10px 10px 0 10px;
+      border-radius: 10px 10px 0;
 
       &-time {
         font-size: 9px;
@@ -343,9 +343,10 @@
     &_media {
       max-width: 400px;
       padding: 11px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgb(0 0 0 / 20%), 0 1px 3px rgb(0 0 0 / 10%);
       border: $border-gray-color;
       border-radius: 12px;
+
       & > img {
         background-size: cover;
         background-repeat: no-repeat;
@@ -367,7 +368,7 @@
       flex-wrap: wrap;
       padding: 11px;
       background-color: #f8f8f8;
-      border-radius: 0 10px 10px 10px;
+      border-radius: 0 10px 10px;
 
       &-time {
         font-size: 9px;
@@ -376,6 +377,7 @@
     }
   }
 }
+
 .submitFormMessage {
   position: relative;
   width: 100%;
@@ -390,6 +392,7 @@
   &__action {
     cursor: pointer;
     transition: 0.3s;
+
     &:hover {
       transform: translateY(-3px);
     }
@@ -403,11 +406,13 @@
     min-height: 32px;
     height: fit-content;
     padding: 10px 20px;
+
     &:focus {
       border: none;
       outline: none;
     }
   }
+
   &__button {
     background-color: inherit;
     border: none;
@@ -418,12 +423,13 @@
       transform: translateY(-3px);
     }
   }
+
   &__actions {
     position: absolute;
     background-color: white;
     left: 0;
     bottom: 70px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
     border-radius: 12px;
     width: 162px;
     display: none;
@@ -440,13 +446,14 @@
       padding: 8px 16px;
       font-size: 12px;
 
-
       &:hover {
         background-color: #f8f8f8;
         border-radius: 12px;
       }
 
-      &-media, &-file, &-location {
+      &-media,
+      &-file,
+      &-location {
         display: none;
       }
     }
@@ -457,9 +464,9 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0 0 0 / 50%);
   z-index: 66666;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 
@@ -484,5 +491,5 @@
 }
 
 .active {
-  display: flex ;
+  display: flex;
 }

@@ -1,5 +1,0 @@
-export {default as BackToChat} from './backToChat.hbs?raw'
-export {default as AvatarProfile} from './avatarProfile.hbs?raw'
-export {default as FieldInfoProfile} from './fieldInfoProfile.hbs?raw'
-export {default as ModalUpdateIconProfile} from './modalUpdateIconProfile.hbs?raw'
-export {default as InputModalProfile } from './inputModal.hbs?raw'
