@@ -31,12 +31,12 @@ export class ActionMenuItem extends Block {
   }
   render() {
     return `
-                <div id="{{idAction}}" class="actionMenu__item">
-                    <span class="actionMenu__item_addUser">
-                        +
-                    </span>
-                    <p class="actionMenu__item_text">{{item_text}}</p>
-                </div>
-                `;
+            <div id="{{idAction}}" class="actionMenu__item">
+                <span class="actionMenu__item_addUser">
+                    +
+                </span>
+                <p class="actionMenu__item_text">{{item_text}}</p>
+            </div>
+            `;
   }
 }

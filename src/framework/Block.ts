@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-empty-function */
+// import { store } from '../store/store';
 import EventBus, { EventCallback } from './EventBus';
 import * as Handlebars from 'handlebars';
 
 export interface BlockProps {
   props?: {
-    // Пришлось добавить any потому, что в некоторых местах использую конструкция для получения и изменения пропсов типа this.props.prop?...
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
   setProps?: (value: object) => void;
@@ -17,7 +17,6 @@ interface AttributeProps {
   [key: string]: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default abstract class Block<Props extends Record<string, any> = BlockProps> {
   static EVENTS = {
     INIT: 'init',
@@ -91,13 +90,14 @@ export default abstract class Block<Props extends Record<string, any> = BlockPro
     if (!response) {
       return;
     }
-    this._render();
+    return this._render();
   }
 
-  protected componentDidUpdate(oldProps?: BlockProps, newProps?: BlockProps): boolean {
-    console.log('oldProps', oldProps);
-    console.log('newProps', newProps);
-    return true;
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+    if (JSON.stringify(oldProps) !== JSON.stringify(newProps)) {
+      return true;
+    }
+    return false;
   }
 
   private _getChildrenPropsAndProps(propsAndChildren: BlockProps): {
@@ -144,8 +144,9 @@ export default abstract class Block<Props extends Record<string, any> = BlockPro
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
+
+    this._render();
   }
 
   public getProps() {
@@ -158,6 +159,7 @@ export default abstract class Block<Props extends Record<string, any> = BlockPro
     }
 
     Object.assign(this.lists, nextList);
+    this._render();
   }
 
   public setChild(nextChild: Record<string, Block>): void {
@@ -186,7 +188,6 @@ export default abstract class Block<Props extends Record<string, any> = BlockPro
     if (shouldRemoveEvents) {
       this._removeEvents();
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const propsAndStubs = { ...this.props } as Record<string, any>;
     const tmpId = Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {

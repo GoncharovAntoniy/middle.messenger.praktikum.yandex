@@ -1,6 +1,5 @@
-import App from '../../App';
+import { router } from '../../App';
 import { Button } from '../../components/button';
-import { state } from '../../consts/consts';
 import Block from '../../framework/Block';
 import { TButton, TContextProfile, TField, TModalProfileInfo } from '../../types/index';
 import { changeClickButtonProfile } from '../../utils/changeClickButtonProfile';
@@ -24,6 +23,7 @@ export class Profile extends Block {
   constructor(props: TProps) {
     super({
       ...props,
+      saveButton: props.props?.contextProfile.saveButton,
       BackToChat: new BackToChat({
         idButton: 'backToChatBtnProfile',
         onClick: (e: Event) => {
@@ -77,14 +77,11 @@ export class Profile extends Block {
 
   backToChatRedirect(e: Event) {
     e.preventDefault();
-    state.currentPage = '/chat';
-    const app = new App();
-    app.render();
+    router.go('/chat');
   }
 
   render() {
-    console.log(this);
-    const saveButton = this.props.props?.contextProfile.saveButton;
+    // const saveButton = this.props.props?.contextProfile.saveButton;
     return `
         <div id="app">
             <main class="profile">
@@ -99,7 +96,7 @@ export class Profile extends Block {
                                 
                                 </div>
                                 <div class="profile__infoUser_container_update">
-                                {{#if ${saveButton}}}
+                                {{#if saveButton }}
                                 <div class="profile__infoUser_container_update-saveBtnContainer">
                                     {{{ Buttons }}}
                                 </div>

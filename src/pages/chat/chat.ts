@@ -1,9 +1,11 @@
 import { Button } from '../../components/button';
 import Block from '../../framework/Block';
+import store, { StoreEvents } from '../../store/store';
 import { TChatLogMessages, TContextChat, TModalInfo } from '../../types';
-import { ModalChat } from './components/modalChat';
+import { EmptyChatlog } from './components/emptyChatLog';
+import { modalChat } from './components/modalChat';
 import { MessageModule } from './modules/messageModule';
-import { SearchAndListUsersModule } from './modules/searchAndListUsersModule';
+import { searchAndListUsersModule } from './modules/searchAndListUsersModule';
 
 interface TCurrentProps {
   textButton: string;
@@ -29,12 +31,15 @@ export class Chat extends Block {
   constructor(props: TProps) {
     super({
       ...props,
-      SearchAndListUsersModule: new SearchAndListUsersModule({ ...props }),
+      SearchAndListUsersModule: new searchAndListUsersModule(props.props.contextChat.infoAvatar),
       MessageModule: new MessageModule({
         ...props,
         openModalChat: (e: Event, currentProps: TCurrentProps) => this.openModalChat(e, currentProps),
       }),
-      ModalChat: new ModalChat({ ...props.props.contextChat.modalInfo }),
+      ModalChat: new modalChat({ ...props.props.contextChat.modalInfo }),
+    });
+    store.on(StoreEvents.Updated, () => {
+      // console.log('event on');
     });
   }
 
@@ -52,7 +57,7 @@ export class Chat extends Block {
       title: currentProps.title,
       className: 'modalChat active',
     };
-    const button = new Button({ ...propsModal.infoButton, onClick: (e: Event) => console.log(e) });
+    const button = new Button({ ...propsModal.infoButton });
     this.children.ModalChat.setChild({ Button: button });
     this.children.ModalChat.setProps({
       title: currentProps.title,
@@ -63,7 +68,6 @@ export class Chat extends Block {
       },
     });
   }
-
   render() {
     return `
             <div id="app">
@@ -72,7 +76,8 @@ export class Chat extends Block {
                         {{{ SearchAndListUsersModule }}}
                     </section>
                     <section class="chatContainer__rightSection">
-                        {{{ MessageModule }}}
+                    {{{ MessageModule }}}
+                    
                     </section>
                 </main>
                 {{{ ModalChat }}}

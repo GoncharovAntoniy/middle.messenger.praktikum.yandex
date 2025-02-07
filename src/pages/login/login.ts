@@ -1,4 +1,5 @@
 import Block from '../../framework/Block';
+// import store, { StoreEvents } from '../../store/store';
 import { TButton, TInput } from '../../types/index';
 import { FormLogin } from './form';
 

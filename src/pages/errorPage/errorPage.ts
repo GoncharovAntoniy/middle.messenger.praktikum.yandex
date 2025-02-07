@@ -1,11 +1,10 @@
-import App from '../../App';
+import { router } from '../../App';
 import { Button } from '../../components/button';
-import { state } from '../../consts/consts';
 import Block from '../../framework/Block';
 import { TButton } from '../../types/index';
 
 interface TProps {
-  backToChatBtn: TButton;
+  props: { backToChatBtn: TButton };
 }
 
 export class ErrorPage extends Block {
@@ -13,23 +12,24 @@ export class ErrorPage extends Block {
     super({
       ...props,
       Button: new Button({
-        ...props.backToChatBtn,
+        ...props.props.backToChatBtn,
         onClick: (e: Event) => this.backToChat(e),
       }),
     });
   }
   backToChat(e: Event) {
     e.preventDefault();
-    state.currentPage = '/chat';
-    const app = new App();
-    app.render();
+    // state.currentPage = '/chat';
+    // const app = new App();
+    // app.render();
+    router.go('/chat');
   }
   render() {
     return `<div id="app">
                     <main class="errorPage">
                         <div class="errorPage__codeSection">
-                            <h3 class="errorPage__codeSection_code">{{errorCode}}</h3>
-                            <p class="errorPage__codeSection_description">{{errorDescription}}</p>
+                            <h3 class="errorPage__codeSection_code">{{props.errorCode}}</h3>
+                            <p class="errorPage__codeSection_description">{{props.errorDescription}}</p>
                         </div>
                         {{{ Button }}}
                     </main>

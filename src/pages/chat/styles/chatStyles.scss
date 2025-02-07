@@ -189,6 +189,11 @@
   }
 }
 
+.active {
+  background-color: #d6eff5;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
+}
+
 .messageModule {
   position: relative;
   display: flex;
