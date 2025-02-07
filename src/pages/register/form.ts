@@ -1,7 +1,9 @@
-import App from '../../App';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { RegisterApi } from '../../api/registration-api';
+import { router } from '../../App';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
-import { dictInput, state } from '../../consts/consts';
+import { dictInput } from '../../consts/consts';
 import Block from '../../framework/Block';
 import { TButton, TInput } from '../../types';
 import { validationFormInput } from '../../utils/validationFormInput';
@@ -45,7 +47,6 @@ export class FormRegister extends Block {
 
   changeClickButtons(e: Event) {
     e.preventDefault();
-    const app = new App();
     if ((e.currentTarget as HTMLElement).id === 'registerBtn') {
       const isFalsArray: boolean[] = [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,10 +58,15 @@ export class FormRegister extends Block {
         }
       });
       console.log(this.dictInputsValue);
+      // Настроить регистрацию
+      const register = new RegisterApi();
+      register
+        .createRegister(this.dictInputsValue)
+        .then((data) => ((data as Record<string, any>).id ? router.go('/chat') : console.log(data)))
+        .catch((err) => console.error(err));
     }
     if ((e.currentTarget as HTMLElement).id === 'loginBtn') {
-      state.currentPage = '/login';
-      app.render();
+      router.go('/');
     }
   }
 

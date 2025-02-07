@@ -1,7 +1,9 @@
 import { Button } from '../../../components/button';
 import { Input } from '../../../components/input';
 import Block from '../../../framework/Block';
+import store, { connect, StoreEvents } from '../../../store/store';
 import { TButton, TInput, TModalInfo } from '../../../types';
+import chatController from '../chat-controller';
 
 export interface TPropsModalChat extends TModalInfo {
   infoInput: TInput;
@@ -9,6 +11,7 @@ export interface TPropsModalChat extends TModalInfo {
 }
 
 export class ModalChat extends Block {
+  currentValueLogin = '';
   constructor(props: TPropsModalChat) {
     super({
       ...props,
@@ -16,6 +19,7 @@ export class ModalChat extends Block {
         ...props.infoInput,
         onChange: (e: Event, currentThis: Input) => {
           const { value } = e.target as HTMLInputElement;
+          this.currentValueLogin = value;
           console.log(value, currentThis);
         },
         onBlur: (e: Event, currentThis: Input) => console.log(e, currentThis),
@@ -24,10 +28,14 @@ export class ModalChat extends Block {
         ...props.infoButton,
         onClick: (e: Event) => {
           console.log(e);
+          chatController.setListUsers(this.currentValueLogin);
         },
       }),
       events: {
-        submit: (e: Event) => e.preventDefault(),
+        submit: (e: Event) => {
+          e.preventDefault();
+          chatController.setListUsers(this.currentValueLogin);
+        },
         click: (e: Event) => {
           const attrClass = (e.target as HTMLInputElement).getAttribute('class');
           if (attrClass === 'modalChat__container') {
@@ -38,6 +46,9 @@ export class ModalChat extends Block {
           }
         },
       },
+    });
+    store.on(StoreEvents.Updated, () => {
+      // console.log('store on');
     });
   }
 
@@ -53,3 +64,15 @@ export class ModalChat extends Block {
                 `;
   }
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapStateToProps = (state: Record<string, any>) => {
+  return {
+    title: state.contextChat.modalInfo.title,
+    className: state.contextChat.modalInfo.className,
+    infoInput: state.contextChat.modalInfo.infoInput,
+    infoButton: state.contextChat.modalInfo.infoButton,
+  };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const modalChat = connect(mapStateToProps)(ModalChat as any);

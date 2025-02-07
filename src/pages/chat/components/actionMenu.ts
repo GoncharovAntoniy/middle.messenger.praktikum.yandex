@@ -1,4 +1,6 @@
 import Block from '../../../framework/Block';
+import store from '../../../store/store';
+import chatController from '../chat-controller';
 import { TCurrentProps } from '../modules/messageModule';
 import { ActionMenuItem } from './actionMenuItem';
 
@@ -33,11 +35,15 @@ export class ActionMenu extends Block {
       }),
       ActionMenuItemDeleteUser: new ActionMenuItem({
         idAction: 'deleteUser',
-        item_text: 'Удалить пользователя',
-        title: 'Удалить пользователя',
+        item_text: 'Удалить чат',
+        title: 'Удалить чат',
         textButton: 'Удалить',
         idButton: 'deleteUser',
-        onClick: (e: Event, currentProps: TCurrentProps) => props.openModalChat(e, currentProps),
+        onClick: () => {
+          const id = store.getState().currentChatId as number;
+          chatController.deleteUserChat(id);
+          this.setProps({ className: 'actionMenu' });
+        },
       }),
     });
   }

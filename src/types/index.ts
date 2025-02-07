@@ -62,14 +62,18 @@ export interface TSubmitActionItem extends BlockProps {
 }
 
 export interface TInfoAvatar extends BlockProps {
-  username: string;
-  lastMessage?: string;
-  time?: string;
-  notReadMessageCount?: string;
+  title: string;
+  avatar?: string;
+  created_by?: string;
+  id: number;
+  last_message?: Record<string, any>;
+  unread_count?: string;
+  time: string;
+  currentChatClass?: string;
 }
 
 export interface TInfoHeaderChat extends BlockProps {
-  username: string;
+  title: string;
 }
 
 export interface TInfoSubmitInput extends BlockProps {
@@ -82,7 +86,6 @@ export interface TInfoSubmitInput extends BlockProps {
 export interface TModalInfo extends BlockProps {
   title: string;
   className: string;
-  closeIcon: string;
   infoInput: TInput;
   infoButton: TButton;
 }

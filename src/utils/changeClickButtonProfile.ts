@@ -1,6 +1,6 @@
+import { LogoutApi } from '../api/logout-api';
 import App from '../App';
 import { Button } from '../components/button';
-import { state } from '../consts/consts';
 import Block from '../framework/Block';
 import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
@@ -50,9 +50,8 @@ export const changeClickButtonProfile = (event: Event, currentThis: Block) => {
       return;
     }
     case 'logout': {
-      state.currentPage = '/login';
-      const app = new App();
-      app.render();
+      const logout = new LogoutApi();
+      logout.logout();
       return 'click logout';
     }
     case 'saveDataBtn': {
@@ -60,7 +59,7 @@ export const changeClickButtonProfile = (event: Event, currentThis: Block) => {
       currentThis.setLists({ Buttons });
       updateBoolSaveBtnAndPass(currentThis, false);
       updateBoolSaveBtn(currentThis, false);
-      // Не смог избавить сяот any
+      // Не смог избавиться от any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: true });

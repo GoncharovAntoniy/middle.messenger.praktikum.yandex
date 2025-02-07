@@ -1,11 +1,13 @@
 import { state } from './consts/consts';
-import { Chat } from './pages/chat/chat';
-import { ErrorPage } from './pages/errorPage/errorPage';
-import { Login } from './pages/login/login';
-import { Profile } from './pages/profile/profile';
-import { Register } from './pages/register/register';
+import Router from './framework/router';
+import ConnectedChat from './pages/chat';
+import ConnectedErrorPage from './pages/errorPage';
+import ConnectedLogin from './pages/login';
+import ConnectedProfile from './pages/profile';
+import ConnectedRegister from './pages/register';
 import { TState } from './types';
 
+export const router = new Router('#app');
 export default class App {
   public state: TState;
   private appElement: HTMLElement | null;
@@ -16,32 +18,9 @@ export default class App {
   }
 
   render(): string {
-    if (this.state.currentPage === '/login') {
-      const loginPage = new Login({
-        props: this.state.contextLogin,
-      });
+    router.use('/', ConnectedLogin).use('/register', ConnectedRegister).use('/chat', ConnectedChat).use('/profile', ConnectedProfile).use('/errorPage', ConnectedErrorPage).start();
+    if (window.location.pathname === '/chat') {
       if (this.appElement) {
-        this.appElement.replaceWith(loginPage.getContent());
-      }
-    }
-    if (this.state.currentPage === '/register') {
-      const registerPage = new Register({
-        props: this.state.contextRegister,
-      });
-      if (this.appElement) {
-        this.appElement.replaceWith(registerPage.getContent());
-      }
-    }
-    if (this.state.currentPage === '/chat') {
-      const props = {
-        contextChat: this.state.contextChat,
-        emptyLog: this.state.emptyLog,
-        chatLogMessages: this.state.chatLogMessages,
-      };
-
-      const chatPage = new Chat({ props, contextChat: this.state.contextChat, emptyLog: this.state.emptyLog });
-      if (this.appElement) {
-        this.appElement.replaceWith(chatPage.getContent());
         const rigthBlock = document.querySelector('.chatContainer__rightSection');
         if (rigthBlock) {
           rigthBlock.scrollTo({
@@ -50,29 +29,6 @@ export default class App {
             behavior: 'auto',
           });
         }
-      }
-    }
-    if (this.state.currentPage === '/profile') {
-      const props = {
-        modalProfileInfo: this.state.modalProfileInfo,
-        contextProfile: this.state.contextProfile,
-        fieldsPass: this.state.fieldsPass,
-        fields: this.state.fields,
-        currentPage: this.state.currentPage,
-      };
-      const profilePage = new Profile({
-        props: props,
-      });
-      if (this.appElement) {
-        this.appElement.replaceWith(profilePage.getContent());
-      }
-    }
-    if (this.state.currentPage === '/errorPage') {
-      const errorPage = new ErrorPage({
-        ...this.state.errorPageContext,
-      });
-      if (this.appElement) {
-        this.appElement.replaceWith(errorPage.getContent());
       }
     }
     return '';
