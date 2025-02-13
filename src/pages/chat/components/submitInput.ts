@@ -42,9 +42,10 @@ export class SubmitInput extends Block {
 
       ButtonSubmitChat: new ButtonSubmitChat({}),
       events: {
-        submit: (e: Event) => {
+        submit: async (e: Event) => {
           e.preventDefault();
-          chatController.sendMessage('message', this.inputValue);
+          await chatController.sendMessage('message', this.inputValue);
+          this.inputValue = '';
           // const app = new App();
           // app.render();
         },

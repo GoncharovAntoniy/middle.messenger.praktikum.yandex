@@ -32,13 +32,20 @@ const modalInfo: TModalInfo = {
     textButton: 'Добавить',
   },
 };
+const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+const email = userInfo.email || '';
+const login = userInfo.login || '';
+const first_name = userInfo.first_name || '';
+const second_name = userInfo.second_name || '';
+const display_name = userInfo.display_name || '';
+const phone = userInfo.phone || '';
 
 const fields: TField[] = [
   {
     name: 'email',
     idInput: 'emailProfile',
     nameField: 'Почта',
-    value: 'pochta@yandex.ru',
+    value: email,
     typeInput: 'text',
     disabled: true,
   },
@@ -46,7 +53,7 @@ const fields: TField[] = [
     name: 'login',
     idInput: 'loginProfile',
     nameField: 'Логин',
-    value: 'ivanivanov',
+    value: login,
     typeInput: 'text',
     disabled: true,
   },
@@ -54,7 +61,7 @@ const fields: TField[] = [
     name: 'first_name',
     idInput: 'usernameProfile',
     nameField: 'Имя',
-    value: 'Иван',
+    value: first_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -62,7 +69,7 @@ const fields: TField[] = [
     name: 'second_name',
     idInput: 'lastnameProfile',
     nameField: 'Фамилия',
-    value: 'Иванов',
+    value: second_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -70,7 +77,7 @@ const fields: TField[] = [
     name: 'display_name',
     idInput: 'chatName',
     nameField: 'Имя в чате',
-    value: 'Иван',
+    value: display_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -78,7 +85,7 @@ const fields: TField[] = [
     name: 'phone',
     idInput: 'numberProfile',
     nameField: 'Телефон',
-    value: '+7 (909) 967 30 30',
+    value: phone,
     typeInput: 'text',
     disabled: true,
   },
@@ -89,21 +96,21 @@ const fieldsPass: TField[] = [
     name: 'oldPassword',
     idInput: 'oldPass',
     nameField: 'Старый пароль',
-    value: 'old password',
+    value: '',
     typeInput: 'password',
   },
   {
     name: 'newPassword',
     idInput: 'newPass',
     nameField: 'Новый пароль',
-    value: 'new password',
+    value: '',
     typeInput: 'password',
   },
   {
     name: 'newPassword',
     idInput: 'newRePass',
     nameField: 'Повторите новый пароль',
-    value: 'new password',
+    value: '',
     typeInput: 'password',
   },
 ];
@@ -250,17 +257,22 @@ const contextChat: TContextChat = {
   },
   modalInfo,
   submitActionsItem,
+  createChat: {
+    valueInput: '',
+  },
 };
 
 const contextProfile: TContextProfile = {
   updateData: false,
   updatePass: false,
   saveButton: false,
-  modalPropfile: false,
+  modalProfile: false,
+  userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
   avatarInfo: {
     avatar: '/images/userIcon.svg',
     username: 'Антоний',
     classAvatar: 'profile__infoUser_avatar-container_icon',
+    onClick: () => null,
   },
 
   buttons: [

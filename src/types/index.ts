@@ -102,13 +102,14 @@ export interface TAvatarInfoProfile extends BlockProps {
   avatar: string;
   username: string;
   classAvatar: string;
+  onClick: () => void | null;
 }
 
 export interface TContextProfile extends BlockProps {
   updateData: boolean;
   updatePass: boolean;
   saveButton: boolean;
-  modalPropfile: boolean;
+  modalProfile: boolean;
   avatarInfo: TAvatarInfoProfile;
   buttons: TButton[];
   updateBtn: TButton;

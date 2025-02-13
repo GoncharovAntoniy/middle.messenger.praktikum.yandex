@@ -2,6 +2,11 @@
 import { HTTPTransport } from '.';
 import { BaseApi } from './base-api';
 
+interface TValueUserToChat {
+  users: [number];
+  chatId: number;
+}
+
 const chatAPIInstance = new HTTPTransport();
 const baseHost = 'https://ya-praktikum.tech';
 
@@ -44,6 +49,18 @@ export class ChatApi extends BaseApi {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
+    });
+  }
+  addUserToChat(value: TValueUserToChat) {
+    return fetch(`${baseHost}/api/v2/chats/users`, {
+      method: 'PUT',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify(value),
     });
   }
   async fetchUnreadMessages(chatId: number, ws: WebSocket) {

@@ -3,7 +3,7 @@ import { Profile } from './profile';
 
 const mapStateToProps = (state: any) => ({
   props: {
-    modalProfileInfo: { ...state.modalProfileInfo },
+    modalProfileInfo: state.modalProfileInfo,
     contextProfile: { ...state.contextProfile },
     fieldsPass: [...state.fieldsPass],
     fields: [...state.fields],
@@ -11,5 +11,5 @@ const mapStateToProps = (state: any) => ({
   },
 });
 
-const ConnectedProfile = connect(mapStateToProps)(Profile);
+const ConnectedProfile = connect(mapStateToProps)(Profile as any);
 export default ConnectedProfile;

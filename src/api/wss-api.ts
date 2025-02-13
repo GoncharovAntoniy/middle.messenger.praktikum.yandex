@@ -6,7 +6,7 @@ export class WebSocketService {
   private reconnectInterval = 5000;
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 10;
-  private pingInterval: NodeJS.Timeout | null = null;
+  private pingInterval: any;
   private isLoadingMessages = false; // Флаг загрузки сообщений
 
   constructor(url: string) {
@@ -33,10 +33,8 @@ export class WebSocketService {
           return;
         }
         console.log('Received JSON:', data);
-        store.set('chatLogMessages', [...(store.getState().chatLogMessages || []), data]);
 
         if (Array.isArray(data)) {
-          // const chatLogMessages = store.getState().chatLogMessages || [];
           store.set('chatLogMessages', [...data.reverse()]);
           this.isLoadingMessages = false;
         } else {

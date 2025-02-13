@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { state } from './consts/consts';
 import Router from './framework/router';
 import ConnectedChat from './pages/chat';
@@ -5,6 +6,7 @@ import ConnectedErrorPage from './pages/errorPage';
 import ConnectedLogin from './pages/login';
 import ConnectedProfile from './pages/profile';
 import ConnectedRegister from './pages/register';
+import store, { StoreEvents } from './store/store';
 import { TState } from './types';
 
 export const router = new Router('#app');
@@ -15,6 +17,7 @@ export default class App {
   constructor() {
     this.state = state;
     this.appElement = document.getElementById('app');
+    store.on(StoreEvents.Updated, () => {});
   }
 
   render(): string {

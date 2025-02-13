@@ -19,7 +19,7 @@ export class Avatar extends Block {
       currentChatClass: props.currentChatClass || 'avatar',
       events: {
         click: async () => {
-          await chatController.getMessagesUser(this.props.id as number);
+          await chatController.getMessagesUser(this.props.id as number, props.title);
         },
       },
     });

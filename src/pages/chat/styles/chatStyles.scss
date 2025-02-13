@@ -123,6 +123,34 @@
 .listUsers {
   overflow: scroll;
   height: calc(100vh - 110px);
+  &_addUser {
+    width: 100%;
+    margin: 4px 2px;
+    &_form {
+      padding: 4px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      &_input {
+        flex: 0 1 80%;
+      }
+      &_item {
+        flex: 0 1 10%;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 0 2px;
+        border-radius: 4px;
+        width: 100%;
+        padding: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        &:hover {
+          background-color: #ecebeb;
+        }
+      }
+    }
+  }
 
   &::-webkit-scrollbar {
     display: none;

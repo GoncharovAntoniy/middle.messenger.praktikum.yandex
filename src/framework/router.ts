@@ -15,7 +15,7 @@ class Route {
 
   constructor(pathname: string, view: BlockClass, props: any) {
     this._pathname = pathname;
-    this._blockClass = new view({});
+    this._blockClass = view;
     this._block = null;
     this._props = props;
   }
@@ -38,7 +38,7 @@ class Route {
   }
 
   render() {
-    this._block = this._blockClass;
+    this._block = new this._blockClass({});
     render(this._props.rootQuery, this._block);
   }
 }

@@ -34,7 +34,7 @@ export class ModalChat extends Block {
       events: {
         submit: (e: Event) => {
           e.preventDefault();
-          chatController.setListUsers(this.currentValueLogin);
+          chatController.addUserChat({ users: [0], chatId: store.getState().currentChatId as number });
         },
         click: (e: Event) => {
           const attrClass = (e.target as HTMLInputElement).getAttribute('class');

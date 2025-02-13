@@ -6,11 +6,15 @@ import { TInfoAvatar } from '../../../types/index';
 import { isEqualAuthor } from '../../../utils/isEqualUtil';
 import chatController from '../chat-controller';
 import { Avatar } from '../components/avatar';
+import { CreateChat } from '../components/createChat';
 import { HeaderSearch } from '../components/headerSearch';
 
 interface TProps {
   props: {
     infoAvatar: TInfoAvatar[];
+    createChat: {
+      valueInput: string;
+    };
   };
 }
 
@@ -22,6 +26,7 @@ export class SearchAndListUsersModule extends Block {
         onClick: (e: Event) => this.redirectProfile(e),
       }),
       Avatars: [],
+      CreateChat: new CreateChat({ ...props.props?.createChat }),
     });
     chatController.getListUsers();
     store.on(StoreEvents.Updated, () => {
@@ -45,12 +50,14 @@ export class SearchAndListUsersModule extends Block {
     e.preventDefault();
     if ((e.target as HTMLInputElement).id === 'goToProfile') {
       router.go('/profile');
+      chatController.closeWS();
     }
   }
   render() {
     return `<div>
                     {{{ HeaderSearch }}}
                     <div class="listUsers">
+                        {{{ CreateChat }}}
                         {{{ Avatars }}}
                     </div>
                 </div>`;
@@ -59,6 +66,7 @@ export class SearchAndListUsersModule extends Block {
 const mapStateToProps = (state: any) => ({
   props: {
     infoAvatar: state.contextChat.infoAvatar,
+    createChat: state.contextChat.createChat,
   },
 });
 export const searchAndListUsersModule = connect(mapStateToProps)(SearchAndListUsersModule as any);
