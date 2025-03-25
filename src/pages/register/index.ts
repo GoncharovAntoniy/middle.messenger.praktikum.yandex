@@ -4,5 +4,6 @@ import { Register } from './register';
 
 const mapRegisterToProps = (state: any) => ({ props: state.contextRegister });
 
-const ConnectedRegister = connect(mapRegisterToProps)(Register);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ConnectedRegister = connect(mapRegisterToProps)(Register as any);
 export default ConnectedRegister;

@@ -1,17 +1,10 @@
-import { Button } from '../../components/button';
 import Block from '../../framework/Block';
 import store, { StoreEvents } from '../../store/store';
 import { TChatLogMessages, TContextChat, TModalInfo } from '../../types';
-import { EmptyChatlog } from './components/emptyChatLog';
+// import { EmptyChatlog } from './components/emptyChatLog';
 import { modalChat } from './components/modalChat';
 import { MessageModule } from './modules/messageModule';
 import { searchAndListUsersModule } from './modules/searchAndListUsersModule';
-
-interface TCurrentProps {
-  textButton: string;
-  idButton: string;
-  title: string;
-}
 
 interface ContextChat extends TContextChat {
   modalInfo: TModalInfo;
@@ -34,7 +27,7 @@ export class Chat extends Block {
       SearchAndListUsersModule: new searchAndListUsersModule(props.props.contextChat.infoAvatar),
       MessageModule: new MessageModule({
         ...props,
-        openModalChat: (e: Event, currentProps: TCurrentProps) => this.openModalChat(e, currentProps),
+        openModalChat: (e: Event) => this.openModalChat(e),
       }),
       ModalChat: new modalChat({ ...props.props.contextChat.modalInfo }),
     });
@@ -43,44 +36,24 @@ export class Chat extends Block {
     });
   }
 
-  openModalChat(e: Event, currentProps: TCurrentProps) {
+  openModalChat(e: Event) {
     e.stopPropagation();
 
-    let propsModal = this.props.props?.contextChat.modalInfo;
-    propsModal = {
-      ...propsModal,
-      infoButton: {
-        ...propsModal.infoButton,
-        textButton: currentProps.textButton,
-        idButton: currentProps.idButton,
-      },
-      title: currentProps.title,
-      className: 'modalChat active',
-    };
-    const button = new Button({ ...propsModal.infoButton });
-    this.children.ModalChat.setChild({ Button: button });
-    this.children.ModalChat.setProps({
-      title: currentProps.title,
-      className: 'modalChat active',
-      infoButton: {
-        idButton: currentProps.idButton,
-        textButton: currentProps.textButton,
-      },
-    });
+    store.set('modalInfo.className', 'modalChat active');
   }
   render() {
     return `
-            <div id="app">
-                <main class="chatContainer">
-                    <section class="chatContainer__leftSection">
-                        {{{ SearchAndListUsersModule }}}
-                    </section>
-                    <section class="chatContainer__rightSection">
-                    {{{ MessageModule }}}
-                    
-                    </section>
-                </main>
-                {{{ ModalChat }}}
-            <dic/>`;
+          <div id="app">
+              <main class="chatContainer">
+                  <section class="chatContainer__leftSection">
+                      {{{ SearchAndListUsersModule }}}
+                  </section>
+                  <section class="chatContainer__rightSection">
+                  {{{ MessageModule }}}
+                  
+                  </section>
+              </main>
+              {{{ ModalChat }}}
+          <dic/>`;
   }
 }

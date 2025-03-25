@@ -33,7 +33,7 @@ export class Profile extends Block {
         },
       }),
       AvatarProfile: new avatarProfile({
-        avatar: JSON.parse(localStorage.getItem('userInfo')).avatar ? JSON.parse(localStorage.getItem('userInfo')).avatar : '',
+        avatar: JSON.parse(String(localStorage.getItem('userInfo'))).avatar ? JSON.parse(String(localStorage.getItem('userInfo'))).avatar : '',
         classAvatar: props.props.contextProfile.avatarInfo.classAvatar,
         username: props.props.contextProfile.avatarInfo.username,
         onClick: () => {

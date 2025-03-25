@@ -26,7 +26,7 @@ export class AvatarProfile extends Block {
 }
 
 const mapStateToProps = (state: any) => {
-  const avatar = JSON.parse(localStorage.getItem('userInfo')).avatar || '';
+  const avatar = JSON.parse(String(localStorage.getItem('userInfo'))).avatar || '';
   return {
     avatar: avatar || state.contextProfile.avatarInfo.avatar,
     classAvatar: `${state.contextProfile.avatarInfo.classAvatar} iconAvatar`,

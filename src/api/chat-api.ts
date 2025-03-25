@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTTPTransport } from '.';
+import store from '../store/store';
 import { BaseApi } from './base-api';
 
 interface TValueUserToChat {
@@ -51,8 +52,24 @@ export class ChatApi extends BaseApi {
       credentials: 'include',
     });
   }
-  addUserToChat(value: TValueUserToChat) {
-    return fetch(`${baseHost}/api/v2/chats/users`, {
+
+  async userSearch(login: string) {
+    const data = await fetch(`${baseHost}/api/v2/user/search`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({ login }),
+    });
+    const res = await data.json();
+    store.set('modalInfo.listUsersSearch', res);
+    return res;
+  }
+  async addUserToChat(value: TValueUserToChat) {
+    return await fetch(`${baseHost}/api/v2/chats/users`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',

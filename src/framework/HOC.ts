@@ -2,9 +2,9 @@
 import store, { StoreEvents } from '../store/store';
 import Block from './Block';
 
-// type Indexed<T = unknown> = {
-//   [key in string]: T;
-// };
+type Indexed<T = unknown> = {
+  [key in string]: T;
+};
 
 // export function connect(Component: typeof Block, store: any) {
 //   return class extends Component {

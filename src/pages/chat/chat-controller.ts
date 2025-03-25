@@ -3,11 +3,6 @@ import { ChatApi } from '../../api/chat-api';
 import { WebSocketService } from '../../api/wss-api';
 import store from '../../store/store';
 
-interface TValueUserToChat {
-  users: [number];
-  chatId: number;
-}
-
 const chatApi = new ChatApi();
 
 class ChatController {
@@ -25,7 +20,7 @@ class ChatController {
     chatApi.createChat(title).then((data) => {
       if ((data as any).id) {
         this.getListUsers();
-        store.set('contextChat.modalInfo.className', 'modalChat');
+        // store.set('contextChat.modalInfo.className', 'modalChat');
       }
     });
   }
@@ -46,7 +41,7 @@ class ChatController {
     store.set('token', tokenRes.token);
 
     const userData = await chatApi.getUserChat(chatId).then((res) => res.json());
-    store.set('userInfo', userData[0]);
+    store.set('userInfo', userData);
     store.set('contextChat.infoHeaderChat.title', title);
     store.set('currentChatId', chatId);
 
@@ -76,8 +71,11 @@ class ChatController {
     this.ws.close();
   }
 
-  public addUserChat(value: TValueUserToChat) {
-    chatApi.addUserToChat(value);
+  public async addUserChat(login: string) {
+    await chatApi.userSearch(login);
+  }
+  public async addUserToChat(users: any, chatId: number) {
+    chatApi.addUserToChat({ users, chatId });
   }
 }
 

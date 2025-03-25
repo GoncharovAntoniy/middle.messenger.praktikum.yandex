@@ -131,6 +131,15 @@ export interface TDict {
   [key: string]: string | number;
 }
 
+export interface IUser {
+  avatar: string;
+  display_name: string;
+  first_name: string;
+  id: number;
+  login: string;
+  second_name: string;
+}
+
 export interface TState extends BlockProps {
   currentPage: string;
   emptyLog: boolean;

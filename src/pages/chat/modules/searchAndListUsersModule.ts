@@ -49,7 +49,7 @@ export class SearchAndListUsersModule extends Block {
   redirectProfile(e: Event) {
     e.preventDefault();
     if ((e.target as HTMLInputElement).id === 'goToProfile') {
-      router.go('/profile');
+      router.go('/settings');
       chatController.closeWS();
     }
   }

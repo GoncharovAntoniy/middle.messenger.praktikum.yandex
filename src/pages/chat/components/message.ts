@@ -7,7 +7,7 @@ export class Message extends Block {
   constructor(props: TChatLogMessages) {
     super({
       ...props,
-      role: JSON.parse(localStorage.getItem('userInfo')).id === props.user_id,
+      role: JSON.parse(String(localStorage.getItem('userInfo'))).id === props.user_id,
       time: formatDate(props.time),
     });
   }

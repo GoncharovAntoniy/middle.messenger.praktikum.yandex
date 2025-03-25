@@ -30,6 +30,7 @@ const modalInfo: TModalInfo = {
     typeButton: 'submit',
     classButton: 'buttonAuth',
     textButton: 'Добавить',
+    // onClick: () => console.log('Hello from initial state'),
   },
 };
 const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');

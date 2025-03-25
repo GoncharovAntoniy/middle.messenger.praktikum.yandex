@@ -1,5 +1,3 @@
-import App from '../../../App';
-import { state } from '../../../consts/consts';
 import Block from '../../../framework/Block';
 import { TContextChat } from '../../../types/index';
 import { validationFormInput } from '../../../utils/validationFormInput';

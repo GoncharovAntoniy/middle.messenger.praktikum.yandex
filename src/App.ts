@@ -21,7 +21,13 @@ export default class App {
   }
 
   render(): string {
-    router.use('/', ConnectedLogin).use('/register', ConnectedRegister).use('/chat', ConnectedChat).use('/profile', ConnectedProfile).use('/errorPage', ConnectedErrorPage).start();
+    router
+      .use('/', ConnectedLogin)
+      .use('/register', ConnectedRegister)
+      .use('/chat', ConnectedChat)
+      .use('/settings', ConnectedProfile)
+      .use('/errorPage', ConnectedErrorPage)
+      .start();
     if (window.location.pathname === '/chat') {
       if (this.appElement) {
         const rigthBlock = document.querySelector('.chatContainer__rightSection');
