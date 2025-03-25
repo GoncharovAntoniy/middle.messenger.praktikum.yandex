@@ -4,5 +4,6 @@ import { ErrorPage } from './errorPage';
 
 const mapStateToProps = (state: any) => ({ props: state.errorPageContext });
 
-const ConnectedErrorPage = connect(mapStateToProps)(ErrorPage);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ConnectedErrorPage = connect(mapStateToProps)(ErrorPage as any);
 export default ConnectedErrorPage;

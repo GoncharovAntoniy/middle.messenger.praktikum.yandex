@@ -13,5 +13,6 @@ function mapLoginToProps(state: any) {
   };
 }
 
-const ConnectedLogin = connect(mapLoginToProps)(Login);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ConnectedLogin = connect(mapLoginToProps)(Login as any);
 export default ConnectedLogin;

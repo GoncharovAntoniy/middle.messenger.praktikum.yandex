@@ -1,8 +1,8 @@
 import Block from '../../../framework/Block';
-import store, { connect } from '../../../store/store';
+import { connect } from '../../../store/store';
 import { TChatLogMessages, TContextChat } from '../../../types';
 import { isEqualAuthor } from '../../../utils/isEqualUtil';
-import chatController from '../chat-controller';
+// import chatController from '../chat-controller';
 import { Message } from './message';
 
 type TProps = {

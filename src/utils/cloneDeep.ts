@@ -56,7 +56,7 @@ export function cloneDeepAuthor<T extends Indexed>(obj: T) {
     // Handle:
     // * Date
     if (item instanceof Date) {
-      return new Date(item.valueOf());
+      return new Date(item.getTime());
     }
 
     // Handle:

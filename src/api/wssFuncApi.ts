@@ -19,6 +19,7 @@ export const WebsocketServise = (url: string) => {
   });
 
   socket.addEventListener('error', (event) => {
-    console.log('Ошибка', event.message);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    console.log('Ошибка', (event as Record<string, any>).message);
   });
 };

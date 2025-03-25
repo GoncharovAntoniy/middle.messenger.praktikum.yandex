@@ -5,7 +5,6 @@ import Block from '../../framework/Block';
 import { TButton, TInput } from '../../types';
 import { validationFormInput } from '../../utils/validationFormInput';
 import { router } from '../../App';
-import store from '../../store/store';
 import { LoginApi } from '../../api/login-api';
 
 interface TProps {

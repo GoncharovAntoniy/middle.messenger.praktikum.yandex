@@ -20,7 +20,7 @@ class ChatController {
     chatApi.createChat(title).then((data) => {
       if ((data as any).id) {
         this.getListUsers();
-        store.set('contextChat.modalInfo.className', 'modalChat');
+        // store.set('contextChat.modalInfo.className', 'modalChat');
       }
     });
   }
@@ -36,16 +36,16 @@ class ChatController {
     });
   }
 
-  public async getMessagesUser(chatId: number) {
+  public async getMessagesUser(chatId: number, title: string) {
     const tokenRes = await chatApi.getMessagesChat(chatId).then((res) => res.json());
     store.set('token', tokenRes.token);
 
     const userData = await chatApi.getUserChat(chatId).then((res) => res.json());
-    store.set('userInfo', userData[0]);
-    store.set('contextChat.infoHeaderChat.title', userData[1].first_name);
+    store.set('userInfo', userData);
+    store.set('contextChat.infoHeaderChat.title', title);
     store.set('currentChatId', chatId);
 
-    const userId = JSON.parse(localStorage.getItem('userInfo'));
+    const userId = JSON.parse(localStorage.getItem('userInfo') || '{}');
     const token = store.getState().token;
 
     if (userId && token) {
@@ -54,10 +54,8 @@ class ChatController {
     }
     this.ws;
     const infoAvatar = store.getState().contextChat.infoAvatar;
-    console.log('infoAvatar', infoAvatar);
     const newDataInfoAvatar = infoAvatar.map((item) => (item.id === chatId ? { ...item, currentChatClass: 'avatar activeAvatar' } : { ...item, currentChatClass: 'avatar' }));
     store.set('contextChat.infoAvatar', newDataInfoAvatar);
-    console.log(store.getState());
   }
 
   public sendMessage(type: string, message: string) {
@@ -69,7 +67,15 @@ class ChatController {
   }
 
   public closeWS() {
+    console.log('click close');
     this.ws.close();
+  }
+
+  public async addUserChat(login: string) {
+    await chatApi.userSearch(login);
+  }
+  public async addUserToChat(users: any, chatId: number) {
+    chatApi.addUserToChat({ users, chatId });
   }
 }
 

@@ -1,7 +1,7 @@
 import { BaseApi } from './base-api';
 import { HTTPTransport } from '.';
 import { router } from '../App';
-import chatController from '../pages/chat/chat-controller';
+// import chatController from '../pages/chat/chat-controller';
 // import { store } from '../store/store';
 
 const logoutApiInstance = new HTTPTransport();
@@ -19,7 +19,7 @@ export class LogoutApi extends BaseApi {
         console.log(res);
         if (res === 'OK') {
           localStorage.removeItem('userInfo');
-          chatController.closeWS();
+          // chatController.closeWS();
           router.go('/');
         }
       });

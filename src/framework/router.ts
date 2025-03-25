@@ -15,7 +15,7 @@ class Route {
 
   constructor(pathname: string, view: BlockClass, props: any) {
     this._pathname = pathname;
-    this._blockClass = new view({});
+    this._blockClass = view;
     this._block = null;
     this._props = props;
   }
@@ -38,7 +38,7 @@ class Route {
   }
 
   render() {
-    this._block = this._blockClass;
+    this._block = new this._blockClass({});
     render(this._props.rootQuery, this._block);
   }
 }
@@ -47,13 +47,13 @@ class Router {
   private static __instance: Router;
   private routes: Route[];
   private history: History;
-  private _currentRoute: Route | null;
+  protected currentRoute: Route | null;
   private _rootQuery: string;
 
   constructor(rootQuery: string) {
     this.routes = [];
     this.history = window.history;
-    this._currentRoute = null;
+    this.currentRoute = null;
     this._rootQuery = rootQuery;
   }
 
@@ -86,7 +86,7 @@ class Router {
       return;
     }
 
-    this._currentRoute = route;
+    this.currentRoute = route;
     route.render();
   }
 
