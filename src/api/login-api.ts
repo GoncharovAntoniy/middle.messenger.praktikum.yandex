@@ -17,7 +17,8 @@ export class LoginApi extends BaseApi {
         data: data,
       })
       .then((data) => {
-        if (data === 'OK') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (data === 'OK' || (data as any).reason === 'User already in system') {
           this.authUser();
           router.go('/chat');
           chatController.getListUsers();
@@ -36,13 +37,3 @@ export class LoginApi extends BaseApi {
     });
   }
 }
-// {
-//   "id": 3175,
-//   "first_name": "Antoniy",
-//   "second_name": "G",
-//   "display_name": null,
-//   "login": "antoniy",
-//   "avatar": null,
-//   "email": "testGoncharov@mail.ru",
-//   "phone": "89991119922"
-// }
