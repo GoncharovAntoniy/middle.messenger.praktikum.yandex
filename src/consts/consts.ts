@@ -8,6 +8,7 @@ import {
   TErrorPageContext,
   TField,
   TModalInfo,
+  TModalInfoDeleteUsers,
   TModalProfileInfo,
   TState,
   TSubmitActionItem,
@@ -31,6 +32,17 @@ const modalInfo: TModalInfo = {
     classButton: 'buttonAuth',
     textButton: 'Добавить',
     // onClick: () => console.log('Hello from initial state'),
+  },
+};
+const deleteUsersModalInfo: TModalInfoDeleteUsers = {
+  title: '',
+  className: 'modalChat',
+  chatId: 0,
+  infoButton: {
+    idButton: 'buttonAddUser',
+    typeButton: 'submit',
+    classButton: 'buttonAuth',
+    textButton: 'Удалить',
   },
 };
 const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
@@ -257,6 +269,7 @@ const contextChat: TContextChat = {
     classInput: 'submitFormMessage__input',
   },
   modalInfo,
+  deleteUsersModalInfo,
   submitActionsItem,
   createChat: {
     valueInput: '',
@@ -271,7 +284,7 @@ const contextProfile: TContextProfile = {
   userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
   avatarInfo: {
     avatar: '/images/userIcon.svg',
-    username: 'Антоний',
+    username: userInfo.display_name,
     classAvatar: 'profile__infoUser_avatar-container_icon',
     onClick: () => null,
   },
@@ -340,6 +353,7 @@ export const state: TState = {
   chatLogMessages,
   emptyLog: false,
   modalInfo,
+  deleteUsersModalInfo,
   modalProfileInfo,
   fields,
   fieldsPass,

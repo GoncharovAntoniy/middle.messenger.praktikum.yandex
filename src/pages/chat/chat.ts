@@ -1,6 +1,7 @@
 import Block from '../../framework/Block';
 import store, { StoreEvents } from '../../store/store';
-import { TChatLogMessages, TContextChat, TModalInfo } from '../../types';
+import { TChatLogMessages, TContextChat, TModalInfo, TModalInfoDeleteUsers } from '../../types';
+import { deleteUsersModalChat } from './components/deleteUsersModalChat';
 // import { EmptyChatlog } from './components/emptyChatLog';
 import { modalChat } from './components/modalChat';
 import { MessageModule } from './modules/messageModule';
@@ -8,6 +9,7 @@ import { searchAndListUsersModule } from './modules/searchAndListUsersModule';
 
 interface ContextChat extends TContextChat {
   modalInfo: TModalInfo;
+  deleteUsersModalInfo: TModalInfoDeleteUsers;
 }
 
 interface TProps {
@@ -27,19 +29,29 @@ export class Chat extends Block {
       SearchAndListUsersModule: new searchAndListUsersModule(props.props.contextChat.infoAvatar),
       MessageModule: new MessageModule({
         ...props,
-        openModalChat: (e: Event) => this.openModalChat(e),
+        openModalChatAddUser: (e: Event) => this.openModalChatAddUser(e),
+        openModalChatDeleteUser: (e: Event) => this.openModalChatDeleteUser(e),
       }),
       ModalChat: new modalChat({ ...props.props.contextChat.modalInfo }),
+      DeleteModalChat: new deleteUsersModalChat({ ...props.props.contextChat.deleteUsersModalInfo }),
     });
     store.on(StoreEvents.Updated, () => {
       // console.log('event on');
     });
   }
 
-  openModalChat(e: Event) {
+  openModalChatAddUser(e: Event) {
     e.stopPropagation();
 
     store.set('modalInfo.className', 'modalChat active');
+    store.set('modalInfo.title', 'Добавить пользователя');
+  }
+  openModalChatDeleteUser(e: Event) {
+    e.stopPropagation();
+
+    store.set('deleteUsersModalInfo.className', 'modalChat active');
+    store.set('deleteUsersModalInfo.title', 'Удалить пользователя');
+    store.set('deleteUsersModalInfo.chatId', Number(store.getState().currentChatId));
   }
   render() {
     return `
@@ -54,6 +66,7 @@ export class Chat extends Block {
                   </section>
               </main>
               {{{ ModalChat }}}
+              {{{ DeleteModalChat }}}
           <dic/>`;
   }
 }

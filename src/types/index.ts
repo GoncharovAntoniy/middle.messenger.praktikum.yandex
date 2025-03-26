@@ -89,12 +89,19 @@ export interface TModalInfo extends BlockProps {
   infoInput: TInput;
   infoButton: TButton;
 }
+export interface TModalInfoDeleteUsers extends BlockProps {
+  title: string;
+  className: string;
+  chatId: number;
+  infoButton: TButton;
+}
 
 export interface TContextChat extends BlockProps {
   infoAvatar: TInfoAvatar[];
   infoHeaderChat: TInfoHeaderChat;
   infoSubmitInput: TInfoSubmitInput;
   modalInfo: TModalInfo;
+  deleteUsersModalInfo: TModalInfoDeleteUsers;
   submitActionsItem: TSubmitActionItem[];
 }
 

@@ -2,6 +2,7 @@
 import { HTTPTransport } from '.';
 import store from '../store/store';
 import { BaseApi } from './base-api';
+import { baseURL } from './baseURL';
 
 interface TValueUserToChat {
   users: [number];
@@ -9,11 +10,10 @@ interface TValueUserToChat {
 }
 
 const chatAPIInstance = new HTTPTransport();
-const baseHost = 'https://ya-praktikum.tech';
 
 export class ChatApi extends BaseApi {
   createChat(title: string) {
-    return chatAPIInstance.post('/api/v2/chats', {
+    return chatAPIInstance.post('/chats', {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export class ChatApi extends BaseApi {
     });
   }
   deleteChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats`, {
+    return fetch(`${baseURL}/chats`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',
@@ -36,17 +36,17 @@ export class ChatApi extends BaseApi {
     });
   }
   getChats() {
-    return chatAPIInstance.get('/api/v2/chats');
+    return chatAPIInstance.get('/chats');
   }
   getMessagesChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats/token/${id}`, {
+    return fetch(`${baseURL}/chats/token/${id}`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
     });
   }
   getUserChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats/${id}/users`, {
+    return fetch(`${baseURL}/chats/${id}/users`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -54,7 +54,7 @@ export class ChatApi extends BaseApi {
   }
 
   async userSearch(login: string) {
-    const data = await fetch(`${baseHost}/api/v2/user/search`, {
+    const data = await fetch(`${baseURL}/user/search`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -69,7 +69,7 @@ export class ChatApi extends BaseApi {
     return res;
   }
   async addUserToChat(value: TValueUserToChat) {
-    return await fetch(`${baseHost}/api/v2/chats/users`, {
+    return await fetch(`${baseURL}/chats/users`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -81,7 +81,7 @@ export class ChatApi extends BaseApi {
     });
   }
   async fetchUnreadMessages(chatId: number, ws: WebSocket) {
-    const unreadCountResponse = await fetch(`${baseHost}/chats/${chatId}/new`);
+    const unreadCountResponse = await fetch(`${baseURL}/chats/${chatId}/new`);
     const unreadCount = await unreadCountResponse.json();
 
     let receivedMessages: any[] = [];

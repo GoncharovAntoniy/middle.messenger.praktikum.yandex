@@ -9,7 +9,7 @@ const loginApiInstance = new HTTPTransport();
 export class LoginApi extends BaseApi {
   async login(data: Record<string, any>) {
     return await loginApiInstance
-      .post('/api/v2/auth/signin', {
+      .post('/auth/signin', {
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export class LoginApi extends BaseApi {
       });
   }
   async authUser() {
-    return await loginApiInstance.get('/api/v2/auth/user').then((authData) => {
+    return await loginApiInstance.get('/auth/user').then((authData) => {
       if (authData) {
         localStorage.setItem('userInfo', JSON.stringify(authData));
       } else {

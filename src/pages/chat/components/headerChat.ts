@@ -7,7 +7,8 @@ import { avatar } from './avatar';
 import { HeaderActions } from './headerActions';
 
 interface TProps {
-  openModalChat: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
   props: {
     contextChat: {
       infoHeaderChat: {
@@ -22,7 +23,7 @@ export class HeaderChat extends Block {
     super({
       ...props,
       Avatar: new avatar({ title: props.props?.contextChat.infoHeaderChat.title }),
-      ActionMenu: new ActionMenu({ openModalChat: props.openModalChat, className: 'actionMenu' }),
+      ActionMenu: new ActionMenu({ openModalChatAddUser: props.openModalChatAddUser, openModalChatDeleteUser: props.openModalChatDeleteUser, className: 'actionMenu' }),
       HeaderActions: new HeaderActions({ onClick: (e: Event) => this.showActionMenu(e) }),
     });
     store.on(StoreEvents.Updated, () => {

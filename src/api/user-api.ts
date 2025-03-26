@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import store from '../store/store';
 import { BaseApi } from './base-api';
-
-const baseHost = 'https://ya-praktikum.tech';
+import { baseURL } from './baseURL';
 
 export class UserApi extends BaseApi {
   async updateUserInfo(data: Record<string, any>) {
-    return fetch(`${baseHost}/api/v2/user/profile`, {
+    return fetch(`${baseURL}/user/profile`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -29,7 +28,7 @@ export class UserApi extends BaseApi {
       .catch((err) => console.error(err));
   }
   async updateUserPassword(data: Record<string, any>) {
-    return fetch(`${baseHost}/api/v2/user/password`, {
+    return fetch(`${baseURL}/user/password`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -48,7 +47,7 @@ export class UserApi extends BaseApi {
   async updateUserAvatar(data: Blob) {
     const formData = new FormData();
     formData.append('avatar', data);
-    return fetch(`${baseHost}/api/v2/user/profile/avatar`, {
+    return fetch(`${baseURL}/user/profile/avatar`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
