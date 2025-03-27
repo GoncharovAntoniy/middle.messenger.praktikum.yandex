@@ -5,8 +5,12 @@ import { TInfoAvatar } from '../../../types';
 import { formatDate } from '../../../utils/formatDate';
 import chatController from '../chat-controller';
 
+interface IProps extends TInfoAvatar {
+  onClick: () => void;
+}
+
 export class Avatar extends Block {
-  constructor(props: TInfoAvatar) {
+  constructor(props: IProps) {
     super({
       ...props,
       avatar: props.avatar,
@@ -18,9 +22,7 @@ export class Avatar extends Block {
       time: props.last_message?.time ? formatDate(props.last_message?.time) : null,
       currentChatClass: props.currentChatClass || 'avatar',
       events: {
-        click: async () => {
-          await chatController.getMessagesUser(this.props.id as number, props.title);
-        },
+        click: () => props.onClick(),
       },
     });
     store.on(StoreEvents.Updated, () => {
@@ -35,7 +37,11 @@ export class Avatar extends Block {
   render() {
     return `<div class="{{currentChatClass}}">
               <div class="avatar__leftBlock">
-                <img src="/images/iconUser.svg" alt="icon" />
+              {{#if avatar}}
+                <img class="avatar__leftBlock_icon" src="{{{ avatar }}}"  />
+                {{else}}
+                <img class="avatar__leftBlock_icon" src="/images/iconUser.svg"  />
+              {{/if}}
                 <div class="avatar__leftBlock_infoUser">
                   <h5 class="avatar__leftBlock_infoUser_userName">{{ title }}</h5>
                   {{#if last_message}}
@@ -61,6 +67,7 @@ export class Avatar extends Block {
 function mapChatToProps(state: any) {
   return {
     title: state.title || state.contextChat.infoHeaderChat.title,
+    avatar: state.avatar || state.contextChat.infoHeaderChat.avatar,
   };
 }
 export const avatar = connect(mapChatToProps)(Avatar as any);

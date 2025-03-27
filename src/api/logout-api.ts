@@ -9,7 +9,7 @@ const logoutApiInstance = new HTTPTransport();
 export class LogoutApi extends BaseApi {
   async logout() {
     return await logoutApiInstance
-      .post('/api/v2/auth/logout', {
+      .post('/auth/logout', {
         headers: {
           accept: 'application/json',
         },

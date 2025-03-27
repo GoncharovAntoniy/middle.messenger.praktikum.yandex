@@ -1,5 +1,4 @@
 import Block from '../../../framework/Block';
-import store from '../../../store/store';
 import { TChatLogMessages } from '../../../types';
 import { formatDate } from '../../../utils/formatDate';
 
@@ -13,7 +12,6 @@ export class Message extends Block {
   }
 
   render() {
-    console.log('store', store.getState().currentChatId);
     return `<div>
                     {{#if role}}
                     <div class="chatLog__myMessage">

@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../../api/baseURL';
 import Block from '../../../framework/Block';
 import { connect } from '../../../store/store';
 import { TAvatarInfoProfile } from '../../../types';
@@ -16,7 +17,7 @@ export class AvatarProfile extends Block {
               <div class="profile__infoUser_avatar-container">
                 <img
                   class="{{{classAvatar}}}"
-                  src="https://ya-praktikum.tech/api/v2/resources{{{avatar}}}"
+                  src="{{{avatar}}}"
                   alt="icon"
                 />
               </div>
@@ -26,9 +27,11 @@ export class AvatarProfile extends Block {
 }
 
 const mapStateToProps = (state: any) => {
-  const avatar = JSON.parse(String(localStorage.getItem('userInfo'))).avatar || '';
+  const avatar = JSON.parse(String(localStorage.getItem('userInfo'))).avatar
+    ? `${BASE_URL}/resources${JSON.parse(String(localStorage.getItem('userInfo'))).avatar}`
+    : state.contextProfile.avatarInfo.avatar;
   return {
-    avatar: avatar || state.contextProfile.avatarInfo.avatar,
+    avatar: avatar,
     classAvatar: `${state.contextProfile.avatarInfo.classAvatar} iconAvatar`,
     username: state.contextProfile.avatarInfo.username,
   };

@@ -7,11 +7,14 @@ import { avatar } from './avatar';
 import { HeaderActions } from './headerActions';
 
 interface TProps {
-  openModalChat: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatUpdateIcon: (e: Event, currentProps: TCurrentProps) => void;
   props: {
     contextChat: {
       infoHeaderChat: {
         title: string;
+        avatar: string;
       };
     };
   };
@@ -21,8 +24,13 @@ export class HeaderChat extends Block {
   constructor(props: TProps) {
     super({
       ...props,
-      Avatar: new avatar({ title: props.props?.contextChat.infoHeaderChat.title }),
-      ActionMenu: new ActionMenu({ openModalChat: props.openModalChat, className: 'actionMenu' }),
+      Avatar: new avatar({ title: props.props?.contextChat.infoHeaderChat.title, onclick: () => null, avatar: props.props?.contextChat.infoHeaderChat.avatar }),
+      ActionMenu: new ActionMenu({
+        openModalChatAddUser: props.openModalChatAddUser,
+        openModalChatDeleteUser: props.openModalChatDeleteUser,
+        openModalChatUpdateIcon: props.openModalChatUpdateIcon,
+        className: 'actionMenu',
+      }),
       HeaderActions: new HeaderActions({ onClick: (e: Event) => this.showActionMenu(e) }),
     });
     store.on(StoreEvents.Updated, () => {

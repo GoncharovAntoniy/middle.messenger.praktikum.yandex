@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { BASE_URL } from '../../api/baseURL';
 import { ChatApi } from '../../api/chat-api';
 import { WebSocketService } from '../../api/wss-api';
 import store from '../../store/store';
@@ -12,6 +13,7 @@ class ChatController {
   }
   public getListUsers() {
     chatApi.getChats().then((data) => {
+      console.log(data);
       store.set('contextChat.infoAvatar', data);
       store.set('contextChat.infoHeaderChat.title', '');
     });
@@ -20,12 +22,16 @@ class ChatController {
     chatApi.createChat(title).then((data) => {
       if ((data as any).id) {
         this.getListUsers();
-        // store.set('contextChat.modalInfo.className', 'modalChat');
+        store.set('contextChat.modalInfo.className', 'modalChat');
       }
     });
   }
 
-  public deleteUserChat(id: number) {
+  public async updateIconChat(chatId: number, data: Blob) {
+    await chatApi.updateIconChat(String(chatId), data);
+  }
+
+  public deleteChat(id: number) {
     chatApi.deleteChat(id).then((data) => {
       if (data) {
         this.getListUsers();
@@ -35,14 +41,22 @@ class ChatController {
       }
     });
   }
+  public async deleteUsersChat(users: number[], chatId: number) {
+    chatApi.deleteUsersChat(users, chatId);
+    const userData = await chatApi.getUserChat(chatId).then((res) => res.json());
+    store.set('userInfo', userData);
+    store.set('contextChat.deleteUsersModalInfo.className', 'modalChat');
+  }
 
-  public async getMessagesUser(chatId: number, title: string) {
+  public async getMessagesUser(chatId: number, title: string, avatar: string) {
     const tokenRes = await chatApi.getMessagesChat(chatId).then((res) => res.json());
     store.set('token', tokenRes.token);
 
     const userData = await chatApi.getUserChat(chatId).then((res) => res.json());
+    const avatarIcon = avatar ? BASE_URL + '/resources' + avatar : '/images/iconUser.svg';
     store.set('userInfo', userData);
     store.set('contextChat.infoHeaderChat.title', title);
+    store.set('contextChat.infoHeaderChat.avatar', avatarIcon);
     store.set('currentChatId', chatId);
 
     const userId = JSON.parse(localStorage.getItem('userInfo') || '{}');
@@ -76,6 +90,7 @@ class ChatController {
   }
   public async addUserToChat(users: any, chatId: number) {
     chatApi.addUserToChat({ users, chatId });
+    store.set('contextChat.modalInfo.className', 'modalChat');
   }
 }
 

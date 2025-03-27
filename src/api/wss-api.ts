@@ -1,4 +1,5 @@
 import store from '../store/store';
+import { BASE_URL } from './baseURL';
 
 export class WebSocketService {
   private socket: WebSocket | null = null;
@@ -32,7 +33,6 @@ export class WebSocketService {
         if (data.type === 'pong' || data.type === 'ping') {
           return;
         }
-        console.log('Received JSON:', data);
 
         if (Array.isArray(data)) {
           store.set('chatLogMessages', [...data.reverse()]);
@@ -84,7 +84,7 @@ export class WebSocketService {
 
     try {
       // Запрашиваем количество непрочитанных сообщений через API
-      const response = await fetch(`https://ya-praktikum.tech/api/v2/chats/new/${chatId}`, {
+      const response = await fetch(`${BASE_URL}/chats/new/${chatId}`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',

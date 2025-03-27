@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { BASE_URL } from '../../../api/baseURL';
 import { router } from '../../../App';
 import Block from '../../../framework/Block';
 import store, { connect, StoreEvents } from '../../../store/store';
@@ -38,7 +39,18 @@ export class SearchAndListUsersModule extends Block {
       if (!isEqualAuthor(oldProps.props?.infoAvatar, newProps.props?.infoAvatar)) {
         this.setLists({
           Avatars: newProps.props?.infoAvatar.map((item: TInfoAvatar) =>
-            item.id === store.getState().currentChatId ? new Avatar({ ...item, currentChatClass: 'avatar active' }) : new Avatar(item),
+            item.id === store.getState().currentChatId
+              ? new Avatar({
+                  ...item,
+                  onClick: () => chatController.getMessagesUser(item.id, item.title, item.avatar ? String(item.avatar) : ''),
+                  avatar: item.avatar ? BASE_URL + '/resources' + item.avatar : '/images/iconUser.svg',
+                  currentChatClass: 'avatar active',
+                })
+              : new Avatar({
+                  ...item,
+                  onClick: () => chatController.getMessagesUser(item.id, item.title, item.avatar ? String(item.avatar) : ''),
+                  avatar: item.avatar ? BASE_URL + '/resources' + item.avatar : '/images/iconUser.svg',
+                }),
           ),
         });
         this.setProps({ ...newProps.props });

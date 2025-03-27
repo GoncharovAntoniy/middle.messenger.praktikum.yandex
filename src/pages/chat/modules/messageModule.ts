@@ -18,7 +18,9 @@ interface TProps {
     emptyLog: boolean;
   };
   contextChat: TContextChat;
-  openModalChat: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatUpdateIcon: (e: Event, currentProps: TCurrentProps) => void;
   emptyLog: boolean;
 }
 
@@ -27,7 +29,11 @@ export class MessageModule extends Block {
     super({
       ...props,
       EmptyChatLog: new EmptyChatlog({ emptyLog: props.emptyLog }),
-      HeaderChat: new headerChat({ openModalChat: props.openModalChat }),
+      HeaderChat: new headerChat({
+        openModalChatAddUser: props.openModalChatAddUser,
+        openModalChatDeleteUser: props.openModalChatDeleteUser,
+        openModalChatUpdateIcon: props.openModalChatUpdateIcon,
+      }),
       ChatLog: new chatLog({ ...props }),
       SubmitInput: new SubmitInput({
         ...props,

@@ -2,6 +2,7 @@
 import { HTTPTransport } from '.';
 import store from '../store/store';
 import { BaseApi } from './base-api';
+import { BASE_URL } from './baseURL';
 
 interface TValueUserToChat {
   users: [number];
@@ -9,11 +10,10 @@ interface TValueUserToChat {
 }
 
 const chatAPIInstance = new HTTPTransport();
-const baseHost = 'https://ya-praktikum.tech';
 
 export class ChatApi extends BaseApi {
   createChat(title: string) {
-    return chatAPIInstance.post('/api/v2/chats', {
+    return chatAPIInstance.post('/chats', {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export class ChatApi extends BaseApi {
     });
   }
   deleteChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats`, {
+    return fetch(`${BASE_URL}/chats`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',
@@ -36,25 +36,61 @@ export class ChatApi extends BaseApi {
     });
   }
   getChats() {
-    return chatAPIInstance.get('/api/v2/chats');
+    return chatAPIInstance.get('/chats');
   }
   getMessagesChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats/token/${id}`, {
+    return fetch(`${BASE_URL}/chats/token/${id}`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
     });
   }
   getUserChat(id: number) {
-    return fetch(`${baseHost}/api/v2/chats/${id}/users`, {
+    return fetch(`${BASE_URL}/chats/${id}/users`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
     });
   }
 
+  async deleteUsersChat(usersIds: number[], chatId: number) {
+    return fetch(`${BASE_URL}/chats/users`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        users: usersIds,
+        chatId: chatId,
+      }),
+    });
+  }
+
+  async updateIconChat(chatId: string, data: Blob) {
+    const formData = new FormData();
+    formData.append('chatId', chatId);
+    formData.append('avatar', data);
+    await fetch(`${BASE_URL}/chats/avatar`, {
+      method: 'PUT',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        accept: 'application/json',
+      },
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.error(err));
+  }
+
   async userSearch(login: string) {
-    const data = await fetch(`${baseHost}/api/v2/user/search`, {
+    const data = await fetch(`${BASE_URL}/user/search`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -69,7 +105,7 @@ export class ChatApi extends BaseApi {
     return res;
   }
   async addUserToChat(value: TValueUserToChat) {
-    return await fetch(`${baseHost}/api/v2/chats/users`, {
+    return await fetch(`${BASE_URL}/chats/users`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -81,7 +117,7 @@ export class ChatApi extends BaseApi {
     });
   }
   async fetchUnreadMessages(chatId: number, ws: WebSocket) {
-    const unreadCountResponse = await fetch(`${baseHost}/chats/${chatId}/new`);
+    const unreadCountResponse = await fetch(`${BASE_URL}/chats/${chatId}/new`);
     const unreadCount = await unreadCountResponse.json();
 
     let receivedMessages: any[] = [];
