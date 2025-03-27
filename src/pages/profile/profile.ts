@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../api/baseURL';
 import { router } from '../../App';
 import { Button } from '../../components/button';
 import Block from '../../framework/Block';
@@ -33,7 +34,7 @@ export class Profile extends Block {
         },
       }),
       AvatarProfile: new avatarProfile({
-        avatar: JSON.parse(String(localStorage.getItem('userInfo'))).avatar ? JSON.parse(String(localStorage.getItem('userInfo'))).avatar : '',
+        avatar: JSON.parse(String(localStorage.getItem('userInfo'))).avatar ? `${BASE_URL}/resources${JSON.parse(String(localStorage.getItem('userInfo'))).avatar}` : '',
         classAvatar: props.props.contextProfile.avatarInfo.classAvatar,
         username: props.props.contextProfile.avatarInfo.username,
         onClick: () => {
@@ -92,7 +93,6 @@ export class Profile extends Block {
       if (!isEqualAuthor(oldProps.props?.contextProfile.userInfo, newProps.props?.contextProfile.userInfo)) {
         this.setLists({
           FieldsInfoProfile: newProps.props?.fields.map((item: TField) => {
-            console.log('userInfo', userInfo[item.name]);
             return new FieldInfoProfile({
               idInput: item.idInput,
               name: item.name,

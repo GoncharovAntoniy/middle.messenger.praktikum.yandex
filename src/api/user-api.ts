@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import store from '../store/store';
 import { BaseApi } from './base-api';
-import { baseURL } from './baseURL';
+import { BASE_URL } from './baseURL';
 
 export class UserApi extends BaseApi {
   async updateUserInfo(data: Record<string, any>) {
-    return fetch(`${baseURL}/user/profile`, {
+    return fetch(`${BASE_URL}/user/profile`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -25,10 +25,10 @@ export class UserApi extends BaseApi {
           console.log('call store from user api', store.getState().contextProfile.userInfo);
         }
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
   }
   async updateUserPassword(data: Record<string, any>) {
-    return fetch(`${baseURL}/user/password`, {
+    return fetch(`${BASE_URL}/user/password`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -47,7 +47,7 @@ export class UserApi extends BaseApi {
   async updateUserAvatar(data: Blob) {
     const formData = new FormData();
     formData.append('avatar', data);
-    return fetch(`${baseURL}/user/profile/avatar`, {
+    return fetch(`${BASE_URL}/user/profile/avatar`, {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',

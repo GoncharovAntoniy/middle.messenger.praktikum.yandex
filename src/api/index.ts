@@ -1,5 +1,5 @@
 import { queryStringify } from '../utils/queryStringify';
-import { baseURL } from './baseURL';
+import { BASE_URL } from './baseURL';
 
 enum METHODS {
   GET = 'GET',
@@ -47,22 +47,22 @@ type HTTPMethod = <R = unknown>(url: string, options?: OptionsWithoutMethod) => 
 
 export class HTTPTransport {
   get: HTTPMethod = (url, options = {}) => {
-    const totalURL = baseURL + url;
+    const totalURL = BASE_URL + url;
     return this.request(totalURL, { ...options, method: METHODS.GET }, options.timeout);
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    const totalURL = baseURL + url;
+    const totalURL = BASE_URL + url;
     return this.request(totalURL, { ...options, method: METHODS.POST }, options.timeout);
   };
 
   put: HTTPMethod = (url, options = {}) => {
-    const totalURL = baseURL + url;
+    const totalURL = BASE_URL + url;
     return this.request(totalURL, { ...options, method: METHODS.PUT }, options.timeout);
   };
 
   delete: HTTPMethod = (url, options = {}) => {
-    const totalURL = baseURL + url;
+    const totalURL = BASE_URL + url;
     return this.request(totalURL, { ...options, method: METHODS.DELETE }, options.timeout);
   };
 

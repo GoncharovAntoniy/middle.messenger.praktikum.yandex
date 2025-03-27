@@ -1,5 +1,5 @@
 import store from '../store/store';
-import { baseURL } from './baseURL';
+import { BASE_URL } from './baseURL';
 
 export class WebSocketService {
   private socket: WebSocket | null = null;
@@ -84,7 +84,7 @@ export class WebSocketService {
 
     try {
       // Запрашиваем количество непрочитанных сообщений через API
-      const response = await fetch(`${baseURL}/chats/new/${chatId}`, {
+      const response = await fetch(`${BASE_URL}/chats/new/${chatId}`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',

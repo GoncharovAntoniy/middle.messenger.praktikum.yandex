@@ -4,6 +4,7 @@ import { TChatLogMessages, TContextChat, TModalInfo, TModalInfoDeleteUsers } fro
 import { deleteUsersModalChat } from './components/deleteUsersModalChat';
 // import { EmptyChatlog } from './components/emptyChatLog';
 import { modalChat } from './components/modalChat';
+import { modalUpdateIconChat } from './components/modalUpdateIconChat';
 import { MessageModule } from './modules/messageModule';
 import { searchAndListUsersModule } from './modules/searchAndListUsersModule';
 
@@ -31,9 +32,11 @@ export class Chat extends Block {
         ...props,
         openModalChatAddUser: (e: Event) => this.openModalChatAddUser(e),
         openModalChatDeleteUser: (e: Event) => this.openModalChatDeleteUser(e),
+        openModalChatUpdateIcon: (e: Event) => this.openModalChatUpdateIcon(e),
       }),
       ModalChat: new modalChat({ ...props.props.contextChat.modalInfo }),
       DeleteModalChat: new deleteUsersModalChat({ ...props.props.contextChat.deleteUsersModalInfo }),
+      ModalUpdateIconChat: new modalUpdateIconChat({ className: 'modalUpdateIconChat' }),
     });
     store.on(StoreEvents.Updated, () => {
       // console.log('event on');
@@ -53,6 +56,11 @@ export class Chat extends Block {
     store.set('deleteUsersModalInfo.title', 'Удалить пользователя');
     store.set('deleteUsersModalInfo.chatId', Number(store.getState().currentChatId));
   }
+  openModalChatUpdateIcon(e: Event) {
+    e.stopPropagation();
+
+    store.set('className', 'modalUpdateIconChat active');
+  }
   render() {
     return `
           <div id="app">
@@ -67,6 +75,7 @@ export class Chat extends Block {
               </main>
               {{{ ModalChat }}}
               {{{ DeleteModalChat }}}
+               {{{ ModalUpdateIconChat }}}
           <dic/>`;
   }
 }

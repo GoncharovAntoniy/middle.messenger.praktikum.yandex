@@ -14,11 +14,13 @@ export type TActionMenuItem = {
   onClick: (e: Event, currentProps: TCurrentProps) => void;
   openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
   openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatUpdateIcon: (e: Event, currentProps: TCurrentProps) => void;
 };
 
 type TProps = {
   openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
   openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatUpdateIcon: (e: Event, currentProps: TCurrentProps) => void;
   className: string;
 };
 
@@ -43,7 +45,7 @@ export class ActionMenu extends Block {
         idButton: 'deleteUser',
         onClick: () => {
           const id = store.getState().currentChatId as number;
-          chatController.deleteUserChat(id);
+          chatController.deleteChat(id);
           this.setProps({ className: 'actionMenu' });
         },
       }),
@@ -54,11 +56,14 @@ export class ActionMenu extends Block {
         textButton: 'Удалить',
         idButton: 'deleteUser',
         onClick: (e: Event, currentProps: TCurrentProps) => props.openModalChatDeleteUser(e, currentProps),
-        // onClick: () => {
-        //   const id = store.getState().currentChatId as number;
-        //   chatController.deleteUserChat(id);
-        //   this.setProps({ className: 'actionMenu' });
-        // },
+      }),
+      ActionMenuItemUpdateIcon: new ActionMenuItem({
+        idAction: 'deleteUser',
+        item_text: 'Изменить аватар',
+        title: 'Изменить аватар',
+        textButton: 'Сохранить',
+        idButton: 'deleteUser',
+        onClick: (e: Event, currentProps: TCurrentProps) => props.openModalChatUpdateIcon(e, currentProps),
       }),
     });
   }
@@ -68,6 +73,7 @@ export class ActionMenu extends Block {
                     {{{ ActionMenuItemAddUser }}}
                     {{{ ActionMenuItemDeleteChat }}}
                     {{{ ActionMenuItemDeleteUser }}}
+                    {{{ ActionMenuItemUpdateIcon }}}
                 </div>`;
   }
 }

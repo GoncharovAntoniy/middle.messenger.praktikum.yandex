@@ -17,7 +17,7 @@ export class DeleteUsersModalChat extends Block {
         textButton: 'Удалить',
         onClick: (event) => {
           event.preventDefault();
-          this.deleteUsersChat(this.userIdList);
+          this.deleteUsersChat();
         },
       }),
       ListUsers: null,
@@ -60,11 +60,8 @@ export class DeleteUsersModalChat extends Block {
     return true;
   }
 
-  async deleteUsersChat(users: number[]) {
-    console.log(users);
-    console.log(Number(store.getState().currentChatId));
-    // Заменить на новую апи
-    // chatController.addUserToChat(users, Number(store.getState().currentChatId));
+  async deleteUsersChat() {
+    chatController.deleteUsersChat(this.userIdList, Number(store.getState().currentChatId));
   }
 
   pushUser(userId: number) {
