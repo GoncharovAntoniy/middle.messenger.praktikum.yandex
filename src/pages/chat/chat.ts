@@ -1,18 +1,16 @@
-import { Button } from '../../components/button';
 import Block from '../../framework/Block';
-import { TChatLogMessages, TContextChat, TModalInfo } from '../../types';
-import { ModalChat } from './components/modalChat';
+import store, { StoreEvents } from '../../store/store';
+import { TChatLogMessages, TContextChat, TModalInfo, TModalInfoDeleteUsers } from '../../types';
+import { deleteUsersModalChat } from './components/deleteUsersModalChat';
+// import { EmptyChatlog } from './components/emptyChatLog';
+import { modalChat } from './components/modalChat';
+import { modalUpdateIconChat } from './components/modalUpdateIconChat';
 import { MessageModule } from './modules/messageModule';
-import { SearchAndListUsersModule } from './modules/searchAndListUsersModule';
-
-interface TCurrentProps {
-  textButton: string;
-  idButton: string;
-  title: string;
-}
+import { searchAndListUsersModule } from './modules/searchAndListUsersModule';
 
 interface ContextChat extends TContextChat {
   modalInfo: TModalInfo;
+  deleteUsersModalInfo: TModalInfoDeleteUsers;
 }
 
 interface TProps {
@@ -29,53 +27,55 @@ export class Chat extends Block {
   constructor(props: TProps) {
     super({
       ...props,
-      SearchAndListUsersModule: new SearchAndListUsersModule({ ...props }),
+      SearchAndListUsersModule: new searchAndListUsersModule(props.props.contextChat.infoAvatar),
       MessageModule: new MessageModule({
         ...props,
-        openModalChat: (e: Event, currentProps: TCurrentProps) => this.openModalChat(e, currentProps),
+        openModalChatAddUser: (e: Event) => this.openModalChatAddUser(e),
+        openModalChatDeleteUser: (e: Event) => this.openModalChatDeleteUser(e),
+        openModalChatUpdateIcon: (e: Event) => this.openModalChatUpdateIcon(e),
       }),
-      ModalChat: new ModalChat({ ...props.props.contextChat.modalInfo }),
+      ModalChat: new modalChat({ ...props.props.contextChat.modalInfo }),
+      DeleteModalChat: new deleteUsersModalChat({ ...props.props.contextChat.deleteUsersModalInfo }),
+      ModalUpdateIconChat: new modalUpdateIconChat({ className: 'modalUpdateIconChat' }),
+    });
+    store.on(StoreEvents.Updated, () => {
+      // console.log('event on');
     });
   }
 
-  openModalChat(e: Event, currentProps: TCurrentProps) {
+  openModalChatAddUser(e: Event) {
     e.stopPropagation();
 
-    let propsModal = this.props.props?.contextChat.modalInfo;
-    propsModal = {
-      ...propsModal,
-      infoButton: {
-        ...propsModal.infoButton,
-        textButton: currentProps.textButton,
-        idButton: currentProps.idButton,
-      },
-      title: currentProps.title,
-      className: 'modalChat active',
-    };
-    const button = new Button({ ...propsModal.infoButton, onClick: (e: Event) => console.log(e) });
-    this.children.ModalChat.setChild({ Button: button });
-    this.children.ModalChat.setProps({
-      title: currentProps.title,
-      className: 'modalChat active',
-      infoButton: {
-        idButton: currentProps.idButton,
-        textButton: currentProps.textButton,
-      },
-    });
+    store.set('modalInfo.className', 'modalChat active');
+    store.set('modalInfo.title', 'Добавить пользователя');
   }
+  openModalChatDeleteUser(e: Event) {
+    e.stopPropagation();
 
+    store.set('deleteUsersModalInfo.className', 'modalChat active');
+    store.set('deleteUsersModalInfo.title', 'Удалить пользователя');
+    store.set('deleteUsersModalInfo.chatId', Number(store.getState().currentChatId));
+  }
+  openModalChatUpdateIcon(e: Event) {
+    e.stopPropagation();
+
+    store.set('className', 'modalUpdateIconChat active');
+  }
   render() {
     return `
-            <div id="app">
-                <main class="chatContainer">
-                    <section class="chatContainer__leftSection">
-                        {{{ SearchAndListUsersModule }}}
-                    </section>
-                    <section class="chatContainer__rightSection">
-                        {{{ MessageModule }}}
-                    </section>
-                </main>
-                {{{ ModalChat }}}
-            <dic/>`;
+          <div id="app">
+              <main class="chatContainer">
+                  <section class="chatContainer__leftSection">
+                      {{{ SearchAndListUsersModule }}}
+                  </section>
+                  <section class="chatContainer__rightSection">
+                  {{{ MessageModule }}}
+                  
+                  </section>
+              </main>
+              {{{ ModalChat }}}
+              {{{ DeleteModalChat }}}
+               {{{ ModalUpdateIconChat }}}
+          <dic/>`;
   }
 }

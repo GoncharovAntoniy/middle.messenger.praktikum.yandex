@@ -1,8 +1,8 @@
 import Block from '../../../framework/Block';
 import { TChatLogMessages, TContextChat } from '../../../types';
-import { ChatLog } from '../components/chatLog';
+import { chatLog } from '../components/chatLog';
 import { EmptyChatlog } from '../components/emptyChatLog';
-import { HeaderChat } from '../components/headerChat';
+import { headerChat } from '../components/headerChat';
 import { SubmitInput } from '../components/submitInput';
 
 export interface TCurrentProps {
@@ -18,7 +18,9 @@ interface TProps {
     emptyLog: boolean;
   };
   contextChat: TContextChat;
-  openModalChat: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatAddUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatDeleteUser: (e: Event, currentProps: TCurrentProps) => void;
+  openModalChatUpdateIcon: (e: Event, currentProps: TCurrentProps) => void;
   emptyLog: boolean;
 }
 
@@ -27,8 +29,12 @@ export class MessageModule extends Block {
     super({
       ...props,
       EmptyChatLog: new EmptyChatlog({ emptyLog: props.emptyLog }),
-      HeaderChat: new HeaderChat({ openModalChat: props.openModalChat }),
-      ChatLog: new ChatLog({ ...props }),
+      HeaderChat: new headerChat({
+        openModalChatAddUser: props.openModalChatAddUser,
+        openModalChatDeleteUser: props.openModalChatDeleteUser,
+        openModalChatUpdateIcon: props.openModalChatUpdateIcon,
+      }),
+      ChatLog: new chatLog({ ...props }),
       SubmitInput: new SubmitInput({
         ...props,
       }),
@@ -37,14 +43,14 @@ export class MessageModule extends Block {
   render() {
     return `
         <div class="messageModule">
+            <div class="messageModule__header">
+              {{{ HeaderChat }}}    
+            </div>
             {{#if epmtyLog}}
                 {{{ EmptyChatLog }}}
             {{/if}}
             {{#unless emptyLog}}
-                <div class="messageModule__header">
-                {{{ HeaderChat }}}
-                    
-                </div>
+                
                 <div class="messageModule__chat">
                 {{{ ChatLog }}}
                     

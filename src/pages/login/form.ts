@@ -1,10 +1,11 @@
-import App from '../../App';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
-import { dictInput, state } from '../../consts/consts';
+import { dictInput } from '../../consts/consts';
 import Block from '../../framework/Block';
 import { TButton, TInput } from '../../types';
 import { validationFormInput } from '../../utils/validationFormInput';
+import { router } from '../../App';
+import { LoginApi } from '../../api/login-api';
 
 interface TProps {
   props: {
@@ -45,7 +46,6 @@ export class FormLogin extends Block {
 
   changeClickButtons(e: Event) {
     e.preventDefault();
-    const app = new App();
     if ((e.currentTarget as HTMLElement).id === 'authBtn') {
       const isFalsArray: boolean[] = [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,13 +58,12 @@ export class FormLogin extends Block {
       });
       const isBool = isFalsArray.some((item) => item === false);
       if (!isBool && isFalsArray.length !== 0) {
-        state.currentPage = '/chat';
-        app.render();
+        const login = new LoginApi();
+        login.login(this.dictInputsValue);
       }
     }
     if ((e.currentTarget as HTMLElement).id === 'linkBtn') {
-      state.currentPage = '/register';
-      app.render();
+      router.go('/register');
     }
   }
 
@@ -79,7 +78,7 @@ export class FormLogin extends Block {
     return `
             <form action="" class="form">
                 <div class="fields">
-                    <h2 class="login__title">Вход</h2>
+                    <h2 class="login__title">{{{ props.title }}}</h2>
                     <div class="inputs">
                     {{{Inputs}}}
                     </div>

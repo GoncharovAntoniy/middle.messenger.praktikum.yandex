@@ -1,12 +1,16 @@
+import { LogoutApi } from '../api/logout-api';
+import { UserApi } from '../api/user-api';
 import App from '../App';
 import { Button } from '../components/button';
-import { state } from '../consts/consts';
+import { dictInputProfile } from '../consts/consts';
 import Block from '../framework/Block';
+// import store from '../store/store';
 import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
 import { updateBoolSaveBtnAndPass } from './updateBoolSaveBtnAndPass';
 
-export const changeClickButtonProfile = (event: Event, currentThis: Block) => {
+const userApi = new UserApi();
+export const changeClickButtonProfile = async (event: Event, currentThis: Block) => {
   const currentFieldsEl = currentThis.lists.FieldsInfoProfile;
   const currentElementId = (event.currentTarget as HTMLInputElement).id;
 
@@ -50,23 +54,30 @@ export const changeClickButtonProfile = (event: Event, currentThis: Block) => {
       return;
     }
     case 'logout': {
-      state.currentPage = '/login';
-      const app = new App();
-      app.render();
+      const logout = new LogoutApi();
+      logout.logout();
       return 'click logout';
     }
     case 'saveDataBtn': {
+      const app = new App();
+      console.log('currentThis', currentThis.lists.FieldsInfoProfile.length);
+      if (currentThis.lists.FieldsInfoProfile.length <= 3) {
+        await userApi.updateUserPassword(dictInputProfile);
+        app.render();
+      } else {
+        await userApi.updateUserInfo(dictInputProfile);
+        app.render();
+      }
       currentThis.removeChildren('Buttons');
       currentThis.setLists({ Buttons });
       updateBoolSaveBtnAndPass(currentThis, false);
       updateBoolSaveBtn(currentThis, false);
-      // Не смог избавить сяот any
+
+      // Не смог избавиться от any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: true });
       });
-      const app = new App();
-      app.render();
       return;
     }
 

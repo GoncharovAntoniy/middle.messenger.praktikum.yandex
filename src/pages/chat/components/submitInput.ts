@@ -1,8 +1,7 @@
-import App from '../../../App';
-import { state } from '../../../consts/consts';
 import Block from '../../../framework/Block';
 import { TContextChat } from '../../../types/index';
 import { validationFormInput } from '../../../utils/validationFormInput';
+import chatController from '../chat-controller';
 import { ButtonSubmitChat } from './buttonSubmitChat';
 import { InputSubmitAction } from './inputSubmitAction';
 import { InputSubmitChat } from './inputSubmitChat';
@@ -16,6 +15,7 @@ interface TProps {
 }
 
 export class SubmitInput extends Block {
+  public inputValue: string;
   constructor(props: TProps) {
     super({
       ...props,
@@ -30,7 +30,6 @@ export class SubmitInput extends Block {
         ...props.props.contextChat.infoSubmitInput,
         onBlur: (e: Event, currentThis: object) => {
           e.preventDefault();
-          console.log(currentThis);
           validationFormInput(e, currentThis);
         },
         onChange: (e: Event) => {
@@ -41,12 +40,16 @@ export class SubmitInput extends Block {
 
       ButtonSubmitChat: new ButtonSubmitChat({}),
       events: {
-        submit: () => {
-          const app = new App();
-          app.render();
+        submit: async (e: Event) => {
+          e.preventDefault();
+          await chatController.sendMessage('message', this.inputValue);
+          this.inputValue = '';
+          // const app = new App();
+          // app.render();
         },
       },
     });
+    this.inputValue = '';
   }
 
   openMenuActions() {
@@ -59,15 +62,16 @@ export class SubmitInput extends Block {
   }
 
   changeInput(e: Event) {
-    const currentId = state.chatLogMessages[state.chatLogMessages.length - 1].id;
-    state.chatLogMessages.push({
-      id: currentId + 1,
-      message: (e.target as HTMLInputElement).value,
-      role: 1,
-      time: '12:00',
-      isImage: false,
-    });
-    console.log((e.target as HTMLInputElement).value);
+    e.preventDefault();
+    // const currentId = state.chatLogMessages[state.chatLogMessages.length - 1].id;
+    // state.chatLogMessages.push({
+    //   id: currentId + 1,
+    //   message: (e.target as HTMLInputElement).value,
+    //   role: 1,
+    //   time: '12:00',
+    //   isImage: false,
+    // });
+    this.inputValue = (e.target as HTMLInputElement).value;
   }
 
   render() {

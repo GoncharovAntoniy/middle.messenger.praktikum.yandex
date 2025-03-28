@@ -62,14 +62,18 @@ export interface TSubmitActionItem extends BlockProps {
 }
 
 export interface TInfoAvatar extends BlockProps {
-  username: string;
-  lastMessage?: string;
-  time?: string;
-  notReadMessageCount?: string;
+  title: string;
+  avatar?: string;
+  created_by?: string;
+  id: number;
+  last_message?: Record<string, any>;
+  unread_count?: string;
+  time: string;
+  currentChatClass?: string;
 }
 
 export interface TInfoHeaderChat extends BlockProps {
-  username: string;
+  title: string;
 }
 
 export interface TInfoSubmitInput extends BlockProps {
@@ -82,8 +86,13 @@ export interface TInfoSubmitInput extends BlockProps {
 export interface TModalInfo extends BlockProps {
   title: string;
   className: string;
-  closeIcon: string;
   infoInput: TInput;
+  infoButton: TButton;
+}
+export interface TModalInfoDeleteUsers extends BlockProps {
+  title: string;
+  className: string;
+  chatId: number;
   infoButton: TButton;
 }
 
@@ -92,6 +101,7 @@ export interface TContextChat extends BlockProps {
   infoHeaderChat: TInfoHeaderChat;
   infoSubmitInput: TInfoSubmitInput;
   modalInfo: TModalInfo;
+  deleteUsersModalInfo: TModalInfoDeleteUsers;
   submitActionsItem: TSubmitActionItem[];
 }
 
@@ -99,13 +109,14 @@ export interface TAvatarInfoProfile extends BlockProps {
   avatar: string;
   username: string;
   classAvatar: string;
+  onClick: () => void | null;
 }
 
 export interface TContextProfile extends BlockProps {
   updateData: boolean;
   updatePass: boolean;
   saveButton: boolean;
-  modalPropfile: boolean;
+  modalProfile: boolean;
   avatarInfo: TAvatarInfoProfile;
   buttons: TButton[];
   updateBtn: TButton;
@@ -125,6 +136,15 @@ export interface TErrorPageContext extends BlockProps {
 
 export interface TDict {
   [key: string]: string | number;
+}
+
+export interface IUser {
+  avatar: string;
+  display_name: string;
+  first_name: string;
+  id: number;
+  login: string;
+  second_name: string;
 }
 
 export interface TState extends BlockProps {

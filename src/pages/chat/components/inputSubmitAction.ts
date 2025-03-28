@@ -15,7 +15,6 @@ export class InputSubmitAction extends Block {
   }
 
   render() {
-    console.log(this.props);
     return `
                 <img
                     id="inputSubmitAction"

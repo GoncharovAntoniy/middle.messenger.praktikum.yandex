@@ -18,7 +18,7 @@ export const validationFormInput = (event: Event, currentThis: any) => {
       checkRegex(regex, currentThis, value, 'Логин должен иметь не менее 3 символов и не более 16');
       break;
     case 'password':
-      regex = /^(?=.*[A-Za-z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,40}$/;
+      regex = /^(?=.*[A-Za-z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,40}$/;
       checkRegex(regex, currentThis, value, 'Пароль начинается с заглавной буквы, не менее 8 символов, обязательно наличие цирфы и спецсимвол');
       break;
     case 'email':

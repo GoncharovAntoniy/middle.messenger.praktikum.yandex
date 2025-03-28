@@ -1,10 +1,13 @@
 import Block from '../../../framework/Block';
 import { TChatLogMessages } from '../../../types';
+import { formatDate } from '../../../utils/formatDate';
 
 export class Message extends Block {
   constructor(props: TChatLogMessages) {
     super({
       ...props,
+      role: JSON.parse(String(localStorage.getItem('userInfo'))).id === props.user_id,
+      time: formatDate(props.time),
     });
   }
 
@@ -15,13 +18,15 @@ export class Message extends Block {
                         {{#if isImage}}
                         <div class="chatLog__myMessage_media">
 
-                        <img src="{{message}}" alt="image">
+                        <img src="{{content}}" alt="image">
                         </div>
                         {{else}}
-                        <p class="chatLog__myMessage_message">
-                        {{message}}
-                        <span class="chatLog__myMessage_message-time"> <img src="/images/dubleCheckIcon.svg" alt="icon"> {{time}}</span>
-                        </p>
+                        {{#if content }}
+                          <p class="chatLog__myMessage_message">
+                          {{content}}
+                          <span class="chatLog__myMessage_message-time"> <img src="/images/dubleCheckIcon.svg" alt="icon"> {{time}}</span>
+                          </p>
+                        {{/if}}
                         {{/if}}
                     </div>
                     {{/if}}
@@ -29,7 +34,7 @@ export class Message extends Block {
                     <div class="chatLog__yourMessage">
                     
                         <p class="chatLog__yourMessage_message">
-                        {{message}}
+                        {{content}}
                         <span class="chatLog__yourMessage_message-time">{{time}}</span>
                         </p>
                     </div>

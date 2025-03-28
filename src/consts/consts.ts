@@ -8,116 +8,17 @@ import {
   TErrorPageContext,
   TField,
   TModalInfo,
+  TModalInfoDeleteUsers,
   TModalProfileInfo,
   TState,
   TSubmitActionItem,
 } from '../types';
 
-const chatLogMessages: TChatLogMessages[] = [
-  {
-    id: 1,
-    message: 'bla bla bla',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 2,
-    message: 'bla bla bla',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 3,
-    message: 'bla bla bla',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 4,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 5,
-    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 6,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 7,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 8,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 3,
-    message: 'bla bla bla',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 4,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 5,
-    message: 'bla bla bla hdcbjhsbd shcbjhdscb cshsjhcbs jchbsdjh chsdhcbjhdsc ',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 6,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 7,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 0,
-    time: '12:00',
-    isImage: false,
-  },
-  {
-    id: 8,
-    message: 'bla bla bla dddddddddd cbhdjhbc sdjhcbjsd chdhbsjdhc sdhbchjbds cjshdcbhbjdhc sdhbcjhbsdjhc dhbcjh sdc hbsjdhc',
-    role: 1,
-    time: '12:00',
-    isImage: false,
-  },
-];
+const chatLogMessages: TChatLogMessages[] = [];
 
 const modalInfo: TModalInfo = {
   title: 'Добавьте пользователя',
   className: 'modalChat',
-  closeIcon: '/images/XIcon.svg',
   infoInput: {
     name: 'login',
     inputId: 'inputLoginAddUser',
@@ -127,18 +28,37 @@ const modalInfo: TModalInfo = {
   },
   infoButton: {
     idButton: 'buttonAddUser',
-    typeButton: 'button',
+    typeButton: 'submit',
     classButton: 'buttonAuth',
     textButton: 'Добавить',
+    // onClick: () => console.log('Hello from initial state'),
   },
 };
+const deleteUsersModalInfo: TModalInfoDeleteUsers = {
+  title: '',
+  className: 'modalChat',
+  chatId: 0,
+  infoButton: {
+    idButton: 'buttonAddUser',
+    typeButton: 'submit',
+    classButton: 'buttonAuth',
+    textButton: 'Удалить',
+  },
+};
+const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+const email = userInfo.email || '';
+const login = userInfo.login || '';
+const first_name = userInfo.first_name || '';
+const second_name = userInfo.second_name || '';
+const display_name = userInfo.display_name || '';
+const phone = userInfo.phone || '';
 
 const fields: TField[] = [
   {
     name: 'email',
     idInput: 'emailProfile',
     nameField: 'Почта',
-    value: 'pochta@yandex.ru',
+    value: email,
     typeInput: 'text',
     disabled: true,
   },
@@ -146,7 +66,7 @@ const fields: TField[] = [
     name: 'login',
     idInput: 'loginProfile',
     nameField: 'Логин',
-    value: 'ivanivanov',
+    value: login,
     typeInput: 'text',
     disabled: true,
   },
@@ -154,7 +74,7 @@ const fields: TField[] = [
     name: 'first_name',
     idInput: 'usernameProfile',
     nameField: 'Имя',
-    value: 'Иван',
+    value: first_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -162,7 +82,7 @@ const fields: TField[] = [
     name: 'second_name',
     idInput: 'lastnameProfile',
     nameField: 'Фамилия',
-    value: 'Иванов',
+    value: second_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -170,7 +90,7 @@ const fields: TField[] = [
     name: 'display_name',
     idInput: 'chatName',
     nameField: 'Имя в чате',
-    value: 'Иван',
+    value: display_name,
     typeInput: 'text',
     disabled: true,
   },
@@ -178,7 +98,7 @@ const fields: TField[] = [
     name: 'phone',
     idInput: 'numberProfile',
     nameField: 'Телефон',
-    value: '+7 (909) 967 30 30',
+    value: phone,
     typeInput: 'text',
     disabled: true,
   },
@@ -189,26 +109,27 @@ const fieldsPass: TField[] = [
     name: 'oldPassword',
     idInput: 'oldPass',
     nameField: 'Старый пароль',
-    value: 'old password',
+    value: '',
     typeInput: 'password',
   },
   {
     name: 'newPassword',
     idInput: 'newPass',
     nameField: 'Новый пароль',
-    value: 'new password',
+    value: '',
     typeInput: 'password',
   },
   {
     name: 'newPassword',
     idInput: 'newRePass',
     nameField: 'Повторите новый пароль',
-    value: 'new password',
+    value: '',
     typeInput: 'password',
   },
 ];
 
 const contextLogin: TContextLogin = {
+  title: 'Вход',
   inputs: [
     {
       name: 'login',
@@ -337,58 +258,9 @@ const submitActionsItem: TSubmitActionItem[] = [
 ];
 
 const contextChat: TContextChat = {
-  infoAvatar: [
-    {
-      username: 'Антоний',
-      lastMessage: 'Привет',
-      time: '12:12',
-      notReadMessageCount: '',
-    },
-    {
-      username: 'Ксюша',
-      lastMessage: 'Я люблю потусить',
-      time: '19:20',
-      notReadMessageCount: '4',
-    },
-    {
-      username: 'Тихон',
-      lastMessage: 'тестим аватар',
-      time: '19:20',
-      notReadMessageCount: '3',
-    },
-    {
-      username: 'Саша',
-      lastMessage: 'тестим аватар',
-      time: '19:20',
-      notReadMessageCount: '3',
-    },
-    {
-      username: 'Владимир',
-      lastMessage: 'тестим аватар',
-      time: '',
-      notReadMessageCount: '',
-    },
-    {
-      username: 'Владимир',
-      lastMessage: 'тестим аватар',
-      time: '19:20',
-      notReadMessageCount: '3',
-    },
-    {
-      username: 'Владимир',
-      lastMessage: 'тестим аватар',
-      time: '19:20',
-      notReadMessageCount: '3',
-    },
-    {
-      username: 'Владимир',
-      lastMessage: 'тестим аватар',
-      time: '19:20',
-      notReadMessageCount: '3',
-    },
-  ],
+  infoAvatar: [],
   infoHeaderChat: {
-    username: 'username',
+    title: '',
   },
   infoSubmitInput: {
     name: 'message',
@@ -397,18 +269,24 @@ const contextChat: TContextChat = {
     classInput: 'submitFormMessage__input',
   },
   modalInfo,
+  deleteUsersModalInfo,
   submitActionsItem,
+  createChat: {
+    valueInput: '',
+  },
 };
 
 const contextProfile: TContextProfile = {
   updateData: false,
   updatePass: false,
   saveButton: false,
-  modalPropfile: false,
+  modalProfile: false,
+  userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
   avatarInfo: {
     avatar: '/images/userIcon.svg',
-    username: 'Антоний',
+    username: userInfo.display_name,
     classAvatar: 'profile__infoUser_avatar-container_icon',
+    onClick: () => null,
   },
 
   buttons: [
@@ -471,10 +349,11 @@ export const dictInput: TDict = {};
 export const dictInputProfile: TDict = {};
 
 export const state: TState = {
-  currentPage: '/register',
+  currentPage: '/',
   chatLogMessages,
   emptyLog: false,
   modalInfo,
+  deleteUsersModalInfo,
   modalProfileInfo,
   fields,
   fieldsPass,

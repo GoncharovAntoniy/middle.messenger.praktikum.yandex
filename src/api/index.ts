@@ -1,3 +1,6 @@
+import { queryStringify } from '../utils/queryStringify';
+import { BASE_URL } from './baseURL';
+
 enum METHODS {
   GET = 'GET',
   POST = 'POST',
@@ -20,31 +23,47 @@ type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 type HTTPMethod = <R = unknown>(url: string, options?: OptionsWithoutMethod) => Promise<R>;
 
-function queryStringify(data: Record<string, unknown>): string {
-  if (typeof data !== 'object' || data === null) {
-    throw new Error('Data must be an object');
-  }
+// function queryStringify(data: Record<string, unknown>): string {
+//   if (typeof data !== 'object' || data === null) {
+//     throw new Error('Data must be an object');
+//   }
 
-  return Object.entries(data)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
-    .join('&');
-}
+//   function buildQueryString(prefix: string, value: any): string {
+//     if (Array.isArray(value)) {
+//       return value.map((item, index) => buildQueryString(`${prefix}[${index}]`, item)).join('&');
+//     } else if (typeof value === 'object' && value !== null) {
+//       return Object.entries(value)
+//         .map(([key, val]) => buildQueryString(`${prefix}[${encodeURIComponent(key)}]`, val))
+//         .join('&');
+//     } else {
+//       return `${encodeURIComponent(prefix)}=${encodeURIComponent(String(value))}`;
+//     }
+//   }
+
+//   return Object.entries(data)
+//     .map(([key, value]) => buildQueryString(encodeURIComponent(key), value))
+//     .join('&');
+// }
 
 export class HTTPTransport {
   get: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    const totalURL = BASE_URL + url;
+    return this.request(totalURL, { ...options, method: METHODS.GET }, options.timeout);
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    const totalURL = BASE_URL + url;
+    return this.request(totalURL, { ...options, method: METHODS.POST }, options.timeout);
   };
 
   put: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    const totalURL = BASE_URL + url;
+    return this.request(totalURL, { ...options, method: METHODS.PUT }, options.timeout);
   };
 
   delete: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    const totalURL = BASE_URL + url;
+    return this.request(totalURL, { ...options, method: METHODS.DELETE }, options.timeout);
   };
 
   request<R = unknown>(url: string, options: Options = {}, timeout = 5000): Promise<R> {
@@ -57,6 +76,7 @@ export class HTTPTransport {
       }
 
       const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
       const isGet = method === METHODS.GET;
 
       xhr.open(method, isGet && !!data ? `${url}?${queryStringify(data as Record<string, unknown>)}` : url);
