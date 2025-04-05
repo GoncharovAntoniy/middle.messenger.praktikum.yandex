@@ -24,7 +24,7 @@ export function setAuthor(object: Indexed | unknown, path: string, value: unknow
   if (typeof path !== 'string') {
     throw new Error('path must be string');
   }
-
+  console.log('test');
   const result = path.split('.').reduceRight<Indexed>(
     (acc, key) => ({
       [key]: acc,
