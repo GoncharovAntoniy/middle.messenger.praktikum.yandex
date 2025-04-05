@@ -1,5 +1,3 @@
 #!/bin/sh
-
-npm run test
-
-npm run lint:all
+npm run lint:staged
+npm run pre-commit
