@@ -47,7 +47,7 @@ class Router {
   private static __instance: Router;
   private routes: Route[];
   private history: History;
-  protected currentRoute: Route | null;
+  private currentRoute: Route | null;
   private _rootQuery: string;
 
   constructor(rootQuery: string) {
@@ -101,6 +101,10 @@ class Router {
 
   forward() {
     this.history.forward();
+  }
+
+  getCurrentPath(): string {
+    return this.currentRoute?._pathname || '';
   }
 
   private getRoute(pathname: string) {
