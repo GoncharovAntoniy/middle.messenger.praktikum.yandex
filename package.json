@@ -57,7 +57,7 @@
     "supertest": "^7.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^4.5.4",
-    "vite": "^6.2.5"
+    "vite": "^4.5.5"
   },
   "dependencies": {
     "express": "^4.21.1",
