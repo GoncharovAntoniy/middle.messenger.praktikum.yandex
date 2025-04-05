@@ -1,16 +1,16 @@
 Ссылка на макет: https://www.figma.com/
 
-Как запустить проект: npm run dev
-
-Билд + запуск проекта: npm run start
-
-Линтеры: 
+Скрипты: 
+    npm run dev - запустить проект
+    npm run start - сборка и запуск проекта
+    npm run build - запуск сборки
     npm run lint - проверка eslint
     npm run lint:fix - проверка eslint с исправлениями
     npm run lint:styles - проверка stylelint
     npm run lint:styles:fix - проверка stylelint с исправлениями
     npm run lint:all - проверка stylelint, eslint + типы
     npm run lint:all:fix - проверка stylelint, eslint + типы с исправлениями
+    npm run test - запускает тесты
 
 Netlify: https://messenger-learn-yandex.netlify.app/
 
@@ -22,3 +22,12 @@ Netlify: https://messenger-learn-yandex.netlify.app/
     /register - соответвенно регистрация
     /chat - основная страница с чатами
     /settings - информация о пользователе
+
+Тесты: 
+    Добавлены тесты для роутера и модуля отправки запросов (HTTPTransport)
+
+Установлен husky:
+    При попытке закоммитить запускает тесты и линтеры
+    Для коммита без тестов и линтеров следует установить флаг -n (git commit -m "комментарий" -n)
+
+Все пакеты обновлены и находятся в актуальном, безопасном состоянии (05.04.2025)
