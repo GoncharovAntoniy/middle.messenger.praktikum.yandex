@@ -5,7 +5,7 @@ function omit<T extends object>(obj: T, fields: (keyof T)[]) {
   });
   return result;
 }
-
+console.log(omit({ test: 'test' }, ['test']));
 // Авторское решение =============
 const hasOwn = {}.hasOwnProperty;
 function classNames(...args: any[]): string {
