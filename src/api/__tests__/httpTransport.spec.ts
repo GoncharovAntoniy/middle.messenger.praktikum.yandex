@@ -98,7 +98,7 @@ describe('HTTPTransport', () => {
     it('должен обрабатывать ошибку сети', async () => {
       const promise = http.get('/fail');
 
-      requests[0].error(); // Эмулируем ошибку сети
+      requests[0].error();
 
       try {
         await promise;

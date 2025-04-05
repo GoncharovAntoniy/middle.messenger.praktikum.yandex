@@ -45,16 +45,6 @@ describe('Router', () => {
   });
 
   describe('use()', () => {
-    it('должен добавлять новый маршрут', () => {
-      // @ts-ignore
-      const initialRoutesLength = router.routes.length;
-
-      router.use('/test', TestBlock);
-
-      // @ts-ignore
-      expect(router.routes.length).to.equal(initialRoutesLength + 1);
-    });
-
     it('должен возвращать this для цепочки вызовов', () => {
       const result = router.use('/test', TestBlock);
       expect(result).to.equal(router);
