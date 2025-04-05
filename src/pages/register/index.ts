@@ -1,4 +1,3 @@
-// import { connect } from '../../framework/HOC';
 import { connect } from '../../store/store';
 import { Register } from './register';
 

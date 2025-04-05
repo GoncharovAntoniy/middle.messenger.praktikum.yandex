@@ -23,28 +23,6 @@ type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 type HTTPMethod = <R = unknown>(url: string, options?: OptionsWithoutMethod) => Promise<R>;
 
-// function queryStringify(data: Record<string, unknown>): string {
-//   if (typeof data !== 'object' || data === null) {
-//     throw new Error('Data must be an object');
-//   }
-
-//   function buildQueryString(prefix: string, value: any): string {
-//     if (Array.isArray(value)) {
-//       return value.map((item, index) => buildQueryString(`${prefix}[${index}]`, item)).join('&');
-//     } else if (typeof value === 'object' && value !== null) {
-//       return Object.entries(value)
-//         .map(([key, val]) => buildQueryString(`${prefix}[${encodeURIComponent(key)}]`, val))
-//         .join('&');
-//     } else {
-//       return `${encodeURIComponent(prefix)}=${encodeURIComponent(String(value))}`;
-//     }
-//   }
-
-//   return Object.entries(data)
-//     .map(([key, value]) => buildQueryString(encodeURIComponent(key), value))
-//     .join('&');
-// }
-
 export class HTTPTransport {
   get: HTTPMethod = (url, options = {}) => {
     const totalURL = BASE_URL + url;

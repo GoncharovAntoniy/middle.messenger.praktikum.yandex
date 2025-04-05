@@ -8,7 +8,7 @@ export class WebSocketService {
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 10;
   private pingInterval: any;
-  private isLoadingMessages = false; // Флаг загрузки сообщений
+  private isLoadingMessages = false;
 
   constructor(url: string) {
     this.url = url;

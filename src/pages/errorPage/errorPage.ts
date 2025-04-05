@@ -19,9 +19,6 @@ export class ErrorPage extends Block {
   }
   backToChat(e: Event) {
     e.preventDefault();
-    // state.currentPage = '/chat';
-    // const app = new App();
-    // app.render();
     router.go('/chat');
   }
   render() {

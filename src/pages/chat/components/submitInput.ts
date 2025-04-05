@@ -44,8 +44,6 @@ export class SubmitInput extends Block {
           e.preventDefault();
           await chatController.sendMessage('message', this.inputValue);
           this.inputValue = '';
-          // const app = new App();
-          // app.render();
         },
       },
     });
@@ -63,14 +61,6 @@ export class SubmitInput extends Block {
 
   changeInput(e: Event) {
     e.preventDefault();
-    // const currentId = state.chatLogMessages[state.chatLogMessages.length - 1].id;
-    // state.chatLogMessages.push({
-    //   id: currentId + 1,
-    //   message: (e.target as HTMLInputElement).value,
-    //   role: 1,
-    //   time: '12:00',
-    //   isImage: false,
-    // });
     this.inputValue = (e.target as HTMLInputElement).value;
   }
 

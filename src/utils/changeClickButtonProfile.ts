@@ -4,7 +4,6 @@ import App from '../App';
 import { Button } from '../components/button';
 import { dictInputProfile } from '../consts/consts';
 import Block from '../framework/Block';
-// import store from '../store/store';
 import { TButton } from '../types/index';
 import { updateBoolSaveBtn } from './updateBoolSaveBtn';
 import { updateBoolSaveBtnAndPass } from './updateBoolSaveBtnAndPass';
@@ -40,7 +39,6 @@ export const changeClickButtonProfile = async (event: Event, currentThis: Block)
   switch (currentElementId) {
     case 'updateData': {
       updateButtons();
-      // Не смог избавить сяот any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: false });
@@ -73,7 +71,6 @@ export const changeClickButtonProfile = async (event: Event, currentThis: Block)
       updateBoolSaveBtnAndPass(currentThis, false);
       updateBoolSaveBtn(currentThis, false);
 
-      // Не смог избавиться от any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       currentFieldsEl.forEach((item: any) => {
         item.setProps({ ...item.props, disabled: true });

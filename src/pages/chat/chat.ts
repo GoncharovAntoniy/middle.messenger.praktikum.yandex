@@ -2,7 +2,6 @@ import Block from '../../framework/Block';
 import store, { StoreEvents } from '../../store/store';
 import { TChatLogMessages, TContextChat, TModalInfo, TModalInfoDeleteUsers } from '../../types';
 import { deleteUsersModalChat } from './components/deleteUsersModalChat';
-// import { EmptyChatlog } from './components/emptyChatLog';
 import { modalChat } from './components/modalChat';
 import { modalUpdateIconChat } from './components/modalUpdateIconChat';
 import { MessageModule } from './modules/messageModule';
