@@ -58,7 +58,6 @@ export class FormRegister extends Block {
         }
       });
       console.log(this.dictInputsValue);
-      // Настроить регистрацию
       const register = new RegisterApi();
       register
         .createRegister(this.dictInputsValue)

@@ -1,5 +1,3 @@
-// import { connect } from '../../framework/HOC';
-// import { storeLogin } from '../../store/store';
 import { connect } from '../../store/store';
 import { Login } from './login';
 

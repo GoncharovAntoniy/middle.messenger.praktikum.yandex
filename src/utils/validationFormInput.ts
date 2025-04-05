@@ -1,10 +1,8 @@
 import { dictInput } from '../consts/consts';
-// Не смог избавить сяот any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const checkRegex = (regex: RegExp, currentThis: any, value: string, errorValue: string) => {
   !regex.test(value) && value ? currentThis.setProps({ classInput: 'input errorInput', errorValue: errorValue }) : currentThis.setProps({ classInput: 'input', errorValue: '' });
 };
-// Не смог избавить сяот any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validationFormInput = (event: Event, currentThis: any) => {
   event.preventDefault();
