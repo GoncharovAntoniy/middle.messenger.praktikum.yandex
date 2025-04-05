@@ -21,7 +21,7 @@ export function setAuthor(object: Indexed | unknown, path: string, value: unknow
   if (typeof object !== 'object' || object === null) {
     return object;
   }
-
+  console.log('test');
   if (typeof path !== 'string') {
     throw new Error('path must be string');
   }
