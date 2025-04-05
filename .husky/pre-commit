@@ -1,6 +1,5 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 
-# Ваши команды
 npm run test
+
 npm run lint:all
